@@ -1,0 +1,6 @@
+module Pods_tempo_ironsource_mediation_adapter {
+  umbrella header "Pods-tempo-ironsource-mediation-adapter-umbrella.h"
+
+  export *
+  module * { export * }
+}

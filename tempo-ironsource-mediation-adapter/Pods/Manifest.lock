@@ -1,0 +1,28 @@
+PODS:
+  - IronSourceSDK (7.3.0.0)
+  - tempo-ironsource-mediation (0.0.4):
+    - IronSourceSDK (~> 7.2)
+    - TempoSDK (~> 1.0.1)
+  - TempoSDK (1.0.1)
+
+DEPENDENCIES:
+  - IronSourceSDK (= 7.3.0.0)
+  - tempo-ironsource-mediation (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - IronSourceSDK
+    - TempoSDK
+
+EXTERNAL SOURCES:
+  tempo-ironsource-mediation:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  IronSourceSDK: 70d098472ea63fa8d58e47ad79ad761ad256ce15
+  tempo-ironsource-mediation: 4e60e27caeff8e95bfb535cd4c176908364662d0
+  TempoSDK: 7f041bf34e9b6fc8c1817789a57d5e1c92f5c0d4
+
+PODFILE CHECKSUM: 3909318d6e347d3c01344913fc0606907bfc6933
+
+COCOAPODS: 1.11.3

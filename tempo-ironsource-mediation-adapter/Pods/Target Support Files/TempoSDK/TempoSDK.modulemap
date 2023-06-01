@@ -1,0 +1,6 @@
+module TempoSDK {
+  umbrella header "TempoSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

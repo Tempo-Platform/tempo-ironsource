@@ -1,0 +1,11 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '11.0'
+
+#use_frameworks!
+
+target 'tempo-ironsource-mediation-adapter' do
+  pod 'IronSourceSDK', '7.3.0.0'
+  pod 'tempo-ironsource-mediation', :path => '../'
+  #pod 'TempoSDK', '~> 1.0.0'
+
+end
