@@ -12,50 +12,10 @@ import tempo_ironsource_mediation
 
 let kAPPKEY = "1a366cbe5"
 
-
-extension ViewController: LevelPlayInterstitialDelegate {
-    // LevelPlayInterstitialDelegate functions
-    func didShow(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
-    }
-    func didClick(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
-    }
-    func didLoad(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
-    }
-    func didFailToLoadWithError(_ error: Error!) {
-        ISTempoUtils.bangLog(msg: String(describing: error.self));
-    }
-    func didOpen(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
-    }
-    func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: "\(String(describing: error.self)) |  \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
-    }
-    func didClose(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
-    }
-    
-    
-}
-
-
-extension ViewController: LevelPlayRewardedVideoDelegate {
-    // LevelPlayRewardedVideoManualDelegate functions
-    func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
-    }
-    func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
-    }
-    
-}
-
-class ViewController: UIViewController, ISInitializationDelegate, ISImpressionDataDelegate {
+class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
         
     func hasAvailableAd(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo))
+        ISTempoUtils.bangLog(msg: "****** Has Video: \(IronSource.hasRewardedVideo()) | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
     }
 
     func hasNoAvailableAd() {
@@ -74,7 +34,7 @@ class ViewController: UIViewController, ISInitializationDelegate, ISImpressionDa
         print("❌ loadTriggered")
     }
     @IBAction func rewardedShowBtnAction(_ sender: Any) {
-        ISTempoUtils.bangLog()
+        ISTempoUtils.bangLog(msg: "****** Has Video: \(IronSource.hasRewardedVideo())")
         IronSource.showRewardedVideo(with: self)//, "rew-ios-000")//, placement: "tempoR1")
         //IronSource.showISDemandOnlyRewardedVideo(self, instanceId: "rew-ios-000")//, placement: "tempoR1")
         print("❌ showTriggered")
@@ -113,12 +73,12 @@ class ViewController: UIViewController, ISInitializationDelegate, ISImpressionDa
     
     func setupIronSourceSdk() {
         ISTempoUtils.bangLog();
-        print("💥 ISIntegrationHelper.validateIntegration()");
-        ISIntegrationHelper.validateIntegration()
-        
-        
-        
+        //print("💥 ISIntegrationHelper.validateIntegration()");
+        //ISIntegrationHelper.validateIntegration()
         //IronSource.add(self) // ?????????????????
+        
+        // Init SDK
+        IronSource.initWithAppKey(kAPPKEY, delegate: self)
         
         // Set the REWARDED ad listeners
         IronSource.setLevelPlayRewardedVideoDelegate(self)
@@ -126,8 +86,6 @@ class ViewController: UIViewController, ISInitializationDelegate, ISImpressionDa
         // Set the INTERSTITIAL ad listeners
         IronSource.setLevelPlayInterstitialDelegate(self)
         
-        // Init SDK
-        IronSource.initWithAppKey(kAPPKEY, delegate: self)
     }
     
     // Initialisation functions
@@ -143,9 +101,36 @@ class ViewController: UIViewController, ISInitializationDelegate, ISImpressionDa
         ISTempoUtils.bangLog();
     }
     
-
-
+    // LevelPlayInterstitialDelegate functions
+    func didShow(with adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+    }
+    func didClick(with adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+    }
+    // LevelPlayRewardedVideoManualDelegate functions
+    func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
+    }
+    func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
+    }
     // BOTH functions
+    func didLoad(with adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+    }
+    func didFailToLoadWithError(_ error: Error!) {
+        ISTempoUtils.bangLog(msg: String(describing: error.self));
+    }
+    func didOpen(with adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+    }
+    func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: "\(String(describing: error.self)) |  \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
+    }
+    func didClose(with adInfo: ISAdInfo!) {
+        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+    }
     // Impressions functions
     func impressionDataDidSucceed(_ impressionData: ISImpressionData!) {
         ISTempoUtils.bangLog(msg: impressionData.all_data?.debugDescription ?? "NO_ALL_DATA");
