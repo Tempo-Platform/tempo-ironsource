@@ -10,7 +10,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialLis
     var delegate:ISInterstitialAdDelegate? = nil
     
     public override func loadAd(with adData: ISAdData, delegate: ISInterstitialAdDelegate) {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true)), \(ISTempoUtils.adUnitDataStringer(adData: adData))");
+        ISTempoUtils.shout(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
         
         // Implement callback delegate
         self.delegate = delegate
@@ -21,17 +21,17 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialLis
         // Create ad instance and load new ad
         DispatchQueue.main.async {
             self.interstitial = TempoInterstitial(parentViewController: nil, delegate: self, appId: appId)
-            self.interstitial!.loadAd(isInterstitial: true, cpmFloor: 25, placementId: nil)
+            self.interstitial!.loadAd(isInterstitial: true, cpmFloor: 0, placementId: nil)
           }
     }
     
     public override func isAdAvailable(with adData: ISAdData) -> Bool {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true)) \(ISTempoUtils.adUnitDataStringer(adData: adData))");
+        ISTempoUtils.shout(msg: "[\(isAdReady), \(ISTempoUtils.adUnitDataStringer(adData: adData))]");
         return isAdReady
     }
     
     public override func showAd(with viewController: UIViewController, adData: ISAdData, delegate: ISInterstitialAdDelegate) {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true)) \(ISTempoUtils.adUnitDataStringer(adData: adData))");
+        ISTempoUtils.shout(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
         self.delegate = delegate
         if (!isAdReady) {
            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
@@ -43,41 +43,41 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialLis
     
     // Listeners
     public func onAdFetchSucceeded(isInterstitial: Bool) {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true))/\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
+        ISTempoUtils.shout(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
         self.delegate?.adDidLoad()
         isAdReady = true
     }
     
     public func onAdFetchFailed(isInterstitial: Bool) {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true))/\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
+        ISTempoUtils.shout(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
         self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.noFill, errorCode: 0, errorMessage: "Ad fetch failed for some reason")
     }
     
     public func onAdClosed(isInterstitial: Bool) {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true))/\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
+        ISTempoUtils.shout(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
         self.delegate?.adDidClose()
         self.delegate?.adDidShowSucceed()
         isAdReady = false
     }
     
     public func onAdDisplayed(isInterstitial: Bool) {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true))/\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
+        ISTempoUtils.shout(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
         self.delegate?.adDidOpen()
     }
     
     public func onAdClicked(isInterstitial: Bool) {
-        ISTempoUtils.bangLog(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: true))/\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
+        ISTempoUtils.shout(msg: "\(ISTempoUtils.getTypeWord(isInterstitial: isInterstitial))");
     }
     
     
     public func onVersionExchange(sdkVersion: String) -> String? {
-        ISTempoUtils.bangLog(msg: "[\(ISTempoUtils.getTypeWord(isInterstitial: true))] SDK Version: \(sdkVersion), Adapter Version: \(ISTempoCustomAdapter.customAdapterVersion)");
+        ISTempoUtils.shout(msg: "[\(ISTempoUtils.getTypeWord(isInterstitial: true))] SDK Version: \(sdkVersion), Adapter Version: \(ISTempoCustomAdapter.customAdapterVersion)");
         ISTempoCustomAdapter.dynSdkVersion = sdkVersion
         return ISTempoCustomAdapter.customAdapterVersion
     }
     
     public func onGetAdapterType() -> String? {
-        ISTempoUtils.bangLog(msg: "[\(ISTempoUtils.getTypeWord(isInterstitial: true))] Adapter type: \(ISTempoCustomAdapter.ADAPTER_TYPE)");
+        ISTempoUtils.shout(msg: "[\(ISTempoUtils.getTypeWord(isInterstitial: true))] Adapter type: \(ISTempoCustomAdapter.ADAPTER_TYPE)");
         return ISTempoCustomAdapter.ADAPTER_TYPE
     }
     

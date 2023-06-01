@@ -11,12 +11,13 @@ public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
     
     
     public override func `init` (_ adData: ISAdData, delegate: ISNetworkInitializationDelegate) {
-       print("💥 ISTempoCustomAdapter.init() \(getDataStuff(adData: adData))")
+        print("💥 ISTempoCustomAdapter.init() \(ISTempoUtils.getAppId(adData: adData))/\(ISTempoUtils.getAddTag(adData: adData))")
        // handle errors TODO: How to detect errors
        if (false) {
           delegate.onInitDidFailWithErrorCode(ISAdapterErrors.missingParams.rawValue, errorMessage: "Fail to init SDK")
           return
        }
+        
        // init success
        delegate.onInitDidSucceed()
        return
@@ -29,11 +30,5 @@ public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
     
     public override func adapterVersion() -> String {
         return ISTempoCustomAdapter.customAdapterVersion
-    }
-    
-    private func getDataStuff(adData: ISAdData) -> String {
-        let adDataAdTag = adData.getString("adUnit")
-        // print("💥 adDataAdTag: \(adDataAdTag ?? "NO_AD_TAG")")
-        return adDataAdTag ?? "NO_AD_TAG"
     }
 }

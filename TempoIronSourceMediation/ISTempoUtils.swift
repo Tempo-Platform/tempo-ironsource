@@ -20,7 +20,7 @@ public class ISTempoUtils {
         return adDataAdTag ?? "NO_AD_TAG"
     }
     
-    public static func bangLog(msg: String = "", functStrion: String = #function) {
+    public static func shout(msg: String = "", functStrion: String = #function) {
         let outMsg = msg.isEmpty ? "" : "| \(msg)"
         print("💥 \(functStrion) \(outMsg)")
     }

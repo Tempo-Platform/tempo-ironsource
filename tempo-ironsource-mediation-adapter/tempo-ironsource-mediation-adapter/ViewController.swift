@@ -13,42 +13,33 @@ import tempo_ironsource_mediation
 let kAPPKEY = "1a366cbe5"
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
-        
-    func hasAvailableAd(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: "****** Has Video: \(IronSource.hasRewardedVideo()) | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
-    }
 
-    func hasNoAvailableAd() {
-        ISTempoUtils.bangLog()
-    }
-
+    // Button outlet/actions
     @IBOutlet weak var rewardedLoadBtn: UIButton!
     @IBOutlet weak var rewardedShowBtn: UIButton!
     @IBOutlet weak var interstitialLoadBtn: UIButton!
     @IBOutlet weak var interstitialShowBtn: UIButton!
     @IBOutlet weak var versionLabel: UILabel!
-    
     @IBAction func rewardedLoadBtnAction(_ sender: Any) {
-        ISTempoUtils.bangLog()
+        ISTempoUtils.shout()
         IronSource.loadRewardedVideo()
-        print("❌ loadTriggered")
     }
     @IBAction func rewardedShowBtnAction(_ sender: Any) {
-        ISTempoUtils.bangLog(msg: "****** Has Video: \(IronSource.hasRewardedVideo())")
-        IronSource.showRewardedVideo(with: self)//, "rew-ios-000")//, placement: "tempoR1")
-        //IronSource.showISDemandOnlyRewardedVideo(self, instanceId: "rew-ios-000")//, placement: "tempoR1")
-        print("❌ showTriggered")
+        ISTempoUtils.shout()
+        IronSource.showRewardedVideo(with: self)
     }
-    
     @IBAction func interstitialLoadBtnAction(_ sender: Any) {
+        ISTempoUtils.shout()
         IronSource.loadInterstitial()
     }
     @IBAction func interstitialPlayBtnAction(_ sender: Any) {
+        ISTempoUtils.shout()
         IronSource.showInterstitial(with: self)
     }
     
+    /// Initial actions on when view loads
     override func viewDidLoad() {
-        ISTempoUtils.bangLog();
+        ISTempoUtils.shout();
         super.viewDidLoad()
         
         // Initialise ironSource listeners and SDK
@@ -60,25 +51,13 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     
     /// Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
-        ISTempoUtils.bangLog();
+        ISTempoUtils.shout();
         super.didReceiveMemoryWarning()
     }
     
-    func setLevelPlayTesting() {
-//        IronSource.setMetaDataWithKey("is_test_suite", value: "enable")
-//        IronSource.launchTestSuite(self)
-        
-        
-    }
-    
     func setupIronSourceSdk() {
-        ISTempoUtils.bangLog();
-        //print("💥 ISIntegrationHelper.validateIntegration()");
+        ISTempoUtils.shout();
         //ISIntegrationHelper.validateIntegration()
-        //IronSource.add(self) // ?????????????????
-        
-        // Init SDK
-        IronSource.initWithAppKey(kAPPKEY, delegate: self)
         
         // Set the REWARDED ad listeners
         IronSource.setLevelPlayRewardedVideoDelegate(self)
@@ -86,54 +65,64 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
         // Set the INTERSTITIAL ad listeners
         IronSource.setLevelPlayInterstitialDelegate(self)
         
+        // Init SDK
+        IronSource.initWithAppKey(kAPPKEY, delegate: self)
     }
     
-    // Initialisation functions
+    /// Initialisation functions
     func initializationDidComplete() {
-        ISTempoUtils.bangLog()
-        setLevelPlayTesting()
+        ISTempoUtils.shout()
     }
     
     /// Initialize the UI elements of the activity
     func initUIElements() {
         // Update version label
-        self.versionLabel.text =  String(format: "%@%@", "sdk version: ", IronSource.sdkVersion());
-        ISTempoUtils.bangLog();
+        self.versionLabel.text =  String(format: "%@%@", "IronSource SDK: ", IronSource.sdkVersion());
+        ISTempoUtils.shout();
     }
     
-    // LevelPlayInterstitialDelegate functions
+    /// LevelPlayInterstitialDelegate functions
     func didShow(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     func didClick(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
-    // LevelPlayRewardedVideoManualDelegate functions
+    
+    /// LevelPlayRewardedVideoDelegate functions
+    func hasAvailableAd(with adInfo: ISAdInfo!) {
+        ISTempoUtils.shout(msg: "****** Has Video: \(IronSource.hasRewardedVideo()) | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
+    }
+    func hasNoAvailableAd() {
+        ISTempoUtils.shout()
+    }
     func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
+        ISTempoUtils.shout(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
     }
     func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
+        ISTempoUtils.shout(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
     }
-    // BOTH functions
+    
+    /// BOTH Reward/Interstitalfunctions
     func didLoad(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     func didFailToLoadWithError(_ error: Error!) {
-        ISTempoUtils.bangLog(msg: String(describing: error.self));
+        ISTempoUtils.shout(msg: String(describing: error.self));
     }
     func didOpen(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: "\(String(describing: error.self)) |  \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
+        ISTempoUtils.shout(msg: "\(String(describing: error.self)) |  \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
     }
     func didClose(with adInfo: ISAdInfo!) {
-        ISTempoUtils.bangLog(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
+    
     // Impressions functions
     func impressionDataDidSucceed(_ impressionData: ISImpressionData!) {
-        ISTempoUtils.bangLog(msg: impressionData.all_data?.debugDescription ?? "NO_ALL_DATA");
+        ISTempoUtils.shout(msg: impressionData.all_data?.debugDescription ?? "NO_ALL_DATA");
     }
 
 
