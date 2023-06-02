@@ -188,6 +188,13 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                                                 didSomething = true
                                             }
                                         }
+                                        if let cpm = jsonDict["cpm"] {
+                                            
+                                            let old = self.currentCpmFloor!;
+                                            self.currentCpmFloor = cpm as? Float
+                                            print("✅ New CPM = \(self.currentCpmFloor ?? 999) (\(old))")
+                                        }
+                                        
                                     }
                                 }
                             }

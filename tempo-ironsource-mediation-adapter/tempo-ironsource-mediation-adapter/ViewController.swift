@@ -12,7 +12,7 @@ import tempo_ironsource_mediation
 
 let kAPPKEY = "1a366cbe5"
 
-class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
+class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoManualDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
     
 
     // Button outlet/actions
@@ -61,7 +61,7 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
         //ISIntegrationHelper.validateIntegration()
         
         // Set the REWARDED ad listeners
-        IronSource.setLevelPlayRewardedVideoDelegate(self)
+        IronSource.setLevelPlayRewardedVideoManualDelegate(self)
         
         // Set the INTERSTITIAL ad listeners
         IronSource.setLevelPlayInterstitialDelegate(self)
