@@ -10,6 +10,8 @@ import IronSource
 
 public class ISTempoUtils {
     
+    private static let testState = true
+    
     public static func getAppId(adData: ISAdData) -> String {
         let adDataAppId = adData.getString("appId")
         return adDataAppId ?? "NO_APP_ID"
@@ -20,20 +22,24 @@ public class ISTempoUtils {
         return adDataAdTag ?? "NO_AD_TAG"
     }
     
-    public static func shout(msg: String = "", functStrion: String = #function) {
+    public static func shout(msg: String = "", showInProd: Bool = false, functStrion: String = #function) {
+        if !testState {
+            return
+        }
+        
         let outMsg = msg.isEmpty ? "" : "| \(msg)"
         print("💥 \(functStrion) \(outMsg)")
     }
     
     public static func adUnitStringer(adInfo: ISAdInfo!) -> String {
-        return "\(adInfo.ad_unit), \(adInfo.ad_network), \(adInfo.instance_name)[\(adInfo.instance_id)]"//, \(adInfo.description)"
+        return "\(adInfo.ad_unit), \(adInfo.ad_network), Instance: [\(adInfo.instance_name), \(adInfo.instance_id)]"
     }
     
     public static func adUnitDataStringer(adData: ISAdData!) -> String {
         return "\(getAppId(adData: adData)) | \(getAddTag(adData: adData))"
     }
     
-    public static func getTypeWord(isInterstitial: Bool) -> String {
+    public static func sayAdType(isInterstitial: Bool) -> String {
         return isInterstitial ? "INTERSTIIAL" : "REWARDED"
     }
 }

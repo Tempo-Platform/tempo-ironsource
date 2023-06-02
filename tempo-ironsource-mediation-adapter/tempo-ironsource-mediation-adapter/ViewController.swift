@@ -13,6 +13,7 @@ import tempo_ironsource_mediation
 let kAPPKEY = "1a366cbe5"
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
+    
 
     // Button outlet/actions
     @IBOutlet weak var rewardedLoadBtn: UIButton!
@@ -26,7 +27,7 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     }
     @IBAction func rewardedShowBtnAction(_ sender: Any) {
         ISTempoUtils.shout()
-        IronSource.showRewardedVideo(with: self)
+        IronSource.showRewardedVideo(with: self, placement: "tempoR1")
     }
     @IBAction func interstitialLoadBtnAction(_ sender: Any) {
         ISTempoUtils.shout()
@@ -85,7 +86,7 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     func didShow(with adInfo: ISAdInfo!) {
         ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
-    func didClick(with adInfo: ISAdInfo!) {
+    func didClick(with adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
         ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     
@@ -96,10 +97,10 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     func hasNoAvailableAd() {
         ISTempoUtils.shout()
     }
-    func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
+    func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
         ISTempoUtils.shout(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
     }
-    func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) {
+    func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
         ISTempoUtils.shout(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
     }
     
@@ -113,7 +114,7 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     func didOpen(with adInfo: ISAdInfo!) {
         ISTempoUtils.shout(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
-    func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) {
+    func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
         ISTempoUtils.shout(msg: "\(String(describing: error.self)) |  \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
     }
     func didClose(with adInfo: ISAdInfo!) {

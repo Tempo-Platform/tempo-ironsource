@@ -57,11 +57,12 @@ public struct Metric : Codable {
     var sdk_version: String
     var adapter_version: String
     var cpm: Float
+    var adapter_type: String?
     
 }
 
 public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKScriptMessageHandler  {
-    public var listener:TempoInterstitialListener!
+    public var listener:TempoInterstitialListener! // given value during init()
     //public var utcGenerator: TempoUtcGenerator!
     private var observation: NSKeyValueObservation?
     var solidColorView:FullScreenUIView!
@@ -78,6 +79,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     var currentParentViewController: UIViewController?
     var previousParentBGColor: UIColor?
     var currentCpmFloor: Float?
+    var currentAdapterType: String?
 
     public func loadAd(interstitial:TempoInterstitial, isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
         print("load url interstitial")
@@ -115,6 +117,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         self.webView.load(URLRequest(url: url))
     }
     
+    
     private func loadUrl(isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
         currentUUID = UUID().uuidString
         currentAdId = adId ?? "NONE"
@@ -124,6 +127,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         currentSdkVersion = sdkVersion
         currentAdapterVersion = adapterVersion
         currentCpmFloor = cpmFloor ?? 0.0
+        currentAdapterType = listener.onGetAdapterType()
         self.addMetric(metricType: "AD_LOAD_REQUEST")
         var components = URLComponents(string: TempoConstants.ADS_API)!
         components.queryItems = [
@@ -135,11 +139,18 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
             URLQueryItem(name: "sdk_version", value: String(currentSdkVersion ?? "")),
             URLQueryItem(name: "adapter_version", value: String(currentAdapterVersion ?? "")),
         ]
+        
+        if currentAdapterType != nil {
+            components.queryItems?.append(URLQueryItem(name: "adapter_type", value: currentAdapterType))
+        }
+        
         components.percentEncodedQuery = components.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B")
         var request = URLRequest(url: components.url!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
+        print("✅ URL ADS_API string: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
+        
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
             if error != nil || data == nil {
@@ -295,7 +306,9 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                             os: "iOS \(UIDevice.current.systemVersion)",
                             sdk_version: currentSdkVersion ?? "",
                             adapter_version: currentAdapterVersion ?? "",
-                            cpm: currentCpmFloor ?? 0.0
+                            cpm: currentCpmFloor ?? 0.0,
+                            adapter_type: currentAdapterType
+                            
         )
         
         self.metricList.append(metric)
@@ -377,7 +390,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                     
                 } catch let error as NSError {
                     if(TempoConstants.IS_DEBUGGING) {
-                        print("(Response dictionary) Error: \(error.localizedDescription)")
+                        print("Error: \(error.localizedDescription)")
                     }
                 }
             }

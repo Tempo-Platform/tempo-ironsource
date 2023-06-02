@@ -1,8 +1,11 @@
 // General constants in use throughout app
 
 struct TempoConstants {
-    static let METRIC_SERVER_URL = "https://metric-api.dev.tempoplatform.com/metrics"
-    static let ADS_API = "https://ads-api.dev.tempoplatform.com/ad"
+    
+    //static let METRIC_SERVER_URL = "https://metric-api.tempoplatform.com/metrics" // PROD
+    static let METRIC_SERVER_URL = "https://metric-api.dev.tempoplatform.com/metrics" // DEV
+    //static let ADS_API = "https://ads-api.tempoplatform.com/ad" // PROD
+    static let ADS_API = "https://ads-api.dev.tempoplatform.com/ad" // DEV
     static let METRIC_BACKUP_FOLDER = "metricJsons"
     static let METRIC_BACKUP_APPEND = ".tempo"
     static let IS_DEBUGGING = true

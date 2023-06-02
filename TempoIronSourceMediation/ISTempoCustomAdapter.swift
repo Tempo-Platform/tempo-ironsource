@@ -6,10 +6,10 @@ import TempoSDK
 public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
  
     public static let ADAPTER_TYPE = "IRONSOURCE"
-    public static let customAdapterVersion = "1.2.3"
-    public static var dynSdkVersion = "1.4.5"
+    public static let customAdapterVersion = "1.0.0"
+    public static var dynSdkVersion = "1.0.1"
     
-    
+    /// SDK initialisation handler
     public override func `init` (_ adData: ISAdData, delegate: ISNetworkInitializationDelegate) {
         print("💥 ISTempoCustomAdapter.init() \(ISTempoUtils.getAppId(adData: adData))/\(ISTempoUtils.getAddTag(adData: adData))")
        // handle errors TODO: How to detect errors
@@ -23,11 +23,12 @@ public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
        return
     }
     
-    
+    /// Returns latest Tempo SDK version
     public override func networkSDKVersion() -> String {
         return ISTempoCustomAdapter.dynSdkVersion
     }
     
+    /// Returns latest ironSource/Tempo custom adapter version
     public override func adapterVersion() -> String {
         return ISTempoCustomAdapter.customAdapterVersion
     }

@@ -16,4 +16,7 @@ public protocol TempoInterstitialListener {
     
     // Called when swapping version information
     func onVersionExchange(sdkVersion: String) -> String?
+    
+    // Called when requesting adapter type
+    func onGetAdapterType() -> String?
 }
