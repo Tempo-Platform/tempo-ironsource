@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "tempo-ironsource-mediation"
-  spec.version      = "0.0.4"
+  spec.version      = "0.1.0"
   spec.summary      = "Tempo ironSource iOS Mediation Adapter."
 
   spec.description  = <<-DESC
@@ -13,15 +13,16 @@ Pod::Spec.new do |spec|
   spec.author       = { "Vishnu" => "vishnu@tempoplatform.com" }
   
   spec.platform     = :ios, "11.0"
-  spec.source       = { :git => "https://github.com/Tempo-Platform/tempo-ios-ironsource-mediation.git", :tag => spec.version.to_s }
+  #spec.source       = { :git => "https://github.com/Tempo-Platform/tempo-ios-ironsource-mediation.git", :tag => spec.version.to_s }
+  spec.source       = { :git => "https://github.com/Tempo-Platform/tempo-ironsource", :tag => spec.version.to_s }
   
   spec.frameworks   = "Foundation", "UIKit"
   spec.requires_arc = true
   spec.static_framework = true
   spec.swift_version = '5.0'
 
-  spec.dependency "TempoSDK", "~> 1.0.1"
-  spec.dependency "IronSourceSDK", "~> 7.2"
+  spec.dependency "TempoSDK", " 1.0.1"
+  spec.dependency "IronSourceSDK", " 7.3.0.0"
   
   spec.source_files = "TempoIronSourceMediation/*.*"
   spec.script_phase = {
