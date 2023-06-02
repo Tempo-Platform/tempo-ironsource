@@ -66,7 +66,6 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoInterstitialL
         self.delegate?.adDidClose()
         self.delegate?.adDidShowSucceed()
         self.delegate?.adRewarded()
-        self.delegate?.adDidClick()
         isAdReady = false
     }
     

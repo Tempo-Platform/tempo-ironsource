@@ -117,7 +117,6 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         self.webView.load(URLRequest(url: url))
     }
     
-    
     private func loadUrl(isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
         currentUUID = UUID().uuidString
         currentAdId = adId ?? "NONE"

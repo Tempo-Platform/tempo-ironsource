@@ -11,8 +11,8 @@ public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
     
     /// SDK initialisation handler
     public override func `init` (_ adData: ISAdData, delegate: ISNetworkInitializationDelegate) {
-        print("💥 ISTempoCustomAdapter.init() \(ISTempoUtils.getAppId(adData: adData))/\(ISTempoUtils.getAddTag(adData: adData))")
-       // handle errors TODO: How to detect errors
+        ISTempoUtils.shout(msg: "TODO: init errors? \(ISTempoUtils.getAppId(adData: adData))/\(ISTempoUtils.getAddTag(adData: adData))")
+       
        if (false) {
           delegate.onInitDidFailWithErrorCode(ISAdapterErrors.missingParams.rawValue, errorMessage: "Fail to init SDK")
           return
