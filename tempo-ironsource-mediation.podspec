@@ -13,7 +13,6 @@ Pod::Spec.new do |spec|
   spec.author       = { "Vishnu" => "vishnu@tempoplatform.com" }
   
   spec.platform     = :ios, "11.0"
-  #spec.source       = { :git => "https://github.com/Tempo-Platform/tempo-ios-ironsource-mediation.git", :tag => spec.version.to_s }
   spec.source       = { :git => "https://github.com/Tempo-Platform/tempo-ironsource", :tag => spec.version.to_s }
   
   spec.frameworks   = "Foundation", "UIKit"
@@ -30,6 +29,8 @@ Pod::Spec.new do |spec|
      :script => "echo 'Adding Custom Module Header' && touch Headers/Public/tempo_ironsource_mediation/tempo_ironsource_mediation.h && echo '#import <IronSource/IronSource.h>' >> Headers/Public/tempo_ironsource_mediation/tempo_ironsource_mediation.h",
      :execution_position => :after_compile
    }
+   
+
    
   spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
