@@ -20,54 +20,54 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		03D0D5EE2E352ACC5071EA0B81756131 /* tempo-ironsource-mediation-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE6C6C27CEDF3E7A1C3B55A95D78A86 /* tempo-ironsource-mediation-dummy.m */; };
 		07A7BDB6713000C878B5ED625FD814D1 /* TempoInterstitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024C6CBD105053EDD2B54DF41F4A6B90 /* TempoInterstitialView.swift */; };
 		19BFE0BE44A3D2CB8050A3265F10C49A /* TempoUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B5BFAAECF420DE6B95947D1B123F3 /* TempoUserInfo.swift */; };
 		2016EE687217AC1705742A54F63AA95F /* TempoInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754AA6A09D51EA8C79E2E8DC30B8CAF7 /* TempoInterstitial.swift */; };
-		2D3DD79A696E33FA1A7BB8BE801493A7 /* tempo-ironsource-mediation-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A12F9517F5DED4BB29AD3FCFFE2DB184 /* tempo-ironsource-mediation-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		2D73257F4611584462B44790B3EC8578 /* ISTempoCustomRewardedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91C7BA5B33B79ECE10BF239E38B9844 /* ISTempoCustomRewardedVideo.swift */; };
-		3146D75E2C18C12AD6D16796748C399C /* ISTempoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD7094A019AFFEA8098BAC23B273C3E /* ISTempoUtils.swift */; };
+		41FBCA989B0976C060B59747ED6471CC /* ISTempoCustomAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60C5030EB397C3D7529E43095072EA1 /* ISTempoCustomAdapter.swift */; };
 		43FC37D9E66BEB90475E2E5DE65754C4 /* TempoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44470E0209B02F579B689852E2C3CD1 /* TempoConstants.swift */; };
 		4AFCC0C3FB2DA70D79CB7432444E40DE /* Pods-tempo-ironsource-mediation-adapter-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81012DF6FF8AEA6DB1AE22163CFD766C /* Pods-tempo-ironsource-mediation-adapter-dummy.m */; };
+		4FD882C8D84296F6EA54B00DBBE4739C /* ISTempoCustomRewardedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E0651FB4AB612A5A30ACCE8991716D /* ISTempoCustomRewardedVideo.swift */; };
 		5718CC723BFBE4ABC77FCBB5F459A13C /* TempoSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A3C8466A1F70088E464780C0089C6F4F /* TempoSDK-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		580703482FF1730D2D300DE82D727317 /* ISTempoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ED3DE2C9395252DB4BC593BBBA659D /* ISTempoUtils.swift */; };
 		6942FBC4B2CA09425AC171519B30B77B /* TempoDataBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49E50BC8AE99EC025041DF999A099AB /* TempoDataBackup.swift */; };
-		73311CF22E26E6E5CC246EE99A91EF06 /* ISTempoCustomAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2252C242E7BD97B61A1344BA61C86C /* ISTempoCustomAdapter.swift */; };
+		7C4407DCF1DA5F7CC772FF45F60CFBEB /* tempo-ironsource-mediation-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C195925EBD8EBA407E5C94EA397E137 /* tempo-ironsource-mediation-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		85E4FAD017C79F93CD711A67C912189B /* Pods-tempo-ironsource-mediation-adapter-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 508D7B8E239132434D5B732E5A314EEF /* Pods-tempo-ironsource-mediation-adapter-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		A8A5D279B8AC73789166249D148982F0 /* tempo-ironsource-mediation-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 10EF965AFD0FB51CC9AC27CFE302A250 /* tempo-ironsource-mediation-dummy.m */; };
 		CA3741042B618B9A8091A81DC106B958 /* TempoInterstitialListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1E103774823366272AA8E2A8BC21AA /* TempoInterstitialListener.swift */; };
-		D0AC2A5A4F640260DAEA6264618ECB05 /* ISTempoCustomInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96E893B2632A93A796C2F49B96E85958 /* ISTempoCustomInterstitial.swift */; };
+		E8B5155EE8AACF7540E328E615659B11 /* ISTempoCustomInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348FC3BA68F03F8566876EC8A71187E3 /* ISTempoCustomInterstitial.swift */; };
 		F8B8296C699F447F1AC83D4C61B02D2E /* TempoSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BD324E401104FBBD596CCEE039DB10FF /* TempoSDK-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		42AC49E2689A62460DC00DBBDA0F4AC6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 452BF17928B1327D885539AD22EC7515;
-			remoteInfo = TempoSDK;
-		};
-		A52AC1A252E7989296894669F8B601E0 /* PBXContainerItemProxy */ = {
+		04F44285C9C5CC903F2B63563C6DBD6D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3864898D8762A9D7C6D241B9FB722FF5;
 			remoteInfo = "tempo-ironsource-mediation";
 		};
-		C9F9A772CC9F53720063E0C07A171DEC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 452BF17928B1327D885539AD22EC7515;
-			remoteInfo = TempoSDK;
-		};
-		F2FD7D032DC197AC6FE13CB865262EDF /* PBXContainerItemProxy */ = {
+		4170BA42782148757A78478A553DDDFC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 205EFBEF86DA6E7E3D5B9BABED8872EE;
 			remoteInfo = IronSourceSDK;
 		};
-		FFA2D4C01FF94D34632ED1EA7CD2BA1A /* PBXContainerItemProxy */ = {
+		7AB9BE36C53FAD64EBBD726F283CD6D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 452BF17928B1327D885539AD22EC7515;
+			remoteInfo = TempoSDK;
+		};
+		CE90186C296A35431EE312FB15F2440E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 452BF17928B1327D885539AD22EC7515;
+			remoteInfo = TempoSDK;
+		};
+		EF92CB5E22C4E5C07D5E3A154F389673 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -96,9 +96,8 @@
 		0C1E103774823366272AA8E2A8BC21AA /* TempoInterstitialListener.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoInterstitialListener.swift; path = TempoSDK/TempoInterstitialListener.swift; sourceTree = "<group>"; };
 		0C858252902DF6AEB3A5D06FC249F059 /* ISAdData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdData.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdData.h"; sourceTree = "<group>"; };
 		0D774C8B5BBAA8CF07ABEB0F5F066ED5 /* ISNTrackingAuthorizationService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNTrackingAuthorizationService.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISNTrackingAuthorizationService.h"; sourceTree = "<group>"; };
-		0E4713CC8BCA33D3B18229755B205636 /* tempo-ironsource-mediation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "tempo-ironsource-mediation.release.xcconfig"; sourceTree = "<group>"; };
+		0EEA1EF04E6FE0C4FDC77F0BCB677121 /* tempo-ironsource-mediation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "tempo-ironsource-mediation.debug.xcconfig"; sourceTree = "<group>"; };
 		0FC88C6214FE195B61DCA7CEC9764973 /* tempo-ironsource-mediation */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "tempo-ironsource-mediation"; path = "libtempo-ironsource-mediation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		10EF965AFD0FB51CC9AC27CFE302A250 /* tempo-ironsource-mediation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "tempo-ironsource-mediation-dummy.m"; sourceTree = "<group>"; };
 		11E6D57FF2343396776A96A02ABFD075 /* ISBaseAdAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseAdAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseAdAdapter.h"; sourceTree = "<group>"; };
 		11E89110AF8D8F30EABB7CDE29719039 /* ISServerResponseParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISServerResponseParser.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISServerResponseParser.h"; sourceTree = "<group>"; };
 		125D55DC782F6706AE47DB6BF2F50ECE /* ISDemandOnlyBannerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDemandOnlyBannerDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISDemandOnlyBannerDelegate.h"; sourceTree = "<group>"; };
@@ -125,9 +124,11 @@
 		2A8911635C6DB5B9E1B2D0C1D34FE593 /* ISBaseRewardedVideo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseRewardedVideo.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBaseRewardedVideo.h"; sourceTree = "<group>"; };
 		2B05139C648FF28DB754ACC467717247 /* ISNetworkInitializationDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNetworkInitializationDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISNetworkInitializationDelegate.h"; sourceTree = "<group>"; };
 		2B58228BE19DE083744E85CBA46BFF69 /* ISMetaDataUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISMetaDataUtils.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISMetaDataUtils.h"; sourceTree = "<group>"; };
+		2C195925EBD8EBA407E5C94EA397E137 /* tempo-ironsource-mediation-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "tempo-ironsource-mediation-umbrella.h"; sourceTree = "<group>"; };
 		318543BFCDD9D3A1DE7C68B9E7FD8196 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; sourceTree = "<group>"; };
 		3341FE86ED658DC9D2F0DF5380632300 /* Pods-tempo-ironsource-mediation-adapter-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-tempo-ironsource-mediation-adapter-acknowledgements.markdown"; sourceTree = "<group>"; };
 		341807AA827C3FA1DF2ADCA3FFF53D06 /* UIView+ISViewUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+ISViewUtils.h"; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/UIView+ISViewUtils.h"; sourceTree = "<group>"; };
+		348FC3BA68F03F8566876EC8A71187E3 /* ISTempoCustomInterstitial.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoCustomInterstitial.swift; path = TempoIronSourceMediation/ISTempoCustomInterstitial.swift; sourceTree = "<group>"; };
 		34BAFFFCA8682510A5FD2BA56EDB104D /* ISGlobalDataWriter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISGlobalDataWriter.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISGlobalDataWriter.h"; sourceTree = "<group>"; };
 		34FCFB4D5BD6E73EB8ED227C55B4AB12 /* ISForegroundTimeCalculator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISForegroundTimeCalculator.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISForegroundTimeCalculator.h"; sourceTree = "<group>"; };
 		365D2693BD65543F20C17EDC86F36730 /* ISImpressionDataDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISImpressionDataDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISImpressionDataDelegate.h"; sourceTree = "<group>"; };
@@ -135,7 +136,6 @@
 		39B7CB8FD8E0E71E0E54197BD3B82032 /* SSEOrientationContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEOrientationContext.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEOrientationContext.h"; sourceTree = "<group>"; };
 		39EFECCA32A1470C72CE537280C46026 /* ISTokenProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISTokenProvider.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISTokenProvider.h"; sourceTree = "<group>"; };
 		3B5539BB8D3D1CC1F1390281F2413E2C /* ISLoggerManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISLoggerManager.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISLoggerManager.h"; sourceTree = "<group>"; };
-		3B73884CD2A2F6A997C8A12E26B5D25F /* tempo-ironsource-mediation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "tempo-ironsource-mediation.debug.xcconfig"; sourceTree = "<group>"; };
 		3BC91232CB8B1B695A12546185F11DEF /* ISGender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISGender.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISGender.h"; sourceTree = "<group>"; };
 		3DFB72482CCA9D3200F6D73C944B7B55 /* Pods-tempo-ironsource-mediation-adapter */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "Pods-tempo-ironsource-mediation-adapter"; path = "libPods-tempo-ironsource-mediation-adapter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DFF8238F9C4936593DE4738AEA81C74 /* ISServerResponseParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISServerResponseParser.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISServerResponseParser.h"; sourceTree = "<group>"; };
@@ -145,6 +145,7 @@
 		41EA591DB539A1D304E67637E1339DF9 /* ISInitializationDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInitializationDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISInitializationDelegate.h"; sourceTree = "<group>"; };
 		426A4F64D30260A0EB1F6E646E674BE4 /* ISUserDefaultsUtilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISUserDefaultsUtilities.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISUserDefaultsUtilities.h"; sourceTree = "<group>"; };
 		441AD83CCB8200E9E9BAA4E2965BF3C8 /* ISOfferwallAdapterDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallAdapterDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISOfferwallAdapterDelegate.h"; sourceTree = "<group>"; };
+		44322036D35D62DBAE20B2A7DB5544E3 /* tempo-ironsource-mediation.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "tempo-ironsource-mediation.modulemap"; sourceTree = "<group>"; };
 		452D06BA423675C3C641FC4FF881CEED /* ISOfferwallDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISOfferwallDelegate.h"; sourceTree = "<group>"; };
 		455175504DFA95FFD588BC3C412BECDF /* LevelPlayBannerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayBannerDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/LevelPlayBannerDelegate.h"; sourceTree = "<group>"; };
 		45681D3745C4F134159DF097F2575F52 /* ISAdapterMetaDataProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterMetaDataProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterMetaDataProtocol.h"; sourceTree = "<group>"; };
@@ -212,27 +213,27 @@
 		900B88DC68707929C6C05D39DA9407E0 /* ISBaseAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseAdapter.h"; sourceTree = "<group>"; };
 		91AC47C9A9B408463529018AB89A502F /* ISAdUnit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdUnit.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdUnit.h"; sourceTree = "<group>"; };
 		94A843D66DAE1448A9319791DD61100D /* ISBaseAdapter+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ISBaseAdapter+Internal.h"; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseAdapter+Internal.h"; sourceTree = "<group>"; };
-		96E893B2632A93A796C2F49B96E85958 /* ISTempoCustomInterstitial.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoCustomInterstitial.swift; path = TempoIronSourceMediation/ISTempoCustomInterstitial.swift; sourceTree = "<group>"; };
 		96FB380721FD6C63C7095470164367C3 /* ISImpressionData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISImpressionData.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISImpressionData.h"; sourceTree = "<group>"; };
 		979B10B0D4638B0021F130656ABF8C6D /* ISInitializationDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInitializationDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISInitializationDelegate.h"; sourceTree = "<group>"; };
 		983988D571845F84285B4334071CAA64 /* ISRewardedVideoDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISRewardedVideoDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISRewardedVideoDelegate.h"; sourceTree = "<group>"; };
 		986A90CD077A3F9307A25BDD15028B0E /* ISAdapterDebugProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterDebugProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterDebugProtocol.h"; sourceTree = "<group>"; };
 		997491D30E899189BA7826F81F5B51A3 /* ISAuctionProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAuctionProvider.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISAuctionProvider.h"; sourceTree = "<group>"; };
 		9A45FE55D6566E8E796AA80C6EAEAF96 /* ISDemandOnlyRewardedVideoDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDemandOnlyRewardedVideoDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISDemandOnlyRewardedVideoDelegate.h"; sourceTree = "<group>"; };
+		9A93C52F3A8293824F99D689969DF3CF /* tempo-ironsource-mediation-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "tempo-ironsource-mediation-prefix.pch"; sourceTree = "<group>"; };
 		9AF9554795D02C3C834B96A4A4B4605E /* ISInitProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInitProvider.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISInitProvider.h"; sourceTree = "<group>"; };
-		9D2252C242E7BD97B61A1344BA61C86C /* ISTempoCustomAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoCustomAdapter.swift; path = TempoIronSourceMediation/ISTempoCustomAdapter.swift; sourceTree = "<group>"; };
 		9D491A5B8E2678B17FA67B0F9F90F97E /* ISAdapterMetaDataProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterMetaDataProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterMetaDataProtocol.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DC9C13BA9A3C1690012F5669D796029 /* ISLog.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISLog.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISLog.h"; sourceTree = "<group>"; };
 		9FA0902180C4AE979469FBCF0B3F1E5F /* TempoSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = TempoSDK.modulemap; sourceTree = "<group>"; };
 		A11084C606C3855F6514AE6CED98ADDB /* ISBannerSize.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBannerSize.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBannerSize.h"; sourceTree = "<group>"; };
-		A12F9517F5DED4BB29AD3FCFFE2DB184 /* tempo-ironsource-mediation-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "tempo-ironsource-mediation-umbrella.h"; sourceTree = "<group>"; };
 		A2F529FE97E07D81F32D7844B7E28C95 /* ISGlobalDataReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISGlobalDataReader.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISGlobalDataReader.h"; sourceTree = "<group>"; };
 		A35D1BE8331770D8C3888FE02154F009 /* ISAdapterConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterConfig.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterConfig.h"; sourceTree = "<group>"; };
 		A3C8466A1F70088E464780C0089C6F4F /* TempoSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TempoSDK-umbrella.h"; sourceTree = "<group>"; };
+		A3ED3DE2C9395252DB4BC593BBBA659D /* ISTempoUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoUtils.swift; path = TempoIronSourceMediation/ISTempoUtils.swift; sourceTree = "<group>"; };
 		A44470E0209B02F579B689852E2C3CD1 /* TempoConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoConstants.swift; path = TempoSDK/TempoConstants.swift; sourceTree = "<group>"; };
 		A5746799D1EA8F5B8CCB7BD8E6CE0BB0 /* TempoSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TempoSDK-prefix.pch"; sourceTree = "<group>"; };
 		A5A71F43E8B4D0874411696C11ED7000 /* SSEScreenContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEScreenContext.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/SSEScreenContext.h"; sourceTree = "<group>"; };
+		A60C5030EB397C3D7529E43095072EA1 /* ISTempoCustomAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoCustomAdapter.swift; path = TempoIronSourceMediation/ISTempoCustomAdapter.swift; sourceTree = "<group>"; };
 		A6528944568B32A0D07D087A4BEC7D68 /* NSUnitDuration+ISTimeUnit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSUnitDuration+ISTimeUnit.h"; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/NSUnitDuration+ISTimeUnit.h"; sourceTree = "<group>"; };
 		A70791637D76F4B4DD2E1C26CC15AEE8 /* ISAdInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdInfo.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdInfo.h"; sourceTree = "<group>"; };
 		AB6B5BFAAECF420DE6B95947D1B123F3 /* TempoUserInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoUserInfo.swift; path = TempoSDK/TempoUserInfo.swift; sourceTree = "<group>"; };
@@ -240,7 +241,6 @@
 		ABAF5FD065089C675DD759448CD86A4A /* ISMetaData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISMetaData.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISMetaData.h"; sourceTree = "<group>"; };
 		AD25829A3EA62D47C96A94BAA3DC3701 /* ISAdapterBaseProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterBaseProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterBaseProtocol.h"; sourceTree = "<group>"; };
 		AD396E89279D9F51B453F70EFD3B8BBF /* TempoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TempoSDK.debug.xcconfig; sourceTree = "<group>"; };
-		AF48F5B45553DEA12381824A7BFAA1F4 /* tempo-ironsource-mediation-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "tempo-ironsource-mediation-prefix.pch"; sourceTree = "<group>"; };
 		B09358631C3A589407B9A0E7C666C767 /* LevelPlayInterstitialDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayInterstitialDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/LevelPlayInterstitialDelegate.h"; sourceTree = "<group>"; };
 		B195A6C2118E0B69B1CD17910D955285 /* ISAdapterConsentProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterConsentProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterConsentProtocol.h"; sourceTree = "<group>"; };
 		B2738CD053E1B3965496B7954E6BEFF2 /* ISAdapterDebugProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterDebugProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterDebugProtocol.h"; sourceTree = "<group>"; };
@@ -266,6 +266,7 @@
 		C6E3837590818042EF0CB443099C35B4 /* ISNetworkInitCallbackProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNetworkInitCallbackProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISNetworkInitCallbackProtocol.h"; sourceTree = "<group>"; };
 		C7FCFF091662328A0BA91BDEBDB043A7 /* ISSegment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISSegment.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISSegment.h"; sourceTree = "<group>"; };
 		C80FEA4FB7F80D13D5F15F1103E31368 /* ISConcurrentMutableSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISConcurrentMutableSet.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISConcurrentMutableSet.h"; sourceTree = "<group>"; };
+		C93498941C26E233EFCD0E27C6858967 /* tempo-ironsource-mediation.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = "tempo-ironsource-mediation.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C94555D7973E45E4FD2280F2DFF8FF8C /* Pods-tempo-ironsource-mediation-adapter-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-tempo-ironsource-mediation-adapter-acknowledgements.plist"; sourceTree = "<group>"; };
 		C984B2400BBF3993ADBD7DEB2DABA0BA /* IronSource.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IronSource.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/IronSource.h"; sourceTree = "<group>"; };
 		C9B2C72D633FA3CE3E53E4A9FA3E07B0 /* ISOfferwallAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISOfferwallAdapterProtocol.h"; sourceTree = "<group>"; };
@@ -284,19 +285,17 @@
 		D437A845830641CAECEF54A857992681 /* SSEnvironment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEnvironment.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEnvironment.h"; sourceTree = "<group>"; };
 		D6B3A375D75F480239C9B65D5E7CF297 /* IronSource.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = IronSource.xcframework; path = IronSource/IronSource.xcframework; sourceTree = "<group>"; };
 		D703501CCC3310D5B68D651476856D4D /* LevelPlayInterstitialDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayInterstitialDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/LevelPlayInterstitialDelegate.h"; sourceTree = "<group>"; };
-		D91C7BA5B33B79ECE10BF239E38B9844 /* ISTempoCustomRewardedVideo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoCustomRewardedVideo.swift; path = TempoIronSourceMediation/ISTempoCustomRewardedVideo.swift; sourceTree = "<group>"; };
-		D98ABC1C48AD981D937A44A85A951A9D /* tempo-ironsource-mediation.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "tempo-ironsource-mediation.modulemap"; sourceTree = "<group>"; };
+		D9E0651FB4AB612A5A30ACCE8991716D /* ISTempoCustomRewardedVideo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoCustomRewardedVideo.swift; path = TempoIronSourceMediation/ISTempoCustomRewardedVideo.swift; sourceTree = "<group>"; };
 		DABFD06B1E88900CFB71DA25C9939CB0 /* ISRewardedVideoManualDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISRewardedVideoManualDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISRewardedVideoManualDelegate.h"; sourceTree = "<group>"; };
 		DBD1EF5E5CF29ED30966D325AC672DD3 /* ISEventsReporting.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISEventsReporting.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISEventsReporting.h"; sourceTree = "<group>"; };
-		DBD7094A019AFFEA8098BAC23B273C3E /* ISTempoUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoUtils.swift; path = TempoIronSourceMediation/ISTempoUtils.swift; sourceTree = "<group>"; };
 		DD867CBD17A9372A7AF1D16AB25F926E /* ISBaseAdAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseAdAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBaseAdAdapter.h"; sourceTree = "<group>"; };
-		DF6DC9F7567164A8B7EF2018F0D25728 /* tempo-ironsource-mediation.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = "tempo-ironsource-mediation.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E39B54AE769BD80C52BF20C1BE60BFE6 /* ISPlacementInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISPlacementInfo.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISPlacementInfo.h"; sourceTree = "<group>"; };
 		E3A2FA62D16A597CC1AEDA85D54FAB5B /* ISNSoundSamplerRingerChecker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNSoundSamplerRingerChecker.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISNSoundSamplerRingerChecker.h"; sourceTree = "<group>"; };
 		E3C4F211EB648766FC637EB36043CE3F /* ISDemandOnlyBannerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDemandOnlyBannerView.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISDemandOnlyBannerView.h"; sourceTree = "<group>"; };
 		E49E50BC8AE99EC025041DF999A099AB /* TempoDataBackup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoDataBackup.swift; path = TempoSDK/TempoDataBackup.swift; sourceTree = "<group>"; };
 		E5A6C55A288203B0233B7573490EAF2D /* ISEventsSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISEventsSettings.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISEventsSettings.h"; sourceTree = "<group>"; };
 		E64C7CDCDECC7323564C668894C42895 /* IronSourceSDK-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "IronSourceSDK-xcframeworks.sh"; sourceTree = "<group>"; };
+		E6647B29ADC2EA2BC71998E8625AAC0C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		E6DC9775C6A9A38DD64E6F713F3079AE /* ISBannerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBannerView.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBannerView.h"; sourceTree = "<group>"; };
 		E6FE568F5E5543A804752C5E37CB4530 /* ISOfferwallAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISOfferwallAdapterProtocol.h"; sourceTree = "<group>"; };
 		E7A232EBADE1786A2FCC91F027B469C0 /* ISInterstitialDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInterstitialDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISInterstitialDelegate.h"; sourceTree = "<group>"; };
@@ -316,6 +315,7 @@
 		F20D01AFB360D98A12CA96C5117B392B /* ISNLightCacheManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNLightCacheManager.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISNLightCacheManager.h"; sourceTree = "<group>"; };
 		F30A890AF2E93A02C22F14B32E07BA8B /* ISAdInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdInfo.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdInfo.h"; sourceTree = "<group>"; };
 		F34501C643877598D736303A145B30DC /* TokenConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TokenConstants.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/TokenConstants.h"; sourceTree = "<group>"; };
+		F4F02FABF521888E85CF0203FA815225 /* tempo-ironsource-mediation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "tempo-ironsource-mediation.release.xcconfig"; sourceTree = "<group>"; };
 		F67ECD07E2C128578E56FCEF803B178F /* ISEventsReporting.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISEventsReporting.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISEventsReporting.h"; sourceTree = "<group>"; };
 		F6B3918753DEC184F9BA4B4D3E5E9135 /* ISAdapterAdDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterAdDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterAdDelegate.h"; sourceTree = "<group>"; };
 		F783905DE2E14F32D428D800DDDC3A7D /* ISOfferwallDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISOfferwallDelegate.h"; sourceTree = "<group>"; };
@@ -323,6 +323,7 @@
 		FBD8D34D6F09CB736C7509BF064F8860 /* SSEnvironment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEnvironment.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/SSEnvironment.h"; sourceTree = "<group>"; };
 		FDDE07DA517552D275767608D76EF9C5 /* SSEOrientationContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEOrientationContext.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/SSEOrientationContext.h"; sourceTree = "<group>"; };
 		FE23E44F95ADBC30E83586E9A1992CF3 /* ISConsentViewDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISConsentViewDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISConsentViewDelegate.h"; sourceTree = "<group>"; };
+		FEE6C6C27CEDF3E7A1C3B55A95D78A86 /* tempo-ironsource-mediation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "tempo-ironsource-mediation-dummy.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,7 +341,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		760AAA79554DFBC46EA002483B4833A4 /* Frameworks */ = {
+		80C0C7F05FB07C45F3C94150E8ADC60D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -350,14 +351,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		47524C204F0681E9BE582B109DAE4043 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				DF6DC9F7567164A8B7EF2018F0D25728 /* tempo-ironsource-mediation.podspec */,
-			);
-			name = Pod;
-			sourceTree = "<group>";
-		};
 		5603A1151C655910B7D3984DFE11A4A2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +358,29 @@
 				F23F627411A025BAF29B926BE4740854 /* TempoSDK */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		74BE533B08814D37B7FCE97E200E6C68 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				44322036D35D62DBAE20B2A7DB5544E3 /* tempo-ironsource-mediation.modulemap */,
+				FEE6C6C27CEDF3E7A1C3B55A95D78A86 /* tempo-ironsource-mediation-dummy.m */,
+				9A93C52F3A8293824F99D689969DF3CF /* tempo-ironsource-mediation-prefix.pch */,
+				2C195925EBD8EBA407E5C94EA397E137 /* tempo-ironsource-mediation-umbrella.h */,
+				0EEA1EF04E6FE0C4FDC77F0BCB677121 /* tempo-ironsource-mediation.debug.xcconfig */,
+				F4F02FABF521888E85CF0203FA815225 /* tempo-ironsource-mediation.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "tempo-ironsource-mediation-adapter/Pods/Target Support Files/tempo-ironsource-mediation";
+			sourceTree = "<group>";
+		};
+		7F380B02412E16FE1AD1B4FDF1BB5959 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				E6647B29ADC2EA2BC71998E8625AAC0C /* README.md */,
+				C93498941C26E233EFCD0E27C6858967 /* tempo-ironsource-mediation.podspec */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		876480A7091BBC3F49918986965E84E7 /* Targets Support Files */ = {
@@ -375,24 +391,10 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		886EAB018DCC88328F3DD1B45843BA3A /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				D98ABC1C48AD981D937A44A85A951A9D /* tempo-ironsource-mediation.modulemap */,
-				10EF965AFD0FB51CC9AC27CFE302A250 /* tempo-ironsource-mediation-dummy.m */,
-				AF48F5B45553DEA12381824A7BFAA1F4 /* tempo-ironsource-mediation-prefix.pch */,
-				A12F9517F5DED4BB29AD3FCFFE2DB184 /* tempo-ironsource-mediation-umbrella.h */,
-				3B73884CD2A2F6A997C8A12E26B5D25F /* tempo-ironsource-mediation.debug.xcconfig */,
-				0E4713CC8BCA33D3B18229755B205636 /* tempo-ironsource-mediation.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "tempo-ironsource-mediation-adapter/Pods/Target Support Files/tempo-ironsource-mediation";
-			sourceTree = "<group>";
-		};
 		8C1B3DE9CC6E9B168A0013F24A665634 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A2848C130F5AA80F3BADF0C73CCAF672 /* tempo-ironsource-mediation */,
+				F41DFCBEA1BE4AF9BF41484693DCCACE /* tempo-ironsource-mediation */,
 			);
 			name = "Development Pods";
 			sourceTree = "<group>";
@@ -626,20 +628,6 @@
 			path = IronSourceSDK;
 			sourceTree = "<group>";
 		};
-		A2848C130F5AA80F3BADF0C73CCAF672 /* tempo-ironsource-mediation */ = {
-			isa = PBXGroup;
-			children = (
-				9D2252C242E7BD97B61A1344BA61C86C /* ISTempoCustomAdapter.swift */,
-				96E893B2632A93A796C2F49B96E85958 /* ISTempoCustomInterstitial.swift */,
-				D91C7BA5B33B79ECE10BF239E38B9844 /* ISTempoCustomRewardedVideo.swift */,
-				DBD7094A019AFFEA8098BAC23B273C3E /* ISTempoUtils.swift */,
-				47524C204F0681E9BE582B109DAE4043 /* Pod */,
-				886EAB018DCC88328F3DD1B45843BA3A /* Support Files */,
-			);
-			name = "tempo-ironsource-mediation";
-			path = ../..;
-			sourceTree = "<group>";
-		};
 		BDA9B642F367183CB4E2F015D99B5987 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -711,6 +699,20 @@
 			path = TempoSDK;
 			sourceTree = "<group>";
 		};
+		F41DFCBEA1BE4AF9BF41484693DCCACE /* tempo-ironsource-mediation */ = {
+			isa = PBXGroup;
+			children = (
+				A60C5030EB397C3D7529E43095072EA1 /* ISTempoCustomAdapter.swift */,
+				348FC3BA68F03F8566876EC8A71187E3 /* ISTempoCustomInterstitial.swift */,
+				D9E0651FB4AB612A5A30ACCE8991716D /* ISTempoCustomRewardedVideo.swift */,
+				A3ED3DE2C9395252DB4BC593BBBA659D /* ISTempoUtils.swift */,
+				7F380B02412E16FE1AD1B4FDF1BB5959 /* Pod */,
+				74BE533B08814D37B7FCE97E200E6C68 /* Support Files */,
+			);
+			name = "tempo-ironsource-mediation";
+			path = ../..;
+			sourceTree = "<group>";
+		};
 		F6A720CB4ADB67EA8724B273C1F14817 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,14 +734,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3913FD57F5822E243D3A71BC3DADB613 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2D3DD79A696E33FA1A7BB8BE801493A7 /* tempo-ironsource-mediation-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		47F5E53C40566E12C033F17885246199 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -748,24 +742,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8E02AEE35416AC136E50295D4F0EAAA8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C4407DCF1DA5F7CC772FF45F60CFBEB /* tempo-ironsource-mediation-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		3864898D8762A9D7C6D241B9FB722FF5 /* tempo-ironsource-mediation */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C99461C767CD781BD62E36C24BBCF757 /* Build configuration list for PBXNativeTarget "tempo-ironsource-mediation" */;
+			buildConfigurationList = E1D8693B3EE790C2702B73C8EE3FE725 /* Build configuration list for PBXNativeTarget "tempo-ironsource-mediation" */;
 			buildPhases = (
-				3913FD57F5822E243D3A71BC3DADB613 /* Headers */,
-				747D24424FA57ACF91904EF7ECE26E39 /* Sources */,
-				760AAA79554DFBC46EA002483B4833A4 /* Frameworks */,
-				338BABD21BAE4488D76A70A7BAA35D5E /* Copy generated compatibility header */,
-				44CCECFB1F9AB773523BFCEBF95A87CF /* [CP-User] Hello  */,
+				8E02AEE35416AC136E50295D4F0EAAA8 /* Headers */,
+				814282C1567EFD47CFD416AC76C8B221 /* Sources */,
+				80C0C7F05FB07C45F3C94150E8ADC60D /* Frameworks */,
+				987EC4A0EDA7F58509D438E4499E1FF3 /* Copy generated compatibility header */,
+				C966C01519499E30A59B9DEDB255562F /* [CP-User] Hello  */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D606C25EE42723EF65254B48B3FBDBD0 /* PBXTargetDependency */,
-				22A01AEA010FE203EFB410C86F79BA5E /* PBXTargetDependency */,
+				9FB7E394F512F8B72863B6E6F976FF70 /* PBXTargetDependency */,
+				1D13CA937B9585DD7547A51E2699C9FC /* PBXTargetDependency */,
 			);
 			name = "tempo-ironsource-mediation";
 			productName = "tempo-ironsource-mediation";
@@ -801,9 +803,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				A296597D07B88EEF7CDBFF714A1D6DE1 /* PBXTargetDependency */,
-				110C01EC73F27D3D310B2BF517C1442E /* PBXTargetDependency */,
-				A5ECAA9492E57DE9C2193D06AFF85D96 /* PBXTargetDependency */,
+				E831A580D91F54ECD1F1F2BB64725F9A /* PBXTargetDependency */,
+				CB22F26C83F15CDCD2E498E3B10BC39A /* PBXTargetDependency */,
+				C040A83AA139E35AC6CBA45D956C5DFA /* PBXTargetDependency */,
 			);
 			name = "Pods-tempo-ironsource-mediation-adapter";
 			productName = "Pods-tempo-ironsource-mediation-adapter";
@@ -841,40 +843,6 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		338BABD21BAE4488D76A70A7BAA35D5E /* Copy generated compatibility header */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h",
-				"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap",
-				"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation-umbrella.h",
-			);
-			name = "Copy generated compatibility header";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap",
-				"${BUILT_PRODUCTS_DIR}/tempo-ironsource-mediation-umbrella.h",
-				"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
-		};
-		44CCECFB1F9AB773523BFCEBF95A87CF /* [CP-User] Hello  */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			name = "[CP-User] Hello ";
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo 'Adding Custom Module Header' && touch Headers/Public/tempo_ironsource_mediation/tempo_ironsource_mediation.h && echo '#import <IronSource/IronSource.h>' >> Headers/Public/tempo_ironsource_mediation/tempo_ironsource_mediation.h";
-		};
 		6E662AE3BE00416C23AAB5D4AA60C0FA /* Copy generated compatibility header */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -898,6 +866,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/TempoSDK/TempoSDK.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/TempoSDK/TempoSDK-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
+		};
+		987EC4A0EDA7F58509D438E4499E1FF3 /* Copy generated compatibility header */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h",
+				"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap",
+				"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation-umbrella.h",
+			);
+			name = "Copy generated compatibility header";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap",
+				"${BUILT_PRODUCTS_DIR}/tempo-ironsource-mediation-umbrella.h",
+				"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
+		};
+		C966C01519499E30A59B9DEDB255562F /* [CP-User] Hello  */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			name = "[CP-User] Hello ";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo 'Adding Custom Module Header' && touch Headers/tempo_ironsource_mediation.h && echo '#import <IronSource/IronSource.h>' >> Headers/tempo_ironsource_mediation.h";
 		};
 		E49EA0606051AB35ECE9FF9B0BF01B70 /* [CP] Copy XCFrameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -927,15 +929,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		747D24424FA57ACF91904EF7ECE26E39 /* Sources */ = {
+		814282C1567EFD47CFD416AC76C8B221 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73311CF22E26E6E5CC246EE99A91EF06 /* ISTempoCustomAdapter.swift in Sources */,
-				D0AC2A5A4F640260DAEA6264618ECB05 /* ISTempoCustomInterstitial.swift in Sources */,
-				2D73257F4611584462B44790B3EC8578 /* ISTempoCustomRewardedVideo.swift in Sources */,
-				3146D75E2C18C12AD6D16796748C399C /* ISTempoUtils.swift in Sources */,
-				A8A5D279B8AC73789166249D148982F0 /* tempo-ironsource-mediation-dummy.m in Sources */,
+				41FBCA989B0976C060B59747ED6471CC /* ISTempoCustomAdapter.swift in Sources */,
+				E8B5155EE8AACF7540E328E615659B11 /* ISTempoCustomInterstitial.swift in Sources */,
+				4FD882C8D84296F6EA54B00DBBE4739C /* ISTempoCustomRewardedVideo.swift in Sources */,
+				580703482FF1730D2D300DE82D727317 /* ISTempoUtils.swift in Sources */,
+				03D0D5EE2E352ACC5071EA0B81756131 /* tempo-ironsource-mediation-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,39 +958,90 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		110C01EC73F27D3D310B2BF517C1442E /* PBXTargetDependency */ = {
+		1D13CA937B9585DD7547A51E2699C9FC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = TempoSDK;
 			target = 452BF17928B1327D885539AD22EC7515 /* TempoSDK */;
-			targetProxy = C9F9A772CC9F53720063E0C07A171DEC /* PBXContainerItemProxy */;
+			targetProxy = CE90186C296A35431EE312FB15F2440E /* PBXContainerItemProxy */;
 		};
-		22A01AEA010FE203EFB410C86F79BA5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = TempoSDK;
-			target = 452BF17928B1327D885539AD22EC7515 /* TempoSDK */;
-			targetProxy = 42AC49E2689A62460DC00DBBDA0F4AC6 /* PBXContainerItemProxy */;
-		};
-		A296597D07B88EEF7CDBFF714A1D6DE1 /* PBXTargetDependency */ = {
+		9FB7E394F512F8B72863B6E6F976FF70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IronSourceSDK;
 			target = 205EFBEF86DA6E7E3D5B9BABED8872EE /* IronSourceSDK */;
-			targetProxy = F2FD7D032DC197AC6FE13CB865262EDF /* PBXContainerItemProxy */;
+			targetProxy = EF92CB5E22C4E5C07D5E3A154F389673 /* PBXContainerItemProxy */;
 		};
-		A5ECAA9492E57DE9C2193D06AFF85D96 /* PBXTargetDependency */ = {
+		C040A83AA139E35AC6CBA45D956C5DFA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "tempo-ironsource-mediation";
 			target = 3864898D8762A9D7C6D241B9FB722FF5 /* tempo-ironsource-mediation */;
-			targetProxy = A52AC1A252E7989296894669F8B601E0 /* PBXContainerItemProxy */;
+			targetProxy = 04F44285C9C5CC903F2B63563C6DBD6D /* PBXContainerItemProxy */;
 		};
-		D606C25EE42723EF65254B48B3FBDBD0 /* PBXTargetDependency */ = {
+		CB22F26C83F15CDCD2E498E3B10BC39A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = TempoSDK;
+			target = 452BF17928B1327D885539AD22EC7515 /* TempoSDK */;
+			targetProxy = 7AB9BE36C53FAD64EBBD726F283CD6D8 /* PBXContainerItemProxy */;
+		};
+		E831A580D91F54ECD1F1F2BB64725F9A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IronSourceSDK;
 			target = 205EFBEF86DA6E7E3D5B9BABED8872EE /* IronSourceSDK */;
-			targetProxy = FFA2D4C01FF94D34632ED1EA7CD2BA1A /* PBXContainerItemProxy */;
+			targetProxy = 4170BA42782148757A78478A553DDDFC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		10897558756D1A0E6725645CD4A22B3C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0EEA1EF04E6FE0C4FDC77F0BCB677121 /* tempo-ironsource-mediation.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/tempo-ironsource-mediation/tempo-ironsource-mediation-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MODULEMAP_FILE = "Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = tempo_ironsource_mediation;
+				PRODUCT_NAME = "tempo-ironsource-mediation";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2169B313DE646FD701D62A3D6579F250 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4F02FABF521888E85CF0203FA815225 /* tempo-ironsource-mediation.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/tempo-ironsource-mediation/tempo-ironsource-mediation-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MODULEMAP_FILE = "Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = tempo_ironsource_mediation;
+				PRODUCT_NAME = "tempo-ironsource-mediation";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		57CD50DE2356A739FC673DC07103A79A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 084A2937CF0D87E3D6E2FF91D3DA9EED /* TempoSDK.release.xcconfig */;
@@ -1209,31 +1262,6 @@
 			};
 			name = Release;
 		};
-		D939ED86B8FC770661BB354BA620155C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B73884CD2A2F6A997C8A12E26B5D25F /* tempo-ironsource-mediation.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/tempo-ironsource-mediation/tempo-ironsource-mediation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MODULEMAP_FILE = "Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = tempo_ironsource_mediation;
-				PRODUCT_NAME = "tempo-ironsource-mediation";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
 		E0BBCADD6C6765FAAE8BDE90187C6D13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 318543BFCDD9D3A1DE7C68B9E7FD8196 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */;
@@ -1273,32 +1301,6 @@
 			};
 			name = Debug;
 		};
-		FAFCAF3BD572924DDC63C8997D2E94F5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E4713CC8BCA33D3B18229755B205636 /* tempo-ironsource-mediation.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/tempo-ironsource-mediation/tempo-ironsource-mediation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MODULEMAP_FILE = "Headers/Public/tempo_ironsource_mediation/tempo-ironsource-mediation.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = tempo_ironsource_mediation;
-				PRODUCT_NAME = "tempo-ironsource-mediation";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1320,20 +1322,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C99461C767CD781BD62E36C24BBCF757 /* Build configuration list for PBXNativeTarget "tempo-ironsource-mediation" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D939ED86B8FC770661BB354BA620155C /* Debug */,
-				FAFCAF3BD572924DDC63C8997D2E94F5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		CB2915836A8A68AB5136C86815FD8232 /* Build configuration list for PBXNativeTarget "TempoSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8E21301DA71A6805C4920044ADFE4758 /* Debug */,
 				57CD50DE2356A739FC673DC07103A79A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1D8693B3EE790C2702B73C8EE3FE725 /* Build configuration list for PBXNativeTarget "tempo-ironsource-mediation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10897558756D1A0E6725645CD4A22B3C /* Debug */,
+				2169B313DE646FD701D62A3D6579F250 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
