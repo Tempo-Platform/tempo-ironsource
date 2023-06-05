@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
-  spec.name         = "tempo-ironsource-mediation"
-  spec.version      = "0.1.1"
+  spec.name         = "tempo-ios-ironsource-mediation"
+  spec.version      = "0.2.0"
   spec.summary      = "Tempo ironSource iOS Mediation Adapter."
 
   spec.description  = <<-DESC
@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
 
   spec.homepage     = "https://www.tempoplatform.com"
   spec.license      = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
-  spec.author       = { "Vishnu" => "vishnu@tempoplatform.com" }
+  spec.author       = { "Stephen" => "stephen@tempoplatform.com" }
   
   spec.platform     = :ios, "11.0"
   spec.source       = { :git => "https://github.com/Tempo-Platform/tempo-ironsource.git", :tag => spec.version.to_s }
@@ -23,10 +23,10 @@ Pod::Spec.new do |spec|
   spec.dependency "TempoSDK", " 1.0.2"
   spec.dependency "IronSourceSDK", " 7.3.0.0"
   
-  spec.source_files = "TempoIronSourceMediation/*.*"
+  spec.source_files = "tempo-ios-ironsource-mediation/*.*"
   spec.script_phase = {
      :name => 'Hello ',
-     :script => "echo 'Adding Custom Module Header' && touch Headers/tempo_ironsource_mediation.h && echo '#import <IronSource/IronSource.h>' >> Headers/tempo_ironsource_mediation.h",
+     :script => "echo 'Adding Custom Module Header' && touch Headers/tempo_ios_ironsource_mediation.h && echo '#import <IronSource/IronSource.h>' >> Headers/tempo_ios_ironsource_mediation.h",
      :execution_position => :after_compile
    }
    
