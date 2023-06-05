@@ -1,6 +1,0 @@
-module tempo_ironsource_mediation {
-  umbrella header "tempo-ironsource-mediation-umbrella.h"
-
-  export *
-  module * { export * }
-}
