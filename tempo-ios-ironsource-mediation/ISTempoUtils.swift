@@ -10,7 +10,7 @@ import IronSource
 
 public class ISTempoUtils {
     
-    private static let testState = true
+    private static let testState = false
     
     public static func getAppId(adData: ISAdData) -> String {
         let adDataAppId = adData.getString("appId")
@@ -20,6 +20,11 @@ public class ISTempoUtils {
     public static func getAddTag(adData: ISAdData) -> String {
         let adDataAdTag = adData.getString("adTag")
         return adDataAdTag ?? "NO_AD_TAG"
+    }
+    
+    public static func getCpmFloor(adData: ISAdData) -> String {
+        let adDataCpmFloor = adData.getString("cpmFloor")
+        return adDataCpmFloor ?? "NO_CPM_FLOOR"
     }
     
     public static func shout(msg: String = "", showInProd: Bool = false, functStrion: String = #function) {

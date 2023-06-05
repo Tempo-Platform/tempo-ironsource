@@ -16,13 +16,21 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoInterstitialL
         // Implement callback delegate
         self.delegate = delegate
         
-        // Get App ID from Ad Data
+        // Get AppID/CPMFloor from Ad Data
         let appId = ISTempoUtils.getAppId(adData: adData)
+        let cpmFloor = ISTempoUtils.getCpmFloor(adData: adData)
+        var cpmFloorFloat: Float = 0
+        if let floatValue = Float(cpmFloor) {
+            print("The CPM is a valid Double: \(floatValue)")
+            cpmFloorFloat = floatValue
+        } else {
+            print("The CPM is not a valid Double")
+        }
         
         // Create ad instance and load new ad
         self.rewarded = TempoInterstitial(parentViewController: nil, delegate: self, appId: appId)
         DispatchQueue.main.async {
-            self.rewarded!.loadAd(isInterstitial: false, cpmFloor: 0, placementId: nil)
+            self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
           }
     }
     

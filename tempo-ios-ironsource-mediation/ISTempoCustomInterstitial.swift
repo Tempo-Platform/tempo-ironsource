@@ -18,11 +18,19 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialLis
         
         // Get App ID from Ad Data
         let appId = ISTempoUtils.getAppId(adData: adData)
+        let cpmFloor = ISTempoUtils.getCpmFloor(adData: adData)
+        var cpmFloorFloat: Float = 0
+        if let floatValue = Float(cpmFloor) {
+            print("The CPM is a valid Double: \(floatValue)")
+            cpmFloorFloat = floatValue
+        } else {
+            print("The CPM is not a valid Double")
+        }
         
         // Create ad instance and load new ad
         self.interstitial = TempoInterstitial(parentViewController: nil, delegate: self, appId: appId)
         DispatchQueue.main.async {
-            self.interstitial!.loadAd(isInterstitial: true, cpmFloor: 0, placementId: nil)
+            self.interstitial!.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
           }
     }
     

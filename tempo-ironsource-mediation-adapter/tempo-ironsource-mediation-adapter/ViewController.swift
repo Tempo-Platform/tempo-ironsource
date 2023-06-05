@@ -8,9 +8,9 @@
 import UIKit
 import IronSource
 import TempoSDK
-import tempo_ironsource_mediation
+import tempo_ios_ironsource_mediation
 
-let kAPPKEY = "1a366cbe5"
+let kAPPKEY = "1a470a75d"
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoManualDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
     
