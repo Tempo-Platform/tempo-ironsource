@@ -11,7 +11,7 @@ public class TempoInterstitial: NSObject {
     public var sdkVersion = TempoConstants.SDK_VERSIONS;
     
     
-    public init(parentViewController:UIViewController?, delegate:TempoInterstitialListener, appId:String) {
+    public init(parentViewController:UIViewController?, delegate:TempoInterstitialListener, appId:String){
         super.init()
         print("Area: \(TempoUserInfo.getIsoCountryCode2Digit() ?? "unknown")");
         self.parentViewController = parentViewController

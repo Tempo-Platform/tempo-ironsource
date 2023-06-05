@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   spec.static_framework = true
   spec.swift_version = '5.0'
 
-  spec.dependency "TempoSDK", " 1.0.1"
+  spec.dependency "TempoSDK", " 1.0.2"
   spec.dependency "IronSourceSDK", " 7.3.0.0"
   
   spec.source_files = "TempoIronSourceMediation/*.*"
