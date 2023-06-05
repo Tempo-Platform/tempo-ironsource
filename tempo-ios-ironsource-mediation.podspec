@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "tempo-ios-ironsource-mediation"
-  spec.version      = "0.2.0"
+  spec.version      = "0.1.3"
   spec.summary      = "Tempo ironSource iOS Mediation Adapter."
 
   spec.description  = <<-DESC
