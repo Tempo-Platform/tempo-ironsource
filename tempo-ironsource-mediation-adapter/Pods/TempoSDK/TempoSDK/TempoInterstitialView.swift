@@ -149,7 +149,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        print("✅ URL ADS_API string: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
+        //print("✅ URL ADS_API string: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
         
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
