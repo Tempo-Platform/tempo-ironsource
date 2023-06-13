@@ -19,7 +19,7 @@ public class TempoInterstitial: NSObject {
         interstitialView!.listener = delegate
         adapterVersion = interstitialView!.listener.onVersionExchange(sdkVersion: self.sdkVersion)
         
-        print("Versions: \(sdkVersion)/\(adapterVersion ?? "UNDEFINED")")
+        print("Versions: [SDK]\(sdkVersion)/[ADAP]\(adapterVersion ?? "UNDEFINED")")
         
         //interstitialView!.utcGenerator = TempoUtcGenerator()
         let advertisingIdentifier: UUID = ASIdentifierManager().advertisingIdentifier

@@ -17,11 +17,6 @@ public class ISTempoUtils {
         return adDataAppId ?? "NO_APP_ID"
     }
     
-    public static func getAddTag(adData: ISAdData) -> String {
-        let adDataAdTag = adData.getString("adTag")
-        return adDataAdTag ?? "NO_AD_TAG"
-    }
-    
     public static func getCpmFloor(adData: ISAdData) -> String {
         let adDataCpmFloor = adData.getString("cpmFloor")
         return adDataCpmFloor ?? "NO_CPM_FLOOR"
@@ -41,10 +36,10 @@ public class ISTempoUtils {
     }
     
     public static func adUnitDataStringer(adData: ISAdData!) -> String {
-        return "\(getAppId(adData: adData)) | \(getAddTag(adData: adData))"
+        return "\(getAppId(adData: adData)) | \(getCpmFloor(adData: adData))"
     }
     
     public static func sayAdType(isInterstitial: Bool) -> String {
-        return isInterstitial ? "INTERSTIIAL" : "REWARDED"
+        return isInterstitial ? "INTERSTITIAL" : "REWARDED"
     }
 }

@@ -6,12 +6,11 @@ import TempoSDK
 public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
  
     public static let ADAPTER_TYPE = "IRONSOURCE"
-    public static let customAdapterVersion = "1.0.3"
-    public static var dynSdkVersion = "1.0.3"
+    public static let customAdapterVersion = "1.0.2"
+    public static var dynSdkVersion = "1.0.4"
     
     /// SDK initialisation handler
     public override func `init` (_ adData: ISAdData, delegate: ISNetworkInitializationDelegate) {
-        ISTempoUtils.shout(msg: "TODO: init errors? \(ISTempoUtils.getAppId(adData: adData))/\(ISTempoUtils.getAddTag(adData: adData))")
        
        if (false) {
           delegate.onInitDidFailWithErrorCode(ISAdapterErrors.missingParams.rawValue, errorMessage: "Fail to init SDK")

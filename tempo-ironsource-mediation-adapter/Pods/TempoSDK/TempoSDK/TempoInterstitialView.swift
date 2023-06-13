@@ -82,7 +82,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     var currentAdapterType: String?
 
     public func loadAd(interstitial:TempoInterstitial, isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
-        print("load url interstitial")
+        print("load url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
         self.setupWKWebview()
         self.loadUrl(isInterstitial:isInterstitial, appId:appId, adId:adId, cpmFloor:cpmFloor, placementId: placementId, sdkVersion: sdkVersion, adapterVersion: adapterVersion)
     }
@@ -104,7 +104,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     }
     
     public func loadSpecificAd(isInterstitial: Bool, campaignId:String) {
-        print("load specific url interstitial")
+        print("load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
         self.setupWKWebview()
         currentUUID = "TEST"
         currentAdId = "TEST"
