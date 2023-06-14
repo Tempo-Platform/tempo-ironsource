@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double tempo_ironsource_mediationVersionNumber;
-FOUNDATION_EXPORT const unsigned char tempo_ironsource_mediationVersionString[];
+FOUNDATION_EXPORT double tempo_ios_ironsource_mediationVersionNumber;
+FOUNDATION_EXPORT const unsigned char tempo_ios_ironsource_mediationVersionString[];
 

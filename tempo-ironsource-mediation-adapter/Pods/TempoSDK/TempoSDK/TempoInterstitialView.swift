@@ -82,7 +82,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     var currentAdapterType: String?
 
     public func loadAd(interstitial:TempoInterstitial, isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
-        print("load url interstitial")
+        print("load url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
         self.setupWKWebview()
         self.loadUrl(isInterstitial:isInterstitial, appId:appId, adId:adId, cpmFloor:cpmFloor, placementId: placementId, sdkVersion: sdkVersion, adapterVersion: adapterVersion)
     }
@@ -104,7 +104,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     }
     
     public func loadSpecificAd(isInterstitial: Bool, campaignId:String) {
-        print("load specific url interstitial")
+        print("load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
         self.setupWKWebview()
         currentUUID = "TEST"
         currentAdId = "TEST"
@@ -116,6 +116,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         self.currentCampaignId = campaignId
         self.webView.load(URLRequest(url: url))
     }
+    
     
     private func loadUrl(isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
         currentUUID = UUID().uuidString
@@ -148,7 +149,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        print("✅ URL ADS_API string: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
+        //print("✅ URL ADS_API string: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
         
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
@@ -177,6 +178,8 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                                         self.addMetric(metricType: "NO_FILL")
                                         didSomething = true
                                     } else if (statusString == "OK") {
+                                        
+                                        // Loads ad from URL with id reference
                                         if let id = jsonDict["id"] {
                                             if let idString = id as? String {
                                                 print("Tempo SDK: Got Ad ID from server. Response \(jsonDict).")
@@ -187,13 +190,13 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                                                 didSomething = true
                                             }
                                         }
-                                        if let cpm = jsonDict["cpm"] {
-                                            
-                                            let old = self.currentCpmFloor!;
-                                            self.currentCpmFloor = cpm as? Float
-                                            print("✅ New CPM = \(self.currentCpmFloor ?? 999) (\(old))")
-                                        }
                                         
+                                        // Update CPM from Tempo backend
+                                        if let cpm = jsonDict["cpm"] {
+                                            //var old = self.currentCpmFloor!;
+                                            self.currentCpmFloor = cpm as? Float
+                                            //print("✅ New CPM = \(self.currentCpmFloor ?? 0) (\(old))")
+                                        }
                                     }
                                 }
                             }

@@ -11,7 +11,7 @@ public class TempoInterstitial: NSObject {
     public var sdkVersion = TempoConstants.SDK_VERSIONS;
     
     
-    public init(parentViewController:UIViewController?, delegate:TempoInterstitialListener, appId:String) {
+    public init(parentViewController:UIViewController?, delegate:TempoInterstitialListener, appId:String){
         super.init()
         print("Area: \(TempoUserInfo.getIsoCountryCode2Digit() ?? "unknown")");
         self.parentViewController = parentViewController
@@ -19,7 +19,7 @@ public class TempoInterstitial: NSObject {
         interstitialView!.listener = delegate
         adapterVersion = interstitialView!.listener.onVersionExchange(sdkVersion: self.sdkVersion)
         
-        print("Versions: \(sdkVersion)/\(adapterVersion ?? "UNDEFINED")")
+        print("Versions: [SDK]\(sdkVersion)/[ADAP]\(adapterVersion ?? "UNDEFINED")")
         
         //interstitialView!.utcGenerator = TempoUtcGenerator()
         let advertisingIdentifier: UUID = ASIdentifierManager().advertisingIdentifier

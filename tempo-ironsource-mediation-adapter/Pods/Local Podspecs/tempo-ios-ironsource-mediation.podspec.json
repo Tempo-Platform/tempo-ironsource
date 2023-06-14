@@ -1,6 +1,6 @@
 {
-  "name": "tempo-ironsource-mediation",
-  "version": "0.1.1",
+  "name": "tempo-ios-ironsource-mediation",
+  "version": "1.0.2",
   "summary": "Tempo ironSource iOS Mediation Adapter.",
   "description": "Using this adapter you will be able to integrate Tempo SDK via ironSource mediation",
   "homepage": "https://www.tempoplatform.com",
@@ -9,14 +9,14 @@
     "file": "LICENSE"
   },
   "authors": {
-    "Vishnu": "vishnu@tempoplatform.com"
+    "Stephen": "stephen@tempoplatform.com"
   },
   "platforms": {
     "ios": "11.0"
   },
   "source": {
     "git": "https://github.com/Tempo-Platform/tempo-ironsource.git",
-    "tag": "0.1.1"
+    "tag": "1.0.2"
   },
   "frameworks": [
     "Foundation",
@@ -27,16 +27,16 @@
   "swift_versions": "5.0",
   "dependencies": {
     "TempoSDK": [
-      " 1.0.2"
+      " 1.0.4"
     ],
     "IronSourceSDK": [
       " 7.3.0.0"
     ]
   },
-  "source_files": "TempoIronSourceMediation/*.*",
+  "source_files": "tempo-ios-ironsource-mediation/*.*",
   "script_phases": {
     "name": "Hello ",
-    "script": "echo 'Adding Custom Module Header' && touch Headers/tempo_ironsource_mediation.h && echo '#import <IronSource/IronSource.h>' >> Headers/tempo_ironsource_mediation.h",
+    "script": "echo 'Adding Custom Module Header' && touch Headers/tempo_ios_ironsource_mediation.h && echo '#import <IronSource/IronSource.h>' >> Headers/tempo_ios_ironsource_mediation.h",
     "execution_position": "after_compile"
   },
   "pod_target_xcconfig": {
