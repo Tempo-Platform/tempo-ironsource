@@ -58,6 +58,8 @@ public struct Metric : Codable {
     var adapter_version: String
     var cpm: Float
     var adapter_type: String?
+    var consent: Bool?
+    var consent_type: String?
     
 }
 
@@ -80,6 +82,8 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     var previousParentBGColor: UIColor?
     var currentCpmFloor: Float?
     var currentAdapterType: String?
+    var currentHasConsent: Bool?
+    var currentConsentType: String?
 
     public func loadAd(interstitial:TempoInterstitial, isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
         print("load url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
@@ -87,11 +91,20 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         self.loadUrl(isInterstitial:isInterstitial, appId:appId, adId:adId, cpmFloor:cpmFloor, placementId: placementId, sdkVersion: sdkVersion, adapterVersion: adapterVersion)
     }
     
+    // Displays loaded ad
     public func showAd(parentViewController:UIViewController) {
         self.currentParentViewController = parentViewController
         self.currentParentViewController!.view.addSubview(solidColorView)
         addMetric(metricType: "AD_SHOW")
         listener.onAdDisplayed(isInterstitial: self.currentIsInterstitial ?? true)
+        
+        // Create JS statement to find video element and play. Method return type not recognised by WebKit so we add null return.
+        let script = "var video = document.getElementById('video'); if (video) { video.play(); void(0)}"
+        webView.evaluateJavaScript(script) { (result, error) in
+            if let error = error {
+                print("Error playing video: \(error)")
+            }
+        }
     }
     
     public func closeAd(){
@@ -110,13 +123,13 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         currentAdId = "TEST"
         currentAppId = "TEST"
         currentIsInterstitial = isInterstitial
-        let urlComponent = isInterstitial ? "interstitial" : "campaign"
+        //let urlComponent = isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW
         self.addMetric(metricType: "CUSTOM_AD_LOAD_REQUEST")
-        let url = URL(string: "https://ads.tempoplatform.com/\(urlComponent)/\(campaignId)/ios")!
+        //let url = URL(string: "https://ads.tempoplatform.com/\(urlComponent)/\(campaignId)/ios")!
+        let url = URL(string: getAdsWebUrl(isInterstitial: isInterstitial, campaignId: campaignId))!
         self.currentCampaignId = campaignId
         self.webView.load(URLRequest(url: url))
     }
-    
     
     private func loadUrl(isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
         currentUUID = UUID().uuidString
@@ -128,8 +141,10 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         currentAdapterVersion = adapterVersion
         currentCpmFloor = cpmFloor ?? 0.0
         currentAdapterType = listener.onGetAdapterType()
+        currentHasConsent = listener.hasUserConsent()
+        
         self.addMetric(metricType: "AD_LOAD_REQUEST")
-        var components = URLComponents(string: TempoConstants.ADS_API)!
+        var components = URLComponents(string: getAdsApiUrl())!
         components.queryItems = [
             URLQueryItem(name: "uuid", value: currentUUID),  // this UUID is unique per ad load
             URLQueryItem(name: "ad_id", value: currentAdId),
@@ -221,6 +236,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         self.addMetric(metricType: "AD_LOAD_FAILED")
     }
     
+    /// Creates the custom WKWebView including safe areas, background color and pulls custom configurations
     private func setupWKWebview() {
         var safeAreaTop: CGFloat
         var safeAreaBottom: CGFloat
@@ -251,6 +267,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         solidColorView.addSubview(webView)
     }
     
+    /// Creates and returns a custom configuration for the WkWebView object
     private func getWKWebViewConfiguration() -> WKWebViewConfiguration {
         let userController = WKUserContentController()
         userController.add(self, name: "observer")
@@ -274,6 +291,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         return configuration
     }
         
+    /// Create controller that provides a way for JavaScript to post messages to a web view.
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if(message.body as? String != nil){
             self.addMetric(metricType: message.body as! String)
@@ -302,6 +320,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         }
     }
 
+    /// Create a new Metric instance based on current ad's class properties, and adds to Metrics array
     private func addMetric(metricType: String) {
         let metric = Metric(metric_type: metricType,
                             ad_id: currentAdId,
@@ -316,7 +335,10 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                             sdk_version: currentSdkVersion ?? "",
                             adapter_version: currentAdapterVersion ?? "",
                             cpm: currentCpmFloor ?? 0.0,
-                            adapter_type: currentAdapterType
+                            adapter_type: currentAdapterType,
+                            consent: currentHasConsent,
+                            consent_type: nil
+                            
                             
         )
         
@@ -327,11 +349,11 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         }
     }
 
-    
+    /// Sends latest version of Metrics array to Tempo backend and then clears
     private func pushMetrics(backupUrl: URL?) {
         
         // Create the url with NSURL
-        let url = URL(string: TempoConstants.METRIC_SERVER_URL)!
+        let url = URL(string: getMetricsUrl())!
         
         // Create the session object
         let session = URLSession.shared
@@ -468,5 +490,20 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
             // Prevents from being checked again this session. If network is failing, no point retrying during this session
             TempoDataBackup.readyForCheck = false
         }
+    }
+    
+    private func getAdsWebUrl(isInterstitial: Bool, campaignId: String) -> String! {
+        var urlDomain = isInterstitial ? TempoConstants.ADS_DOM_URL_PROD : TempoConstants.ADS_DOM_URL_DEV
+        var adsWebUrl = "\(urlDomain)/\(isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW)/\(campaignId)/ios";
+        print("🌏: \(adsWebUrl)")
+        return adsWebUrl
+    }
+    
+    private func getAdsApiUrl() -> String {
+        return TempoConstants.IS_PROD ? TempoConstants.ADS_API_URL_PROD : TempoConstants.ADS_API_URL_DEV;
+    }
+    
+    private func getMetricsUrl() -> String {
+        return TempoConstants.IS_PROD ? TempoConstants.METRICS_URL_PROD : TempoConstants.METRICS_URL_DEV;
     }
 }

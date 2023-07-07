@@ -9,7 +9,7 @@ public class TempoInterstitial: NSObject {
     public var adId:String?
     public var adapterVersion: String?
     public var sdkVersion = TempoConstants.SDK_VERSIONS;
-    
+    public var hasUserConsent: Bool?
     
     public init(parentViewController:UIViewController?, delegate:TempoInterstitialListener, appId:String){
         super.init()

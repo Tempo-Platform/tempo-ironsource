@@ -102,4 +102,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoInterstitialL
         return ISTempoCustomAdapter.ADAPTER_TYPE
     }
     
+    public func hasUserConsent() -> Bool? {
+        return nil;
+    }
 }

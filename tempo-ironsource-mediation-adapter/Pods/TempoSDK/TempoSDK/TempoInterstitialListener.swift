@@ -19,4 +19,7 @@ public protocol TempoInterstitialListener {
     
     // Called when requesting adapter type
     func onGetAdapterType() -> String?
+    
+    // Called when requesting user consent state
+    func hasUserConsent() -> Bool?
 }

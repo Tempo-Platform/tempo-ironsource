@@ -4,6 +4,7 @@ import IronSource
 
 @objc(ISTempoCustomInterstitial)
 public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialListener {
+
     
     var interstitial:TempoInterstitial? = nil
     var isAdReady: Bool = false
@@ -98,5 +99,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialLis
         return ISTempoCustomAdapter.ADAPTER_TYPE
     }
     
- 
+    public func hasUserConsent() -> Bool? {
+        return nil;
+    }
 }
