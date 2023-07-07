@@ -7,9 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ISGlobalDataConstants.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ISGlobalDataReader : NSObject
 
-- (NSDictionary *)dataByKeys:(NSArray<NSString *> *)keys;
+- (nonnull NSDictionary *)dataByKeys:(NSArray<NSString *> *)keys;
+
+- (nonnull NSDictionary *)dataByKeys:(NSArray<NSString *> *)keys
+                           andAdUnit:(ISGlobalDataAdUnit)adUnit;
 
 @end
+
+NS_ASSUME_NONNULL_END

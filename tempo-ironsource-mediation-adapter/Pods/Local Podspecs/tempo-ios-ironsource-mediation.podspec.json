@@ -30,7 +30,7 @@
       "1.0.6"
     ],
     "IronSourceSDK": [
-      " 7.3.0.0"
+      "~> 7.3.0"
     ]
   },
   "source_files": "tempo-ios-ironsource-mediation/*.*",

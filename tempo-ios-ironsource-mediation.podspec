@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
   spec.swift_version = '5.0'
 
   spec.dependency "TempoSDK", "1.0.6"
-  spec.dependency "IronSourceSDK", " 7.3.0.0"
+  spec.dependency "IronSourceSDK", "~> 7.3.0"
   
   spec.source_files = "tempo-ios-ironsource-mediation/*.*"
   spec.script_phase = {

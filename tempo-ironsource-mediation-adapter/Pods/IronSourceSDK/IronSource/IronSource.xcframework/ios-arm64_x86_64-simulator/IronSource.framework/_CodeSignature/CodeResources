@@ -34,7 +34,7 @@
 		</data>
 		<key>Headers/ISAdapterConfig.h</key>
 		<data>
-		UhmL6D0Ly62y5gTfy7j6o5Fl4Xg=
+		xm7sTdjofVGii96kRUhdkh/jXMY=
 		</data>
 		<key>Headers/ISAdapterConsentProtocol.h</key>
 		<data>
@@ -146,7 +146,7 @@
 		</data>
 		<key>Headers/ISError.h</key>
 		<data>
-		XsUK7D3+8edeixrJLkdpUjlAuLw=
+		YUaZiyG6Sh3onwDvnhAP6MgMMUE=
 		</data>
 		<key>Headers/ISEventsReporting.h</key>
 		<data>
@@ -182,7 +182,7 @@
 		</data>
 		<key>Headers/ISInterstitialAdapterProtocol.h</key>
 		<data>
-		NI2K5Vmdi15Cv3I2MqKENEgAK1M=
+		h3phwvBybZwP/1DfvM5YebCBtO0=
 		</data>
 		<key>Headers/ISInterstitialDelegate.h</key>
 		<data>
@@ -238,7 +238,7 @@
 		</data>
 		<key>Headers/ISOfferwallDelegate.h</key>
 		<data>
-		c0I5+eEac3RaGJVtkWvr0Nsm8VI=
+		unK/4Dj9+qv84iNlLDTwJkC9ubA=
 		</data>
 		<key>Headers/ISPlacementInfo.h</key>
 		<data>
@@ -280,9 +280,13 @@
 		<data>
 		yEiHvsA6l/YKZAXpdQVmzWwpDhM=
 		</data>
+		<key>Headers/ISWaterfallConfiguration.h</key>
+		<data>
+		Al0GIoWI2BIHhrga69/aPf/7e6A=
+		</data>
 		<key>Headers/IronSource.h</key>
 		<data>
-		wbPOxJVWZ3AJGua9Baz41diMxF0=
+		awcfdCKNHN8czcc7hWsE/E+e2TQ=
 		</data>
 		<key>Headers/LevelPlayBannerDelegate.h</key>
 		<data>
@@ -306,7 +310,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		FCpgKlRaUjDqOJig3mnNUtWnp5o=
+		kFeuPwpZFXdaKN7zBGkpR0SGTT0=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -392,11 +396,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			UhmL6D0Ly62y5gTfy7j6o5Fl4Xg=
+			xm7sTdjofVGii96kRUhdkh/jXMY=
 			</data>
 			<key>hash2</key>
 			<data>
-			PuxNYzy2kNiEtRhBIgznpzWeXZ9LtOGS66yHAMQxYKc=
+			1cDED0HqcwuWWo8WUsouVBqwebCTqXRuJv9jVVviLLc=
 			</data>
 		</dict>
 		<key>Headers/ISAdapterConsentProtocol.h</key>
@@ -700,11 +704,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			XsUK7D3+8edeixrJLkdpUjlAuLw=
+			YUaZiyG6Sh3onwDvnhAP6MgMMUE=
 			</data>
 			<key>hash2</key>
 			<data>
-			QBQ0+CGQHULIvV82BQAFJxrVgDYRZVQWdMxx6i3sG0M=
+			Hf+vS48BiN6f9mLh/aZkZWgtcJFJXc/45UVOuQFtySE=
 			</data>
 		</dict>
 		<key>Headers/ISEventsReporting.h</key>
@@ -799,11 +803,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NI2K5Vmdi15Cv3I2MqKENEgAK1M=
+			h3phwvBybZwP/1DfvM5YebCBtO0=
 			</data>
 			<key>hash2</key>
 			<data>
-			RsgFbRFdDNPd1LKa71NHYRPVV70r4fPX22UgzefPmJo=
+			nTvlEEJubgRvauIro9R3fVL0qTc61jZn/w05glr2u4s=
 			</data>
 		</dict>
 		<key>Headers/ISInterstitialDelegate.h</key>
@@ -953,11 +957,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			c0I5+eEac3RaGJVtkWvr0Nsm8VI=
+			unK/4Dj9+qv84iNlLDTwJkC9ubA=
 			</data>
 			<key>hash2</key>
 			<data>
-			piAdRx3u+eaz5jRMC5UkVQcxVOchpM9wzhUcPjeVOTY=
+			RSmqwhpKS6sI0HypjVlqvNmpYtOkbW5kyAdKJTjQu5M=
 			</data>
 		</dict>
 		<key>Headers/ISPlacementInfo.h</key>
@@ -1070,15 +1074,26 @@
 			e5YC/8nHLIwFcWZU4MUKgAi9kWOS4k2GAf6aHRODFQI=
 			</data>
 		</dict>
+		<key>Headers/ISWaterfallConfiguration.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Al0GIoWI2BIHhrga69/aPf/7e6A=
+			</data>
+			<key>hash2</key>
+			<data>
+			hCHLHXKSbIS7ni5TAc22N9/VORhW0BnI1HZTr7N7gEo=
+			</data>
+		</dict>
 		<key>Headers/IronSource.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wbPOxJVWZ3AJGua9Baz41diMxF0=
+			awcfdCKNHN8czcc7hWsE/E+e2TQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			jjb858rc2QSIFJdqtSAz+P9Oz4Ar6rigiwR/uY8OIFQ=
+			jHHHv9Y3fUlKZ2tBjmdo+cOo/CzfMFTXN8hLDQ/coo8=
 			</data>
 		</dict>
 		<key>Headers/LevelPlayBannerDelegate.h</key>

@@ -55,5 +55,10 @@
 - (void)setRewardedVideoSettings:(NSDictionary *)rewardedVideoSettings;
 - (void)setBannerSettings:(NSDictionary *)bannerSettings;
 - (void)setProviderDefaultInstance:(NSString *)providerDefaultInstance;
+- (void)setIsOneFlow:(BOOL)isOneFlow;
 - (NSString *)customNetworkAdapterNameForAdUnit:(ISAdUnit *)adUnit;
+- (NSDictionary *)adUnitSettings;
+- (NSString *)demandSourceName;
+- (NSNumber *)isOneFlow;
+
 @end

@@ -53,13 +53,13 @@ typedef NS_ENUM(NSUInteger, ISErrorCode) {
     ERROR_BN_RELOAD_SKIP_BACKGROUND = 614,
     ERROR_BN_LOAD_NO_CONFIG = 615,
     ERROR_BN_UNSUPPORTED_SIZE = 616,
-    ERROR_BN_INSTANCE_LOAD_EMPTY_SERVER_DATA = 618,
+    ERROR_DO_BN_INSTANCE_LOAD_EMPTY_SERVER_DATA = 618,
     ERROR_DO_BN_LOAD_ALREADY_IN_PROGRESS = 619,
     ERROR_DO_BN_LOAD_BEFORE_INIT_SUCCESS = 620,
     ERROR_DO_BN_INSTANCE_LOAD_AUCTION_FAILED = 621,
 
     AUCTION_ERROR_REQUEST = 1000,
-    AUCTION_ERROR_RESPONSE_NOT_200 = 1001,
+    AUCTION_ERROR_RESPONSE_CODE_NOT_VALID = 1001,
     AUCTION_ERROR_PARSE = 1002,
     AUCTION_ERROR_DECRYPTION = 1003,
     AUCTION_ERROR_EMPTY_WATERFALL = 1004,
@@ -107,8 +107,21 @@ typedef NS_ENUM(NSUInteger, ISErrorCode) {
     ERROR_DO_BN_LOAD_MISSING_VIEW_CONTROLLER = 1062,
     ERROR_CODE_MISSING_CONFIGURATION = 1063,
     
+    ERROR_DO_IS_SHOW_DURING_SHOW = 1064,
+    ERROR_DO_IS_SHOW_DURING_LOAD = 1065,
+    ERROR_DO_IS_SHOW_NO_AVAILABLE_ADS = 1066,
+    ERROR_DO_RV_SHOW_DURING_SHOW = 1067,
+    ERROR_DO_RV_SHOW_DURING_LOAD = 1068,
+    ERROR_DO_RV_SHOW_NO_AVAILABLE_ADS = 1069,
+
     ERROR_RV_LOAD_NO_FILL = 1058,
     ERROR_IS_LOAD_NO_FILL = 1158,
+    
+    ERROR_IS_LOAD_AFTER_INIT_FAILED = 1160,
+    ERROR_IS_LOAD_AFTER_LONG_INITIATION = 1161,
+    ERROR_DO_IS_INSTANCE_LOAD_EMPTY_SERVER_DATA = 1162,
+    ERROR_DO_IS_INSTANCE_LOAD_EMPTY_ADAPTER = 1163,
+    ERROR_DO_IS_INSTANCE_LOAD_AUCTION_FAILED = 1164,
     
     ERROR_CONSENT_VIEW_TYPE_NOT_FOUND = 1601,
     ERROR_CONSENT_VIEW_DICTIONARY_NOT_FOUND = 1602,
@@ -137,7 +150,9 @@ typedef NS_ENUM(NSUInteger, ISErrorCode) {
     ERROR_CODE_INIT_FAILED_EXCEPTION = 5008,
     ERROR_CODE_AD_CLOSE_EXCEPTION = 5008,
     ERROR_CODE_DESTROY_EXCEPTION = 5009,
-    ERROR_CODE_INTERNAL_EXCEPTION = 5010
+    ERROR_CODE_INTERNAL_EXCEPTION = 5010,
+    ERROR_CODE_SMASH_IS_NIL = 5012,
+    ERROR_CODE_SMASH_INSTANCE_NAME_IS_NIL = 5013
 };
 
 @interface ISError : NSError
@@ -146,14 +161,11 @@ typedef NS_ENUM(NSUInteger, ISErrorCode) {
 @property (strong) NSString * suffix;
 
 + (NSError *)createError:(ISErrorCode)errorCode;
-+ (NSError *)createError:(ISErrorCode)errorCode withParams:(NSArray*)params;
++ (NSError *)createError:(ISErrorCode)errorCode withParams:(NSArray *)params;
 + (NSError *)createError:(ISErrorCode)errorCode withMessage:(NSString *)message;
 + (NSError *)createErrorWithDomain:(NSString *)domain code:(ISErrorCode)code message:(NSString *)message;
 + (NSError *)appendError:(NSError *)error withPrefix:(NSString *)prefix;
 + (NSError *)appendError:(NSError *)error withSuffix:(NSString *)suffix;
 + (ISErrorCode)getCode:(ISErrorCode)errorCode;
-
-- (instancetype)initWithDomain:(NSString *)domain code:(NSInteger)code userInfo:(NSDictionary *)dict;
-
 
 @end

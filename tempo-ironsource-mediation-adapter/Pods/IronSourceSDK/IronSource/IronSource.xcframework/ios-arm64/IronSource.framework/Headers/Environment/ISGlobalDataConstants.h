@@ -10,6 +10,14 @@
 #ifndef ISGlobalDataConstants
 #define ISGlobalDataConstants
 
+typedef NS_ENUM(NSInteger, ISGlobalDataAdUnit) {
+    ISGlobalDataAdUnitUnknown,
+    ISGlobalDataAdUnitRewardedVideo,
+    ISGlobalDataAdUnitInterstitial,
+    ISGlobalDataAdUnitBanner,
+    ISGlobalDataAdUnitOfferwall
+};
+
 // Token
 static NSString * const kGD_DeviceAPILevelKey                     = @"apilvl";
 static NSString * const kGD_ApplicationVersionKey                 = @"apv";
@@ -25,6 +33,9 @@ static NSString * const kGD_ConrollerGenericParams                = @"ctgp";
 static NSString * const kGD_DiskFreeSpaceKey                      = @"dfs";
 
 static NSString * const kGD_IDEKey                                = @"ide";
+static NSString * const kGD_IDEBuildKey                           = @"ideb";
+static NSString * const kGD_IDESdkNameKey                         = @"idesdkn";
+static NSString * const kGD_IDESdkBuildKey                        = @"idesdkb";
 static NSString * const kGD_IDFAKey                               = @"idfa";
 static NSString * const kGD_IDFVKey                               = @"idfv";
 
@@ -135,6 +146,8 @@ static NSString * const kGD_TcsKey                                = @"tcs";
 
 static NSString * const kGD_DemandOnly                            = @"do";
 static NSString * const kGD_OneFlow                               = @"eof";
+static NSString * const kGD_InstancePlumbus                       = @"dlpl";
+static NSString * const kGD_MediationTypeKey                      = @"mt";
 
 //  Global data manager keys (for internal usage only)
 static NSString * const kGD_NetworksSkan                          = @"allnetworkskan";
@@ -149,5 +162,10 @@ static NSString * const kGD_TestSuite                             = @"tss";
 static NSString * const kGD_UseTestAds                            = @"ts";
 static int const kGD_TrueIntValue                                 = 1;
 static int const kGD_FalseIntValue                                = 0;
+
+// Waterfall Configuration
+static NSString * const kGD_InstanceFilteringParams = @"infp";
+static NSString * const kGD_CeilingKey = @"clng";
+static NSString * const kGD_FloorKey = @"flr";
 
 #endif /* ISGlobalDataConstants */

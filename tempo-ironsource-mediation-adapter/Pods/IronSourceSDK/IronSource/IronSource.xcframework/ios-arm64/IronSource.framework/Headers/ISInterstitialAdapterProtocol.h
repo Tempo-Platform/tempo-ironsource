@@ -54,5 +54,4 @@
                                          serverData:(NSString *)serverData
                                            delegate:(id<ISInterstitialAdapterDelegate>)delegate;
 
-
 @end

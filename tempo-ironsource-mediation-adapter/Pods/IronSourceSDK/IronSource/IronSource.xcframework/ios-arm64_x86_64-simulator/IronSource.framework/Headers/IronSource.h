@@ -30,6 +30,7 @@
 #import "ISImpressionDataDelegate.h"
 #import "ISConsentViewDelegate.h"
 #import "ISInitializationDelegate.h"
+#import "ISWaterfallConfiguration.h"
 
 // imports used for custom adapters infra
 #import "ISBaseInterstitial.h"
@@ -53,8 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define IS_OFFERWALL @"offerwall"
 #define IS_BANNER @"banner"
 
-static NSString * const MEDIATION_SDK_VERSION     = @"7.3.0";
-static NSString * GitHash = @"abe5c7bb3";
+static NSString * const MEDIATION_SDK_VERSION     = @"7.3.1";
+static NSString * GitHash = @"1abda2998";
 
 /*
     This constant is for sending an external impression data from mopub
@@ -244,8 +245,7 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
 
  @param delegate The 'ISRewardedVideoDelegate' for IronSource to send callbacks to.
  */
-+ (void)setRewardedVideoDelegate:(id<ISRewardedVideoDelegate>)delegate;
-
++ (void)setRewardedVideoDelegate:(id<ISRewardedVideoDelegate>)delegate __attribute__((deprecated("This API has been deprecated. Please use setLevelPlayRewardedVideoDelegate instead.")));
 /**
  @abstract Sets the delegate for LevelPlay rewarded video callbacks.
 
@@ -350,7 +350,7 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  @discussion The SDK will notify your delegate of all possible events.
  @param delegate The 'ISRewardedVideoManualDelegate' for IronSource to send callbacks to.
  */
-+ (void)setRewardedVideoManualDelegate:(nullable id<ISRewardedVideoManualDelegate>)delegate;
++ (void)setRewardedVideoManualDelegate:(nullable id<ISRewardedVideoManualDelegate>)delegate __attribute__((deprecated("This API has been deprecated. Please use setLevelPlayRewardedVideoManualDelegate instead.")));
 
 /**
  @abstract Sets Rewarded Video flow for LevelPlay manual load.
@@ -376,8 +376,7 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
 
  @param delegate The 'ISInterstitialDelegate' for IronSource to send callbacks to.
  */
-+ (void)setInterstitialDelegate:(id<ISInterstitialDelegate>)delegate;
-
++ (void)setInterstitialDelegate:(id<ISInterstitialDelegate>)delegate __attribute__((deprecated("This API has been deprecated. Please use setLevelPlayInterstitialDelegate instead.")));
 /**
  @abstract Sets the delegate for LevelPlay interstitial callbacks.
 
@@ -468,14 +467,14 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
 
  @param delegate The 'ISOfferwallDelegate' for IronSource to send callbacks to.
  */
-+ (void)setOfferwallDelegate:(id<ISOfferwallDelegate>)delegate;
++ (void)setOfferwallDelegate:(id<ISOfferwallDelegate>)delegate __attribute__((deprecated("This API call is for the ironSource Offerwall, which will soon be deprecated. Please migrate to the Tapjoy Offerwall using the 'Offerwall migration checklist'.")));
 
 /**
  @abstract Show an offerwall using the default placement.
 
  @param viewController The UIViewController to display the offerwall within.
  */
-+ (void)showOfferwallWithViewController:(UIViewController *)viewController;
++ (void)showOfferwallWithViewController:(UIViewController *)viewController __attribute__((deprecated("This API call is for the ironSource Offerwall, which will soon be deprecated. Please migrate to the Tapjoy Offerwall using the 'Offerwall migration checklist'.")));
 
 /**
  @abstract Show an offerwall using the provided placement name.
@@ -483,20 +482,20 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  @param viewController The UIViewController to display the offerwall within.
  @param placementName The placement name as was defined in the platform. If nil is passed, a default placement will be used.
  */
-+ (void)showOfferwallWithViewController:(UIViewController *)viewController placement:(nullable NSString *)placementName;
++ (void)showOfferwallWithViewController:(UIViewController *)viewController placement:(nullable NSString *)placementName __attribute__((deprecated("This API call is for the ironSource Offerwall, which will soon be deprecated. Please migrate to the Tapjoy Offerwall using the 'Offerwall migration checklist'.")));
 
 /**
  @abstract Retrieve information on the user’s total credits and any new credits the user has earned.
  @discussion The function can be called at any point during the user’s engagement with the app.
  */
-+ (void)offerwallCredits;
++ (void)offerwallCredits __attribute__((deprecated("This API call is for the ironSource Offerwall, which will soon be deprecated. Please migrate to the Tapjoy Offerwall using the 'Offerwall migration checklist'.")));
 
 /**
  @abstract Determine if the offerwall is prepared.
 
  @return YES if there is an available offerwall, NO otherwise.
  */
-+ (BOOL)hasOfferwall;
++ (BOOL)hasOfferwall __attribute__((deprecated("This API call is for the ironSource Offerwall, which will soon be deprecated. Please migrate to the Tapjoy Offerwall using the 'Offerwall migration checklist'.")));
 
 #pragma mark - Banner
 
@@ -505,8 +504,7 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  
  @param delegate The 'ISBannerDelegate' for IronSource to send callbacks to.
  */
-+ (void)setBannerDelegate:(id<ISBannerDelegate>)delegate;
-
++ (void)setBannerDelegate:(id<ISBannerDelegate>)delegate __attribute__((deprecated("This API has been deprecated as of SDK 7.3.0. Please use setLevelPlayBannerDelegate instead.")));
 /**
  @abstract Sets the delegate for LevelPlay banner callbacks.
  
@@ -689,6 +687,35 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  @param viewController The UIViewController to display the Test Suite within.
 */
 + (void)launchTestSuite:(UIViewController *)viewController;
+
+#pragma mark - Waterfall Configuration
+
+/**
+ * Objc Example
+ * <pre>
+ *   ISWaterfallConfigurationBuilder *builder = [ISWaterfallConfiguration builder];
+ *   [builder setCeiling:@10.05];
+ *   [builder setFloor:@1.10];
+ *   ISWaterfallConfiguration *configuration = [builder build];
+ *   [IronSource setWaterfallConfiguration:configuration forAdUnit:[ISAdUnit IS_AD_UNIT_REWARDED_VIDEO]];
+ * </pre>
+ *
+ * Swift Example
+ * <pre>
+ *   let configuration = ISWaterfallConfiguration
+ *     .builder()
+ *     .setCeiling(10.05)
+ *     .setFloor(1.01)
+ *     .build()
+ *   IronSource.setWaterfallConfiguration(configuration, for: ISAdUnit.is_AD_UNIT_REWARDED_VIDEO())
+ * </pre>
+ *
+ * @abstract Allow the publisher to set custom configuration per ad unit.
+ * @param waterfallConfiguration ISWaterfallConfiguration object with custom fields configured by the publisher.
+ * @param adUnit ISAdUnit that the ISWaterfallConfiguration should apply to.
+ */
++ (void) setWaterfallConfiguration:(ISWaterfallConfiguration *)waterfallConfiguration
+                         forAdUnit:(ISAdUnit *)adUnit;
 
 @end
 

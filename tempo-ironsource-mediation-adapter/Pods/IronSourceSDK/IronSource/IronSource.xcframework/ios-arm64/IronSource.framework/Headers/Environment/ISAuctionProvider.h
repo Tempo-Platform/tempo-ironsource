@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ISGlobalDataConstants.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 // This class is a wrapper between the mediation and global data as held in the global data manager.
 // The purpose is to recieve all the data that is related to the auction request from the global data manager,
@@ -21,5 +24,8 @@
 
 - (NSDictionary *)getAuctionData;
 
+- (NSDictionary *)getAuctionDataForAdUnit:(ISGlobalDataAdUnit)adUnit;
+
 @end
 
+NS_ASSUME_NONNULL_END
