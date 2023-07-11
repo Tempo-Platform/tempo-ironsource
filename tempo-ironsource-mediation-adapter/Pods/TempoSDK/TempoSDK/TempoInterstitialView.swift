@@ -84,6 +84,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     var currentAdapterType: String?
     var currentHasConsent: Bool?
     var currentConsentType: String?
+    var currentGeoLocation: String?
 
     public func loadAd(interstitial:TempoInterstitial, isInterstitial: Bool, appId:String, adId:String?, cpmFloor:Float?, placementId: String?, sdkVersion: String?, adapterVersion: String?) {
         print("load url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
@@ -142,6 +143,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         currentCpmFloor = cpmFloor ?? 0.0
         currentAdapterType = listener.onGetAdapterType()
         currentHasConsent = listener.hasUserConsent()
+        currentGeoLocation = "US"  // TODO: This will eventually need to be taken from mediation parameters
         
         self.addMetric(metricType: "AD_LOAD_REQUEST")
         var components = URLComponents(string: getAdsApiUrl())!
@@ -149,7 +151,8 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
             URLQueryItem(name: "uuid", value: currentUUID),  // this UUID is unique per ad load
             URLQueryItem(name: "ad_id", value: currentAdId),
             URLQueryItem(name: "app_id", value: appId),
-            URLQueryItem(name: "cpm", value: String(describing: currentCpmFloor)),
+            URLQueryItem(name: "cpm_floor", value: String(currentCpmFloor ?? 0.0)),
+            URLQueryItem(name: "location", value: currentGeoLocation),
             URLQueryItem(name: "is_interstitial", value: String(currentIsInterstitial!)),
             URLQueryItem(name: "sdk_version", value: String(currentSdkVersion ?? "")),
             URLQueryItem(name: "adapter_version", value: String(currentAdapterVersion ?? "")),
@@ -164,7 +167,9 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        //print("✅ URL ADS_API string: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
+        if(TempoConstants.IS_DEBUGGING) {
+            print("✅ URL ADS_API string: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
+        }
         
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
@@ -181,7 +186,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                     return
                 }
                 do {
-                    var didSomething = false
+                    var validResponse = false
                     let json = try JSONSerialization.jsonObject(with: data!)
                     DispatchQueue.main.async {
                         if let jsonDict = json as? Dictionary<String, Any> {
@@ -191,32 +196,24 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                                         self.listener.onAdFetchFailed(isInterstitial: self.currentIsInterstitial ?? true)
                                         print("Tempo SDK: Failed loading the Ad. Received NO_FILL response from API.")
                                         self.addMetric(metricType: "NO_FILL")
-                                        didSomething = true
+                                        validResponse = true
                                     } else if (statusString == "OK") {
                                         
                                         // Loads ad from URL with id reference
                                         if let id = jsonDict["id"] {
                                             if let idString = id as? String {
                                                 print("Tempo SDK: Got Ad ID from server. Response \(jsonDict).")
-                                                let urlComponent = self.currentIsInterstitial! ? "interstitial" : "campaign"
-                                                let url = URL(string: "https://ads.tempoplatform.com/\(urlComponent)/\(idString)/ios")!
+                                                let url = URL(string: self.getAdsWebUrl(isInterstitial: self.currentIsInterstitial!, campaignId: idString))!
                                                 self.currentCampaignId = idString
                                                 self.webView.load(URLRequest(url: url))
-                                                didSomething = true
+                                                validResponse = true
                                             }
-                                        }
-                                        
-                                        // Update CPM from Tempo backend
-                                        if let cpm = jsonDict["cpm"] {
-                                            //var old = self.currentCpmFloor!;
-                                            self.currentCpmFloor = cpm as? Float
-                                            //print("✅ New CPM = \(self.currentCpmFloor ?? 0) (\(old))")
                                         }
                                     }
                                 }
                             }
                         }
-                        if (!didSomething) {
+                        if (!validResponse) {
                             self.sendAdFetchFailed()
                         }
                     }
@@ -330,6 +327,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
                             bundle_id: Bundle.main.bundleIdentifier!,
                             campaign_id: currentCampaignId ?? "",
                             session_id: currentUUID!,
+                            location: currentGeoLocation ?? "US",
                             placement_id: currentPlacementId ?? "",
                             os: "iOS \(UIDevice.current.systemVersion)",
                             sdk_version: currentSdkVersion ?? "",
@@ -493,9 +491,9 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     }
     
     private func getAdsWebUrl(isInterstitial: Bool, campaignId: String) -> String! {
-        var urlDomain = isInterstitial ? TempoConstants.ADS_DOM_URL_PROD : TempoConstants.ADS_DOM_URL_DEV
-        var adsWebUrl = "\(urlDomain)/\(isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW)/\(campaignId)/ios";
-        print("🌏: \(adsWebUrl)")
+        let urlDomain = TempoConstants.IS_PROD ? TempoConstants.ADS_DOM_URL_PROD : TempoConstants.ADS_DOM_URL_DEV
+        let adsWebUrl = "\(urlDomain)/\(isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW)/\(campaignId)/ios";
+        print("🌏 \(adsWebUrl)")
         return adsWebUrl
     }
     
