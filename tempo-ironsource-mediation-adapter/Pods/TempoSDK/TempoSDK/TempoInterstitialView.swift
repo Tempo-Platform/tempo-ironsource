@@ -493,7 +493,7 @@ public class TempoInterstitialView: UIViewController, WKNavigationDelegate, WKSc
     private func getAdsWebUrl(isInterstitial: Bool, campaignId: String) -> String! {
         let urlDomain = TempoConstants.IS_PROD ? TempoConstants.ADS_DOM_URL_PROD : TempoConstants.ADS_DOM_URL_DEV
         let adsWebUrl = "\(urlDomain)/\(isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW)/\(campaignId)/ios";
-        print("🌏 \(adsWebUrl)")
+        //print("🌏 \(adsWebUrl)")
         return adsWebUrl
     }
     

@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "tempo-ios-ironsource-mediation"
-  spec.version      = "1.0.5"
+  spec.version      = "1.1.0"
   spec.summary      = "Tempo ironSource iOS Mediation Adapter."
 
   spec.description  = <<-DESC
@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   spec.static_framework = true
   spec.swift_version = '5.0'
 
-  spec.dependency "TempoSDK", "1.0.7"
+  spec.dependency "TempoSDK", "1.1.0"
   spec.dependency "IronSourceSDK", "~> 7.3.0"
   
   spec.source_files = "tempo-ios-ironsource-mediation/*.*"
