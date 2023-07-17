@@ -37,7 +37,11 @@ public struct Constants {
         static let ADS_DOM_URL_DEV = "https://development--tempo-html-ads.netlify.app" // DEV
         static let URL_INT = "interstitial"
         static let URL_REW = "campaign"
-        static let METRIC_TIME_HEADER = "X-Timestamp"
+        static let HTTP_METHOD_POST = "POST"
+        static let HEADER_METRIC_TIME = "X-Timestamp"
+        static let HEADER_CONTENT_TYPE = "Content-Type"
+        static let HEADER_ACCEPT = "Accept"
+        static let APPLICATION_JSON = "application/json"
     }
     
     struct URL {

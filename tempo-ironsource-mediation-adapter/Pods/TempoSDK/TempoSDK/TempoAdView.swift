@@ -38,8 +38,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         self.appId = appId
         
         sdkVersion = Constants.SDK_VERSIONS
-        adapterVersion = self.listener.onVersionExchange(sdkVersion: self.sdkVersion)
-        adapterType = self.listener.onGetAdapterType()
+        adapterVersion = self.listener.getAdapterVersion()
+        adapterType = self.listener.getAdapterType()
         consent = self.listener.hasUserConsent()
         adId = getAdId()
     }
@@ -126,10 +126,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         // Get Advertising ID (IDFA) // TODO: add proper IDFA alternative here if we don't have Ad ID
         let advertisingIdentifier: UUID = ASIdentifierManager().advertisingIdentifier
         return advertisingIdentifier.uuidString != Constants.ZERO_AD_ID ? advertisingIdentifier.uuidString : nil
-    }
-    
-    public func updateViewController(parentVC: UIViewController?) {
-        self.parentVC = parentVC
     }
     
     /// Generate REST-ADS-API web request with current session data

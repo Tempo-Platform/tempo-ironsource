@@ -3,7 +3,6 @@ import TempoSDK
 
 public class Metrics {
    
-    
     /// Sends latest version of Metrics array to Tempo backend and then clears
     public static func pushMetrics(currentMetrics: inout [Metric], backupUrl: URL?) {
         
@@ -13,9 +12,9 @@ public class Metrics {
         // Create the session object
         let session = URLSession.shared
         
-        // Now create the Request object using the url object
+        // Now create the Request object using the URL object
         var request = URLRequest(url: url)
-        request.httpMethod = "POST" //set http method as POST
+        request.httpMethod = Constants.Web.HTTP_METHOD_POST
         
         // Declare local metric/data varaibles
         let metricData: Data?
@@ -32,6 +31,7 @@ public class Metrics {
             metricData = try? JSONEncoder().encode(currentMetrics)
             currentMetrics.removeAll()
         }
+        
         request.httpBody = metricData // pass dictionary to data object and set it as request body
         
         // Prints out metrics types being sent in this push
@@ -47,16 +47,16 @@ public class Metrics {
         }
         
         // HTTP Headers
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue(String(Int(Date().timeIntervalSince1970)), forHTTPHeaderField: Constants.Web.METRIC_TIME_HEADER)
+        request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_CONTENT_TYPE)
+        request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_ACCEPT)
+        request.addValue(String(Int(Date().timeIntervalSince1970)), forHTTPHeaderField: Constants.Web.HEADER_METRIC_TIME)
         
         // Create dataTask using the session object to send data to the server
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             guard error == nil else {
                 if(backupUrl == nil) {
                     TempoUtils.Warn(msg: "Data did not send, creating backup")
-                    TempoDataBackup.sendData(metricsArray: metricListCopy)
+                    TempoDataBackup.storeData(metricsArray: metricListCopy)
                 }
                 else{
                     TempoUtils.Warn(msg:"Data did not send, keeping backup: \(backupUrl!)")
@@ -64,16 +64,7 @@ public class Metrics {
                 return
             }
             
-//            // Output details of response TODO: Harmless - "The data couldn’t be read because it isn’t in the correct format"
-//            do{
-//                let dataDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
-//                TempoUtils.Say(msg: "Response dictionary is: \(dataDictionary)")
-//
-//            } catch let error as NSError {
-//                TempoUtils.Say(msg: "Error: \(error.localizedDescription)")
-//            }
-            
-            // If metrics were backeups - and were successfully resent - delete the file from device storage before sending again in case rules have changed
+            // If metrics were back-ups - and were successfully resent - delete the file from device storage before sending again in case rules have changed
             if(backupUrl != nil)
             {
                 TempoUtils.Say(msg: "Removing backup: \(backupUrl!) (x\(TempoDataBackup.fileMetric[backupUrl!]!.count))")
@@ -99,7 +90,7 @@ public class Metrics {
                     break
                 default:
                     TempoUtils.Say(msg: "📊 Non-Tempo related error - backup: \(httpResponse.statusCode)")
-                    TempoDataBackup.sendData(metricsArray: metricListCopy)
+                    TempoDataBackup.storeData(metricsArray: metricListCopy)
                 }
             }
         })
@@ -108,23 +99,22 @@ public class Metrics {
     }
 }
 
-
 public struct Metric : Codable {
     var metric_type: String?
     var ad_id: String?
     var app_id: String?
     var timestamp: Int?
     var is_interstitial: Bool?
-    var bundle_id: String = "unknown"
-    var campaign_id: String = "unknown"
-    var session_id: String = "unknown"
-    var location: String = "unknown"
-//    var gender: String = "?"
-//    var age_range: String = "unknown"
-//    var income_range: String = "unknown"
-    var placement_id: String = "unknown"
+    var bundle_id: String = ""
+    var campaign_id: String = ""
+    var session_id: String = ""
+    var location: String = ""
+//    var gender: String = ""
+//    var age_range: String = ""
+//    var income_range: String = ""
+    var placement_id: String = ""
     var country_code: String? = TempoUserInfo.getIsoCountryCode2Digit()
-    var os: String = "unknown"
+    var os: String = ""
     var sdk_version: String
     var adapter_version: String
     var cpm: Float
