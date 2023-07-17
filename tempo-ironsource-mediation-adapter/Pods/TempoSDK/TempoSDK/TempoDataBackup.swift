@@ -1,5 +1,9 @@
 import Foundation
 
+/**
+ * The class is used to backup any metrics that are not sent due to unforeseen network/communication errors
+ * It backs references of them up in the local storage and attempts to send them again the next time the app is restarted
+ */
 public class TempoDataBackup
 {
     public static var readyForCheck: Bool = true
@@ -13,11 +17,11 @@ public class TempoDataBackup
     }
     
     /// Adds Metric JSON array as data file to device's backup folder
-    public static func sendData(metricsArray: [Metric]?) {
+    internal static func sendData(metricsArray: [Metric]?) {
         
         if(backupsAtMax)
         {
-            if(TempoConstants.IS_DEBUGGING) {
+            if(Constants.IS_TESTING) {
                 print("❌ Cannot add anymore backups. At full capacity!")
             }
         }
@@ -26,7 +30,7 @@ public class TempoDataBackup
             {
                 // Declare file subdirectory to fetch data
                 let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                let jsonDirectory = documentsDirectory.appendingPathComponent(TempoConstants.METRIC_BACKUP_FOLDER)
+                let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
                 do {
                     try FileManager.default.createDirectory(at: jsonDirectory, withIntermediateDirectories: true, attributes: nil)
                 } catch {
@@ -41,7 +45,7 @@ public class TempoDataBackup
                     
                     // Create unique name using datetime
                     var filename = String(Int(Date().timeIntervalSince1970 * 1000))
-                    filename = filename.replacingOccurrences(of: ".", with: "_") +  TempoConstants.METRIC_BACKUP_APPEND
+                    filename = filename.replacingOccurrences(of: ".", with: "_") +  Constants.Backup.METRIC_BACKUP_APPEND
 
                     // Create file URL to device storage
                     let fileURL = jsonDirectory.appendingPathComponent(filename)
@@ -50,7 +54,7 @@ public class TempoDataBackup
                     try jsonData.write(to: fileURL)
                     
                     // Output array details durign debugging
-                    if(TempoConstants.IS_DEBUGGING)
+                    if(Constants.IS_TESTING)
                     {
                         let fileSize = try FileManager.default.attributesOfItem(atPath: fileURL.path)[.size] as? NSNumber
                         var nameList = "Saved files: \(filename) (\(fileSize?.intValue ?? 0 ) bytes)"
@@ -74,15 +78,15 @@ public class TempoDataBackup
         
         // Declare file subdirectory to store data
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let jsonDirectory = documentsDirectory.appendingPathComponent(TempoConstants.METRIC_BACKUP_FOLDER)
+        let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
         
         guard let contents = try? FileManager.default.contentsOfDirectory(at: jsonDirectory, includingPropertiesForKeys: nil) else {
             return
         }
         
         // Check backups are not at full capacity
-        if(contents.count > TempoConstants.MAX_BACKUPS) {
-            if(TempoConstants.IS_DEBUGGING)  {
+        if(contents.count > Constants.Backup.MAX_BACKUPS) {
+            if(Constants.IS_TESTING)  {
                 print("❌ Max Backups! [\(contents.count)]")
             }
             backupsAtMax = true
@@ -107,10 +111,10 @@ public class TempoDataBackup
                         let calendar = Calendar.current
                         let daysOld = calendar.dateComponents([.day], from: creationDate, to: currentDate).day ?? 0
                         
-                        if daysOld >= TempoConstants.EXPIRY_DAYS {
+                        if daysOld >= Constants.Backup.EXPIRY_DAYS {
                             removeSpecificMetricList(backupUrl: fileURL)
-                            if(TempoConstants.IS_DEBUGGING)  {
-                                print("File is older than \(TempoConstants.EXPIRY_DAYS) days")
+                            if(Constants.IS_TESTING)  {
+                                print("File is older than \(Constants.Backup.EXPIRY_DAYS) days")
                             }
                             continue
                         }
@@ -128,7 +132,7 @@ public class TempoDataBackup
                 for metric in metricPayload
                 {
                     fileMetric[fileURL] = metricPayload
-                    if(TempoConstants.IS_DEBUGGING)
+                    if(Constants.IS_TESTING)
                     {
                         print("📊 \(fileURL) => \(metric.metric_type ?? "UNKNOWN")")
                     }
@@ -147,7 +151,7 @@ public class TempoDataBackup
             // Remove each file
             try FileManager.default.removeItem(at: backupUrl)
             
-            if(TempoConstants.IS_DEBUGGING)   {
+            if(Constants.IS_TESTING)   {
                 print("Removing file: \(backupUrl)")
             }
             
@@ -158,7 +162,7 @@ public class TempoDataBackup
     
     /// Clears ALL references in the dedicated local backup folder
     static func clearAllData()  {
-        let jsonDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(TempoConstants.METRIC_BACKUP_FOLDER)
+        let jsonDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
         
         do {
             // Get the contents of the directory
@@ -170,6 +174,27 @@ public class TempoDataBackup
             }
         } catch {
             print("Error while attempting to clear backup folder: \(error)")
+        }
+    }
+    
+    public static func checkHeldMetrics(completion: @escaping (inout [Metric], URL) -> Void) {
+        // See if check has already been called
+        if(readyForCheck) {
+            // Request creation of backup metrics dictionary
+            initCheck()
+            //print("Resending: \(TempoDataBackup.fileMetric.count)")
+            
+            var emptyArray: [Metric] = []
+            
+            // Cycles through each stored arrays and resends
+            for url in fileMetric.keys
+            {
+                //pushMetrics(backupUrl: url)
+                completion(&emptyArray, url)
+            }
+            
+            // Prevents from being checked again this session. If network is failing, no point retrying during this session
+            readyForCheck = false
         }
     }
 }

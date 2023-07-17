@@ -3,10 +3,9 @@ import TempoSDK
 import IronSource
 
 @objc(ISTempoCustomInterstitial)
-public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialListener {
+public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
 
-    
-    var interstitial:TempoInterstitial? = nil
+    var interstitial: TempoAdController?
     var isAdReady: Bool = false
     var delegate:ISInterstitialAdDelegate? = nil
     
@@ -29,7 +28,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialLis
         }
         
         // Create ad instance and load new ad
-        self.interstitial = TempoInterstitial(parentViewController: nil, delegate: self, appId: appId)
+        self.interstitial = TempoAdController(tempoAdListener: self, appId: appId)
         DispatchQueue.main.async {
             self.interstitial!.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
           }
@@ -49,8 +48,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoInterstitialLis
            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
            return
         }
-        self.interstitial!.updateViewController(parentViewController: viewController)
-        self.interstitial!.showAd()
+        self.interstitial!.showAd(parentViewController: viewController)
     }
     
     /// Tempo listener - to be called when ad has successfully loaded

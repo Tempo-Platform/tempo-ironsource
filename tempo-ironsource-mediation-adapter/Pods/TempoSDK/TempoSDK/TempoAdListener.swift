@@ -1,4 +1,4 @@
-public protocol TempoInterstitialListener {
+public protocol TempoAdListener {
     // Called when the interstitial content is finished loading.
     func onAdFetchSucceeded(isInterstitial: Bool)
     

@@ -7,7 +7,7 @@ public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
  
     public static let ADAPTER_TYPE = "IRONSOURCE"
     public static let customAdapterVersion = "1.1.0"
-    public static var dynSdkVersion = "1.1.0"
+    public static var dynSdkVersion = Constants.SDK_VERSIONS
     
     /// SDK initialisation handler
     public override func `init` (_ adData: ISAdData, delegate: ISNetworkInitializationDelegate) {

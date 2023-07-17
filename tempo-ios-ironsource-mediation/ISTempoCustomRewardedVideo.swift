@@ -3,11 +3,11 @@ import TempoSDK
 import IronSource
 
 @objc(ISTempoCustomRewardedVideo)
-public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoInterstitialListener {
+public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     
-    var rewarded :TempoInterstitial? = nil
+    var rewarded: TempoAdController? = nil
     var isAdReady: Bool = false
-    var delegate:ISRewardedVideoAdDelegate? = nil
+    var delegate: ISRewardedVideoAdDelegate? = nil
     
     /// Callback from ironSource API when IronSource.loadRewardedAds() called
     public override func loadAd(with adData: ISAdData, delegate: ISRewardedVideoAdDelegate) {
@@ -28,7 +28,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoInterstitialL
         }
         
         // Create ad instance and load new ad
-        self.rewarded = TempoInterstitial(parentViewController: nil, delegate: self, appId: appId)
+        self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
         DispatchQueue.main.async {
             self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
           }
@@ -51,8 +51,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoInterstitialL
            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
            return
         }
-        self.rewarded!.updateViewController(parentViewController: viewController)
-        self.rewarded!.showAd()
+        self.rewarded!.showAd(parentViewController: viewController)
     }
     
     /// Tempo listener - to be called when ad has successfully loaded
