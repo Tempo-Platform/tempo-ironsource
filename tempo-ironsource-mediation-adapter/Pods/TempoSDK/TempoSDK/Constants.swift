@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let IS_PROD = false
+    public static let IS_PROD = true
     public static let IS_TESTING = true
     
     public static let SDK_VERSIONS = "1.1.0"

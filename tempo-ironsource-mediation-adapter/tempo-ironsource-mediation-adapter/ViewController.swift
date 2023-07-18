@@ -10,7 +10,7 @@ import IronSource
 import TempoSDK
 import tempo_ios_ironsource_mediation
 
-let kAPPKEY = "1a4922385" // 1a4922385/1a470a75d
+let kAPPKEY = Constants.IS_PROD ? "1ade2c39d" : "1a470a75d"
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoManualDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
     
@@ -25,7 +25,7 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
         IronSource.loadRewardedVideo()
     }
     @IBAction func rewardedShowBtnAction(_ sender: Any) {
-        IronSource.showRewardedVideo(with: self, placement: "tempoR1")
+        IronSource.showRewardedVideo(with: self)
     }
     @IBAction func interstitialLoadBtnAction(_ sender: Any) {
         IronSource.loadInterstitial()
