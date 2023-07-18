@@ -22,14 +22,14 @@ public class ISTempoUtils {
         return adDataCpmFloor ?? "NO_CPM_FLOOR"
     }
     
-    public static func shout(msg: String = "", showInProd: Bool = false, functStrion: String = #function) {
-        if !testState {
-            return
-        }
-        
-        let outMsg = msg.isEmpty ? "" : "| \(msg)"
-        print("💥 \(functStrion) \(outMsg)")
-    }
+//    public static func shout(msg: String = "", showInProd: Bool = false, functStrion: String = #function) {
+//        if !testState {
+//            return
+//        }
+//        
+//        let outMsg = msg.isEmpty ? "" : "| \(msg)"
+//        print("💥 \(functStrion) \(outMsg)")
+//    }
     
     public static func adUnitStringer(adInfo: ISAdInfo!) -> String {
         return "\(adInfo.ad_unit), \(adInfo.ad_network), Instance: [\(adInfo.instance_name), \(adInfo.instance_id)]"

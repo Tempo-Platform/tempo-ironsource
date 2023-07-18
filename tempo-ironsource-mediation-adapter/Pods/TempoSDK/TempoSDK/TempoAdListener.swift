@@ -1,4 +1,4 @@
-public protocol TempoInterstitialListener {
+public protocol TempoAdListener {
     // Called when the interstitial content is finished loading.
     func onAdFetchSucceeded(isInterstitial: Bool)
     
@@ -15,10 +15,10 @@ public protocol TempoInterstitialListener {
     func onAdClicked(isInterstitial: Bool)  // TODO: actually monitor clicks and call this callback
     
     // Called when swapping version information
-    func onVersionExchange(sdkVersion: String) -> String?
+    func getAdapterVersion() -> String?
     
     // Called when requesting adapter type
-    func onGetAdapterType() -> String?
+    func getAdapterType() -> String?
     
     // Called when requesting user consent state
     func hasUserConsent() -> Bool?
