@@ -47,7 +47,7 @@ jobs:
           $adapter | Set-Content -Path "$env:ADAPTER_PATH" -Force
           
 
-      # Stage and commit the updated .podspec file
+      # Stage and commit the updated files
       - name: Stage & Commit
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
