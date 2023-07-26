@@ -1,6 +1,5 @@
 #
-# Be sure to run `pod lib lint TempoSDK.podspec' to ensure this is a
-# valid spec before submitting.
+# Run `pod spec lint tempo-ios-ironsource-mediation.podspec' to validate the spec after any changes
 #
 # To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
 #
