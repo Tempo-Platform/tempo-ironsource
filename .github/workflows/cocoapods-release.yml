@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.REPO_WRITE_PAT }}
 
-      # Update the semantic version number in the .podspec and Constants.swift files
+      # Update the semantic version number in the .podspec and ISTempoCustomAdapter.swift files
       - name: Update Versions
         shell: pwsh
         run: |
