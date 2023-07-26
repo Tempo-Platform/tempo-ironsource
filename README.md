@@ -12,7 +12,7 @@ Tempo iOS ironSource Mediation Adapter
 Tempo iOS ironSource Mediation Adapter is a custom API that allows the Tempo SDK to talk to the ironSource SDK.
 
 - [Publish to CocoaPods](#publish-to-cocoapods)
-- [Try the TempoSDK](#try-the-tempo-ios-ironsource-mediation-adapter)
+- [Try the Adapter](#try-the-adapter)
 - [Source Control](#source-control)
     * [Branching](#branching)
     * [Pull Requests](#pull-requests)
@@ -27,7 +27,7 @@ Tempo iOS ironSource Mediation Adapter is a custom API that allows the Tempo SDK
 2. Update the version number in "TempoSDK.podspec" file to match the above GitHub release.
 3. Run `pod trunk push --allow-warnings --verbose`
 
-## Try the Tempo iOS ironSource Mediation Adapter
+## Try the Adapter
 
 Add the following line to your Podfile:
 
