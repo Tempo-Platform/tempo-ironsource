@@ -54,7 +54,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git commit -a -m "Updated .podspec & ISTempoCustomAdapter.swift versions"
 
-      # Force push the updated podspec file using PAT to bypass branch protection
+      # Force push the updated files using PAT to bypass branch protection
       - name: Push Changes
         uses: ad-m/github-push-action@master
         with:
