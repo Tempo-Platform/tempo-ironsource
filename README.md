@@ -1,5 +1,3 @@
-# tempo-ironsource
-
 <h1 align="center">
 
 <img src="assets/tempo-logo.png" width="128"/>
