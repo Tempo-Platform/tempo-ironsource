@@ -1,0 +1,81 @@
+name: Release to CocoaPods
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+env:
+  PODSPEC_PATH: ./tempo-ios-ironsource-mediation.podspec
+  ADAPTER_PATH: ./tempo-ios-ironsource-mediation/ISTempoCustomAdapter.swift
+
+jobs:
+  update-podspec:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      # Checkout main branch, with full history using PAT
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.REPO_WRITE_PAT }}
+
+      # Update the semantic version number in the .podspec and ISTempoCustomAdapter.swift files
+      - name: Update Versions
+        shell: pwsh
+        run: |
+          $version = "${{ github.event.release.tag_name }}"
+          
+          Write-Output "Attempting to update podspec version to $version"
+          $podspec = Get-Content "$env:PODSPEC_PATH"
+          $podspec = $podspec -replace '^(.*spec.version.*)(''.*'')$', "`$1'$version'"
+          
+          Write-Output "Adjusted podspec:`n$podspec"
+          $podspec | Set-Content -Path "$env:PODSPEC_PATH" -Force
+          
+          Write-Output "Attempting to update ISTempoCustomAdapter.swift version to $version"
+          $adapter = Get-Content "$env:ADAPTER_PATH"
+          $adapter = $adapter -replace '^(.*TEMPO_ADAPTER_VERSION.*)(".*")$', "`$1`"$version`""
+          
+          Write-Output "Adjusted ISTempoCustomAdapter.swift:`n$adapter"
+          $adapter | Set-Content -Path "$env:ADAPTER_PATH" -Force
+          
+
+      # Stage and commit the updated files
+      - name: Stage & Commit
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Updated .podspec & ISTempoCustomAdapter.swift versions"
+
+      # Force push the updated files using PAT to bypass branch protection
+      - name: Push Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.REPO_WRITE_PAT }}
+          force_with_lease: true
+
+  push-pod:
+    needs: validate-update-podspec
+    runs-on: macos-latest
+    environment: production
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # Using the podspec, push the latest version of the pod to CocoaPod
+      - name: Push Pod
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          pod trunk push ${{ env.PODSPEC_PATH }} --allow-warnings --verbose
