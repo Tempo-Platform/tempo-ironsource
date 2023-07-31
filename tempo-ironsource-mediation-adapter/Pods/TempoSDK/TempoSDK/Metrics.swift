@@ -1,5 +1,4 @@
 import Foundation
-import TempoSDK
 
 public class Metrics {
    

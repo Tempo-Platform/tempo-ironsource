@@ -10,7 +10,7 @@ import IronSource
 import TempoSDK
 import tempo_ios_ironsource_mediation
 
-let kAPPKEY = Constants.IS_PROD ? "1ade2c39d" : "1a470a75d"
+let kAPPKEY = Constants.isProd ? "1ade2c39d" : "1a470a75d"
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoManualDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
     

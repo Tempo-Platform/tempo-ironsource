@@ -80,6 +80,14 @@ public class TempoDataBackup
             return
         }
         
+        if(contents.count == 0) {
+            TempoUtils.Say(msg: "✅ No Backups! [\(contents.count)]")
+            return
+        }
+        else {
+            TempoUtils.Say(msg: "📂 Backups Found! [\(contents.count)]")
+        }
+        
         // Check backups are not at full capacity
         if(contents.count > Constants.Backup.MAX_BACKUPS) {
             TempoUtils.Warn(msg: "❌ Max Backups! [\(contents.count)]")
@@ -112,7 +120,7 @@ public class TempoDataBackup
                     }
                     
                 } catch {
-                    print("Error checking bkacup file date: \(error)")
+                    print("Error checking backup file date: \(error)")
                 }
                 
                 let data = try Data(contentsOf: fileURL)
