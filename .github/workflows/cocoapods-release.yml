@@ -62,7 +62,7 @@ jobs:
           force_with_lease: true
 
   push-pod:
-    needs: validate-update-podspec
+    needs: update-podspec
     runs-on: macos-latest
     environment: production
 
