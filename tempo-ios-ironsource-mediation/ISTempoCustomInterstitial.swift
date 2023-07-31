@@ -54,20 +54,20 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
     }
     
     /// Tempo listener - to be called when ad has successfully loaded
-    public func onAdFetchSucceeded(isInterstitial: Bool) {
+    public func onTempoAdFetchSucceeded(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdFetchSucceeded \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidLoad()
         isAdReady = true
     }
     
     /// Tempo listener - to be called when ad failed to load
-    public func onAdFetchFailed(isInterstitial: Bool) {
+    public func onTempoAdFetchFailed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdFetchFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.noFill, errorCode: 0, errorMessage: "Ad fetch failed for some reason")
     }
     
     /// Tempo listener - to be called when ad is closed
-    public func onAdClosed(isInterstitial: Bool) {
+    public func onTempoAdClosed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdClosed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidClose()
         self.delegate?.adDidShowSucceed()
@@ -75,26 +75,26 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
     }
     
     /// Tempo listener - to be called when ad is displayed
-    public func onAdDisplayed(isInterstitial: Bool) {
+    public func onTempoAdDisplayed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdDisplayed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidOpen()
     }
     
     /// Tempo listener - to be called when ad is clicked
-    public func onAdClicked(isInterstitial: Bool) {
+    public func onTempoAdClicked(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdClicked \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidClick()
     }
     
     /// Tempo listener - to be called when version references are updated
-    public func getAdapterVersion() -> String? {
-        TempoUtils.Say(msg: "getAdapterVersion \(ISTempoUtils.sayAdType(isInterstitial: true))");
+    public func getTempoAdapterVersion() -> String? {
+        TempoUtils.Say(msg: "getTempoAdapterVersion \(ISTempoUtils.sayAdType(isInterstitial: true))");
         return ISTempoCustomAdapter.TEMPO_ADAPTER_VERSION
     }
     
     /// Tempo listener - to be called when adapter type is requested
-    public func getAdapterType() -> String? {
-        TempoUtils.Say(msg: "getAdapterType \(ISTempoUtils.sayAdType(isInterstitial: true))");
+    public func getTempoAdapterType() -> String? {
+        TempoUtils.Say(msg: "getTempoAdapterType \(ISTempoUtils.sayAdType(isInterstitial: true))");
         return ISTempoCustomAdapter.ADAPTER_TYPE
     }
     

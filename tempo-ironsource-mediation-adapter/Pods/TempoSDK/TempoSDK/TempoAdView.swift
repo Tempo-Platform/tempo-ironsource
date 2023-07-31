@@ -38,8 +38,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         self.appId = appId
         
         sdkVersion = Constants.SDK_VERSIONS
-        adapterVersion = self.listener.getAdapterVersion()
-        adapterType = self.listener.getAdapterType()
+        adapterVersion = self.listener.getTempoAdapterVersion()
+        adapterType = self.listener.getTempoAdapterType()
         consent = self.listener.hasUserConsent()
         adId = getAdId()
     }
@@ -82,7 +82,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         
         // Send SHOW metric and call activate DISPLAYED listener
         addMetric(metricType: Constants.MetricType.SHOW)
-        listener.onAdDisplayed(isInterstitial: self.isInterstitial ?? true)
+        listener.onTempoAdDisplayed(isInterstitial: self.isInterstitial ?? true)
         
         // Create JS statement to find video element and play.
         let script = Constants.JS.JS_FORCE_PLAY
@@ -102,7 +102,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         webView = nil
         solidColorView = nil
         Metrics.pushMetrics(currentMetrics: &metricList, backupUrl: nil)
-        listener.onAdClosed(isInterstitial: self.isInterstitial ?? true)
+        listener.onTempoAdClosed(isInterstitial: self.isInterstitial ?? true)
     }
     
     /// Test function used to test specific campaign ID using dummy values fo other metrics
@@ -116,8 +116,9 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         //let urlComponent = isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW
         self.addMetric(metricType: "CUSTOM_AD_LOAD_REQUEST")
         //let url = URL(string: "https://ads.tempoplatform.com/\(urlComponent)/\(campaignId)/ios")!
-        let url = URL(string: TempoUtils.getAdsWebUrl(isInterstitial: isInterstitial, campaignId: campaignId))!
-        self.campaignId = campaignId
+        let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: isInterstitial, campaignId: campaignId))!
+        //self.campaignId = campaignId
+        self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
         self.webView.load(URLRequest(url: url))
     }
     
@@ -166,7 +167,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                             if let status = jsonDict["status"] {
                                 if let statusString = status as? String {
                                     if statusString == Constants.NO_FILL {
-                                        self.listener.onAdFetchFailed(isInterstitial: self.isInterstitial ?? true)
+                                        self.listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial ?? true)
                                         print("Tempo SDK: Failed loading the Ad. Received NO_FILL response from API.")
                                         self.addMetric(metricType: Constants.NO_FILL)
                                         validResponse = true
@@ -176,8 +177,10 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                                         if let id = jsonDict["id"] {
                                             if let idString = id as? String {
                                                 TempoUtils.Say(msg: "Ad Received \(jsonDict).")
-                                                let url = URL(string: TempoUtils.getAdsWebUrl(isInterstitial: self.isInterstitial!, campaignId: idString))!
-                                                self.campaignId = idString
+                                                //let url = URL(string: TempoUtils.getAdsWebUrl(isInterstitial: self.isInterstitial!, campaignId: idString))!
+                                                let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial!, campaignId: idString))!
+                                                //self.campaignId = idString
+                                                self.campaignId = TempoUtils.checkForTestCampaign(campaignId: idString)
                                                 self.webView.load(URLRequest(url: url))
                                                 validResponse = true
                                             }
@@ -231,7 +234,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     func sendAdFetchFailed(reason: String) {
         print("Tempo SDK: Failed loading the Ad. \(reason).")
-        self.listener.onAdFetchFailed(isInterstitial: self.isInterstitial ?? true)
+        self.listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial ?? true)
         self.addMetric(metricType: Constants.MetricType.LOAD_FAILED)
     }
     
@@ -314,7 +317,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             
             // Show success when content load
             if(webMsg == Constants.MetricType.IMAGES_LOADED) {
-                listener.onAdFetchSucceeded(isInterstitial: self.isInterstitial ?? true)
+                listener.onTempoAdFetchSucceeded(isInterstitial: self.isInterstitial ?? true)
                 self.addMetric(metricType: Constants.MetricType.LOAD_SUCCESS)
             }
         }
@@ -339,19 +342,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                             adapter_type: self.adapterType,
                             consent: self.consent,
                             consent_type: nil
-//                            ad_id: adId,
-//                            app_id: appId,
-//                            is_interstitial: isInterstitial,
-//                            campaign_id: campaignId ?? "",
-//                            session_id: uuid!,
-//                            location: geo ?? "US",
-//                            placement_id: placementId ?? "",
-//                            sdk_version: sdkVersion ?? "",
-//                            adapter_version: adapterVersion ?? "",
-//                            cpm: cpmFloor ?? 0.0,
-//                            adapter_type: adapterType,
-//                            consent: consent,
-//                            consent_type: nil
         )
         
         self.metricList.append(metric)
@@ -360,150 +350,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             Metrics.pushMetrics(currentMetrics: &metricList, backupUrl: nil)
         }
     }
-    
-//    /// Sends latest version of Metrics array to Tempo backend and then clears
-//    internal func pushMetrics(backupUrl: URL?) {
-//
-//        // Create the url with NSURL
-//        let url = URL(string: TempoUtils.getMetricsUrl())!
-//
-//        // Create the session object
-//        let session = URLSession.shared
-//
-//        // Now create the Request object using the url object
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST" //set http method as POST
-//
-//        // Declare local metric/data varaibles
-//        let metricData: Data?
-//        var metricListCopy = [Metric]()
-//
-//        // Assigned values depend on whether it's backup-resend or standard push
-//        if(backupUrl != nil)
-//        {
-//            let backupMetricList = TempoDataBackup.fileMetric[backupUrl!]
-//            metricData = try? JSONEncoder().encode(backupMetricList)
-//        }
-//        else {
-//            metricListCopy = metricList;
-//            metricData = try? JSONEncoder().encode(metricList)
-//            metricList.removeAll()
-//        }
-//        request.httpBody = metricData // pass dictionary to data object and set it as request body
-//
-//        // Prints out metrics types being sent in this push
-//        if(Constants.IS_TESTING)
-//        {
-//            let outMetricList = backupUrl != nil ? TempoDataBackup.fileMetric[backupUrl!]: metricListCopy
-//            if(outMetricList != nil)
-//            {
-//                var metricOutput = "Metrics: "
-//                for metric in outMetricList!{
-//                    metricOutput += "\n  - \(metric.metric_type ?? "<TYPE_UNKNOWN>") | \(metric.sdk_version)/\(metric.adapter_version)"
-//                }
-//                print("📊 \(metricOutput)")
-//                print("📊 Payload: " + String(data: metricData ?? Data(), encoding: .utf8)!)
-//            }
-//        }
-//
-//        // HTTP Headers
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        request.addValue(String(Int(Date().timeIntervalSince1970)), forHTTPHeaderField: Constants.Web.METRIC_TIME_HEADER)
-//
-//        // Create dataTask using the session object to send data to the server
-//        let task = session.dataTask(with: request, completionHandler: { data, response, error in
-//            guard error == nil else {
-//                if(backupUrl == nil) {
-//                    print("Data did not send, creating backup")
-//                    TempoDataBackup.sendData(metricsArray: metricListCopy)
-//                }
-//                else{
-//                    print("Data did not send, keeping backup: \(backupUrl!)")
-//                }
-//                return
-//            }
-//
-//            // Output details of response
-//            if(Constants.IS_TESTING)
-//            {
-//                do{
-//                    let dataDictionary = try JSONSerialization.jsonObject(with: data!, options: [])
-//                    print("Response dictionary is: \(dataDictionary)")
-//
-//                } catch let error as NSError {
-//                    if(Constants.IS_TESTING) {
-//                        print("Error: \(error.localizedDescription)")
-//                    }
-//                }
-//            }
-//
-//            // If metrics were backeups - and were successfully resent - delete the file fro mdevice storage
-//            if(backupUrl != nil)
-//            {
-//                if(Constants.IS_TESTING)
-//                {
-//                    print("Removing backup: \(backupUrl!) (x\(TempoDataBackup.fileMetric[backupUrl!]!.count))")
-//                }
-//
-//                // Remove metricList from device storage
-//                TempoDataBackup.removeSpecificMetricList(backupUrl: backupUrl!)
-//            }
-//            else
-//            {
-//                if(Constants.IS_TESTING) {
-//                    print("Standard Metric sent (x\(metricListCopy.count))")
-//                }
-//
-//                if let httpResponse = response as? HTTPURLResponse {
-//                    //print("Tempo status code: \(httpResponse.statusCode)")
-//                    
-//                    switch(httpResponse.statusCode)
-//                    {
-//                    case 200:
-//                        if(Constants.IS_TESTING)  {
-//                            print("📊 Passed metrics - do not backup: \(httpResponse.statusCode)")
-//                        }
-//                        break
-//                    case 400:
-//                        fallthrough
-//                    case 422:
-//                        if(Constants.IS_TESTING)  {
-//                            print("📊 Passed/Bad metrics - do not backup: \(httpResponse.statusCode)")
-//                        }
-//                        break
-//                    default:
-//                        if(Constants.IS_TESTING)  {
-//                            print("📊 Non-tempo related error - backup: \(httpResponse.statusCode)")
-//                        }
-//                        TempoDataBackup.sendData(metricsArray: metricListCopy)
-//                    }
-//                }
-//            }
-//        })
-//
-//        task.resume()
-//    }
-//
-//    /// Checks once if there are any backed up metrics and runs if found // TODO : MOVE TO BACKYPS?
-//    ///
-//    public func checkHeldMetrics() {
-//        // See if check has already been called
-//        if(TempoDataBackup.readyForCheck) {
-//            // Request creation of backup metrics dictionary
-//            TempoDataBackup.initCheck()
-//            //print("Resending: \(TempoDataBackup.fileMetric.count)")
-//
-//            // Cycles through each stored arrays and resends
-//            for url in TempoDataBackup.fileMetric.keys
-//            {
-//                pushMetrics(backupUrl: url)
-//            }
-//
-//            // Prevents from being checked again this session. If network is failing, no point retrying during this session
-//            TempoDataBackup.readyForCheck = false
-//        }
-//    }
     
     @available(iOS 13.0, *)
     func getSafeAreaTop() -> CGFloat {
@@ -542,30 +388,3 @@ class FullScreenUIView: UIView {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
-
-
-
-
-//public struct Metric : Codable {
-//    var metric_type: String?
-//    var ad_id: String?
-//    var app_id: String?
-//    var timestamp: Int?
-//    var is_interstitial: Bool?
-//    var bundle_id: String = "unknown"
-//    var campaign_id: String = "unknown"
-//    var session_id: String = "unknown"
-//    var location: String = "unknown"
-//    var gender: String = "?"
-//    var age_range: String = "unknown"
-//    var income_range: String = "unknown"
-//    var placement_id: String = "unknown"
-//    var country_code: String? = TempoUserInfo.getIsoCountryCode2Digit()
-//    var os: String = "unknown"
-//    var sdk_version: String
-//    var adapter_version: String
-//    var cpm: Float
-//    var adapter_type: String?
-//    var consent: Bool?
-//    var consent_type: String?
-//}
