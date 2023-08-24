@@ -6,6 +6,8 @@ import AdSupport
 
 public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessageHandler  {
     
+    enum AdState { case dormant, loading, showing }
+    var adState: AdState! = AdState.dormant
     var listener: TempoAdListener! // given value during init()
     var adapterVersion: String!
     var parentVC: UIViewController?
@@ -30,6 +32,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     var consent: Bool?
     var currentConsentType: String?
     var geo: String?
+    
 
     public init(listener: TempoAdListener, appId: String) {
         super.init(nibName: nil, bundle: nil)
@@ -52,6 +55,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     /// Prepares ad for current session (interstitial/reward)
     public func loadAd(isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
+        adState = AdState.loading
         TempoUtils.Say(msg: "loadAd() \(TempoUtils.getAdTypeString(isInterstitial: isInterstitial))", absoluteDisplay: true)
         
         // Create WKWebView instance
@@ -75,28 +79,37 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     /// Plays currently loaded ad for current session (interstitial/reward)
     public func showAd(parentVC: UIViewController?) {
-        
-        // Update parent VC
-        self.parentVC = parentVC
-        self.parentVC!.view.addSubview(solidColorView)
-        
-        // Send SHOW metric and call activate DISPLAYED listener
-        addMetric(metricType: Constants.MetricType.SHOW)
-        listener.onTempoAdDisplayed(isInterstitial: self.isInterstitial ?? true)
-        
-        // Create JS statement to find video element and play.
-        let script = Constants.JS.JS_FORCE_PLAY
-        
-        // Note: Method return type not recognised by WWebKit so we add null return.
-        webView.evaluateJavaScript(script) { (result, error) in
-            if let error = error {
-                print("Error playing video: \(error)")
+        if(solidColorView != nil) {
+            adState = AdState.showing
+            
+            // Update parent VC
+            self.parentVC = parentVC
+            self.parentVC!.view.addSubview(solidColorView)
+            
+            // Send SHOW metric and call activate DISPLAYED listener
+            addMetric(metricType: Constants.MetricType.SHOW)
+            listener.onTempoAdDisplayed(isInterstitial: self.isInterstitial ?? true)
+            
+            // Create JS statement to find video element and play.
+            let script = Constants.JS.JS_FORCE_PLAY
+            
+            // Note: Method return type not recognised by WKWebKit so we add null return.
+            webView.evaluateJavaScript(script) { (result, error) in
+                if let error = error {
+                    print("Error playing video: \(error)")
+                }
             }
         }
+        else {
+            TempoUtils.Shout(msg: "solidColorView was nil during showAd()")
+            return
+        }
+       
     }
     
     /// Closes current WkWebView
     public func closeAd() {
+        adState = AdState.dormant
         solidColorView.removeFromSuperview()
         webView.removeFromSuperview()
         webView = nil
@@ -107,6 +120,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     /// Test function used to test specific campaign ID using dummy values fo other metrics
     public func loadSpecificCampaignAd(isInterstitial: Bool, campaignId:String) {
+        adState = AdState.loading
         print("load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
         self.setupWKWebview()
         uuid = "TEST"
@@ -199,7 +213,9 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                     }
                 }
             }
+            self.adState = AdState.dormant
         })
+        
         task.resume()
     }
     
@@ -374,8 +390,48 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         
         return keyWindow?.safeAreaInsets.bottom ?? 0
     }
+    
+    /// Shuts down Tempo ads as a type of nuclear option
+    func abortTempo() {
+        // Invoke failure callbacks
+        if(adState == AdState.loading)
+        {
+            if(self.isInterstitial != nil)
+            {
+                listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial!)
+            }
+            else{
+                // This should never happen but just in case it fails both rewarded and interstitial as we cannot be sure which it applies to
+                listener.onTempoAdFetchFailed(isInterstitial: true)
+                listener.onTempoAdFetchFailed(isInterstitial: false)
+            }
+        }
+        else if(adState == AdState.showing)
+        {
+            // Close the iOS WebView - this should return to original view this was called against
+            closeAd()
+        }
+        
+        TempoUtils.Warn(msg: "Abrupt Tempo shutdown (state=\(adState!))")
+    }
+    
+    /// WebView fail delegate (ProvisionalNavigation)
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        TempoUtils.Shout(msg: "didFailProvisionalNavigation FAILURE")
+        abortTempo()
+    }
+    
+    /// WebView fail delegate (General fail)
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        TempoUtils.Shout(msg: "didFail FAILURE")
+        abortTempo()
+    }
+    
+    /// WebView success delegate
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        TempoUtils.Say(msg: "🎉🥳🎈 didFinish SUCCESS")
+    }
 }
-
 
 class FullScreenWKWebView: WKWebView {
     override var safeAreaInsets: UIEdgeInsets {

@@ -18,10 +18,6 @@ public class TempoAdController: NSObject {
             // Check for backups
             TempoDataBackup.checkHeldMetrics(completion: Metrics.pushMetrics)
             
-//            // Initial output for monitoring purposes TODO: This part should be done by the adapter module
-//            let adapterVersion = tempoAdListener.onVersionExchange(sdkVersion: Constants.SDK_VERSIONS)
-//            print("TempoSDK: [SDK]\(Constants.SDK_VERSIONS)/[ADAP]\(adapterVersion ?? Constants.UNDEF) | \(appId ?? Constants.UNDEF)")
-            
             // Show as initialised moving forward and ignore this section
             TempoAdController.isInitialised = true;
         }
