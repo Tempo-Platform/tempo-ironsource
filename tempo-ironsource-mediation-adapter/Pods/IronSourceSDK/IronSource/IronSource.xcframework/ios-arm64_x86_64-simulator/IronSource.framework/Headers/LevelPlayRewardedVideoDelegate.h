@@ -2,7 +2,6 @@
 //  LevelPlayRewardedVideoDelegate.h
 //  IronSource
 //
-//  Created by Hadar Pur on 31/05/2022.
 //  Copyright © 2022 IronSource. All rights reserved.
 //
 

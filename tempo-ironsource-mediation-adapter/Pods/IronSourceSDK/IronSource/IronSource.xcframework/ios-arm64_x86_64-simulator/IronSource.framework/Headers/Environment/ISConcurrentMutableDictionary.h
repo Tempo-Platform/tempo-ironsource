@@ -2,7 +2,6 @@
 //  ISConcurrentMutableDictionary.h
 //  Environment
 //
-//  Created by Hadar Pur on 02/06/2021.
 //  Copyright © 2021 ironSource. All rights reserved.
 //
 

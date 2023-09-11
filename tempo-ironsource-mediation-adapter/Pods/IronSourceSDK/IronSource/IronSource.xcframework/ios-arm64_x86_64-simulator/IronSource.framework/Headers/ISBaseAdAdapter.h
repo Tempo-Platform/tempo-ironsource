@@ -7,7 +7,7 @@
 //
 
 #import "ISAdUnit.h"
-#import <IronSource/ISAdapterConfig.h>
+#import "ISAdapterConfig.h"
 #import "ISAdapterBaseProtocol.h"
 #import "ISAdData.h"
 #import "ISAdapterAdDelegate.h"
@@ -15,18 +15,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ISBaseAdAdapterProtocol <NSObject>
-
-/// load the ad
-/// @param adData data containing the configuration passed from the server and other related parameters passed from the publisher like userId
-/// @param delegate the delegate to return mandatory callbacks based on the network - load success, load failure, ad opened, ad closed, show failed
-/// optional callbacks - show success, clicked
-- (void)loadAdWithAdData:(ISAdData*)adData
-                delegate:(id<ISAdapterAdDelegate>)delegate;
-
-@end
-
-@interface ISBaseAdAdapter : NSObject<ISBaseAdAdapterProtocol>
+@interface ISBaseAdAdapter : NSObject
 
 @property (nonatomic) ISAdUnit                              *adUnit; 
 @property (nonatomic, readonly) ISAdapterConfig             *adapterConfig;

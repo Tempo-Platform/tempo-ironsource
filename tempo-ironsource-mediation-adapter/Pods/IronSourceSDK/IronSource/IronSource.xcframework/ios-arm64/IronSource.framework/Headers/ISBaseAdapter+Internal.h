@@ -24,10 +24,11 @@
 #import "ISError.h"
 #import "Environment/ISConcurrentMutableSet.h"
 #import "Environment/ISConcurrentMutableDictionary.h"
-#import "ISNetworkInitCallbackProtocol.h"
 #import "ISLog.h"
 
-@protocol ISNetworkInitCallbackProtocol;
+#import "ISBaseRewardedVideoAdapter.h"
+#import "ISBaseInterstitialAdapter.h"
+#import "ISBaseBannerAdapter.h"
 
 @interface ISBaseAdapter ()
 
