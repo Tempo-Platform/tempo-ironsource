@@ -7,8 +7,28 @@
 #ifndef IRONSOURCE_H
 #define IRONSOURCE_H
 
+// import core classes
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AdSupport/AdSupport.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <CoreTelephony/CTCarrier.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <MessageUI/MessageUI.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import <QuartzCore/QuartzCore.h>
+#import <Security/Security.h>
+#import <StoreKit/StoreKit.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <AVFoundation/AVFoundation.h>
+#import <CoreMedia/CoreMedia.h>
+#import <CFNetwork/CFNetwork.h>
+#import <CoreVideo/CoreVideo.h>
+#import <WebKit/WebKit.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <libxml2/libxml/parser.h>
+#import <libxml2/libxml/tree.h>
+#import <zlib.h>
 
 #import "ISBannerDelegate.h"
 #import "ISRewardedVideoDelegate.h"
@@ -31,10 +51,13 @@
 #import "ISConsentViewDelegate.h"
 #import "ISInitializationDelegate.h"
 #import "ISWaterfallConfiguration.h"
+#import "ISGender.h"
+#import "ISImpressionData.h"
 
 // imports used for custom adapters infra
 #import "ISBaseInterstitial.h"
 #import "ISBaseRewardedVideo.h"
+#import "ISBaseBanner.h"
 #import "ISBaseNetworkAdapter.h"
 #import "ISAdapterErrors.h"
 #import "ISDataKeys.h"
@@ -54,8 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define IS_OFFERWALL @"offerwall"
 #define IS_BANNER @"banner"
 
-static NSString * const MEDIATION_SDK_VERSION     = @"7.3.1";
-static NSString * GitHash = @"1abda2998";
+static NSString * const MEDIATION_SDK_VERSION = @"7.5.0";
+static NSString * GitHash = @"f05a19dfc";
 
 /*
     This constant is for sending an external impression data from mopub

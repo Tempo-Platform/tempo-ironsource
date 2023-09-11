@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSNumber *)getNumber:(NSString *)key;
 
+- (nullable NSDictionary *)getAdUnitData;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ISAdUnit : NSObject
 
-
 @property (strong, nonatomic) NSString *value;
 
 +(ISAdUnit*)IS_AD_UNIT_REWARDED_VIDEO;

@@ -50,6 +50,8 @@ public class Metrics {
         request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_ACCEPT)
         request.addValue(String(Int(Date().timeIntervalSince1970)), forHTTPHeaderField: Constants.Web.HEADER_METRIC_TIME)
         
+        TempoUtils.Say(msg: "🌏 METRICS URL: " + (request.url?.absoluteString ?? "❌ URL STRING ?!"))
+        
         // Create dataTask using the session object to send data to the server
         let task = session.dataTask(with: request, completionHandler: { data, response, error in
             guard error == nil else {
