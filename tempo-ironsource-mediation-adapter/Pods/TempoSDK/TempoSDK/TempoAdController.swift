@@ -36,7 +36,7 @@ public class TempoAdController: NSObject {
     
     
     public func checkLocationConsentAndLoad(isInterstitial: Bool, cpmFloor: Float?, placementId: String?)
-    {
+    { 
         let tempoLoc = TempoLocation()
         tempoLoc.checkLocationServicesConsent(completion: self.handleLocationConsent, isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
     }

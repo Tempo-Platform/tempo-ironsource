@@ -49,8 +49,6 @@ class TempoLocation: NSObject, CLLocationManagerDelegate {
         cpmFloor: Float?,
         placementId: String?) {
             
-            print("💥💥💥💥💥💥 555")
-            
         // CLLocationManager.authorizationStatus can cause UI unresponsiveness if invoked on the main thread.
         DispatchQueue.global().async {
             
