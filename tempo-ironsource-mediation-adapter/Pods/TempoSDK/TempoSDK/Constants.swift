@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.2.4"
+    public static let SDK_VERSIONS = "1.2.6-rc.0"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -70,8 +70,14 @@ public struct Constants {
         static let METRIC_SEND_NOW = [SHOW, LOAD_REQUEST, TIMER_COMPLETED]
     }
     
+    public enum LocationConsent: String {
+        case NONE
+        case GENERAL
+        case PRECISE
+    }
+    
     // Testable variables
-    public static var isProd = true
-    public static var isTesting = false
+    public static var isProd = false
+    public static var isTesting = true
     
 }

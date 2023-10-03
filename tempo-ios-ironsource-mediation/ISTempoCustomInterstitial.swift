@@ -30,10 +30,19 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
         }
         
         // Create ad instance and load new ad
-        self.interstitial = TempoAdController(tempoAdListener: self, appId: appId)
         DispatchQueue.main.async {
-            self.interstitial!.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
-          }
+            if(self.interstitial == nil) {
+                self.interstitial = TempoAdController(tempoAdListener: self, appId: appId)
+                if(self.interstitial == nil) {
+                    // Failed is still nuill
+                    self.onTempoAdFetchFailed(isInterstitial: true)
+                } else {
+                    self.interstitial!.checkLocationConsentAndLoad(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
+                }
+            } else {
+                self.interstitial!.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
+            }
+        }
     }
     
     /// Callback from ironSource API which checks the availbility as determined by the 'isAdReady' property
@@ -63,7 +72,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
     /// Tempo listener - to be called when ad failed to load
     public func onTempoAdFetchFailed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdFetchFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
-        self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.noFill, errorCode: 0, errorMessage: "Ad fetch failed for some reason")
+        self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.internal, errorCode: 0, errorMessage: "Ad fetch failed")
     }
     
     /// Tempo listener - to be called when ad is closed

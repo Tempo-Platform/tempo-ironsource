@@ -1,5 +1,6 @@
 
 import Foundation
+import CoreLocation
 
 /**
  * Global tools to use within the Tempo SDK module
@@ -147,5 +148,19 @@ public class TempoUtils {
     /// Retuns string of 'INTERSTITIAL' or 'REWARDED' for debugging purposes
     public static func getAdTypeString(isInterstitial: Bool) -> String {
         return isInterstitial ? "INTERSTITIAL": "REWARDED"
+    }
+    
+    public static func requestLocation() {
+        let tempoLoc = TempoLocation()
+        tempoLoc.requestLocationConsent()
+    }
+    
+//    public static func hasLocationServicesConsent() {
+//        let tempoLoc = TempoLocation()
+//        tempoLoc.checkLocationServicesConsent(completion: handleLocationConsent)
+//    }
+    
+    public static func handleLocationConsent(consentType: Constants.LocationConsent) {
+        print("💥💥💥💥💥 \(consentType)")
     }
 }
