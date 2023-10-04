@@ -43,6 +43,7 @@ public class TempoAdController: NSObject {
     
     public func handleLocationConsent(consentType: Constants.LocationConsent, isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
         adView?.locationConsent = consentType.rawValue
+        TempoUtils.Say(msg: "TempoLocationConsent: \(consentType.rawValue)")
         DispatchQueue.main.async {
             self.loadAd(isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
         }

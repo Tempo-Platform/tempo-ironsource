@@ -13,7 +13,7 @@
 		0D07931C2A25A4E000586808 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D07931A2A25A4E000586808 /* Main.storyboard */; };
 		0D07931E2A25A4E100586808 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D07931D2A25A4E100586808 /* Assets.xcassets */; };
 		0D0793212A25A4E100586808 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D07931F2A25A4E100586808 /* LaunchScreen.storyboard */; };
-		0D367DD58F4C42B02428B3FD /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22CB5513F6E03922DC579A27 /* libPods-tempo-ironsource-mediation-adapter.a */; };
+		CC0DF85C800ABEC492B319C5 /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6677AA2091035DE3441F801D /* libPods-tempo-ironsource-mediation-adapter.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +25,9 @@
 		0D07931D2A25A4E100586808 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D0793202A25A4E100586808 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D0793222A25A4E100586808 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0D44C39565954212D01B07DB /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; sourceTree = "<group>"; };
-		22CB5513F6E03922DC579A27 /* libPods-tempo-ironsource-mediation-adapter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tempo-ironsource-mediation-adapter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCCDB0D315A666DADE604E29 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; sourceTree = "<group>"; };
+		21C1C4107D7BDA49CA28A080 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; sourceTree = "<group>"; };
+		587785AD093590F64980D4C4 /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; sourceTree = "<group>"; };
+		6677AA2091035DE3441F801D /* libPods-tempo-ironsource-mediation-adapter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tempo-ironsource-mediation-adapter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D367DD58F4C42B02428B3FD /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */,
+				CC0DF85C800ABEC492B319C5 /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,7 +48,7 @@
 				0D0793132A25A4E000586808 /* tempo-ironsource-mediation-adapter */,
 				0D0793122A25A4E000586808 /* Products */,
 				C5277068D64121BDF8550F36 /* Pods */,
-				B6169CD015321C356A7C4AD9 /* Frameworks */,
+				6341B0A37DE913772D4D1F8E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,10 +74,10 @@
 			path = "tempo-ironsource-mediation-adapter";
 			sourceTree = "<group>";
 		};
-		B6169CD015321C356A7C4AD9 /* Frameworks */ = {
+		6341B0A37DE913772D4D1F8E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				22CB5513F6E03922DC579A27 /* libPods-tempo-ironsource-mediation-adapter.a */,
+				6677AA2091035DE3441F801D /* libPods-tempo-ironsource-mediation-adapter.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -85,8 +85,8 @@
 		C5277068D64121BDF8550F36 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BCCDB0D315A666DADE604E29 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */,
-				0D44C39565954212D01B07DB /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */,
+				21C1C4107D7BDA49CA28A080 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */,
+				587785AD093590F64980D4C4 /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -98,7 +98,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0D0793252A25A4E100586808 /* Build configuration list for PBXNativeTarget "tempo-ironsource-mediation-adapter" */;
 			buildPhases = (
-				2D94160F6495C3C2DD7D2F66 /* [CP] Check Pods Manifest.lock */,
+				D2AEE56F1D10601F4E799382 /* [CP] Check Pods Manifest.lock */,
 				0D07930D2A25A4E000586808 /* Sources */,
 				0D07930E2A25A4E000586808 /* Frameworks */,
 				0D07930F2A25A4E000586808 /* Resources */,
@@ -159,7 +159,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2D94160F6495C3C2DD7D2F66 /* [CP] Check Pods Manifest.lock */ = {
+		D2AEE56F1D10601F4E799382 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -266,7 +266,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -320,7 +320,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -332,7 +332,7 @@
 		};
 		0D0793262A25A4E100586808 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCCDB0D315A666DADE604E29 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */;
+			baseConfigurationReference = 21C1C4107D7BDA49CA28A080 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -348,7 +348,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -364,7 +364,7 @@
 		};
 		0D0793272A25A4E100586808 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D44C39565954212D01B07DB /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */;
+			baseConfigurationReference = 587785AD093590F64980D4C4 /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -380,7 +380,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

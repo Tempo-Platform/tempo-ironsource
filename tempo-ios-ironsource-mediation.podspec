@@ -22,7 +22,7 @@ Pod::Spec.new do |spec|
 
   spec.source_files = 'tempo-ios-ironsource-mediation/*.*'
 
-  spec.dependency 'TempoSDK', '1.2.6-rc.0'
+  spec.dependency 'TempoSDK', '1.2.6-rc.2'
   spec.dependency 'IronSourceSDK', '~> 7.5.0'
   spec.requires_arc     = true
   spec.frameworks       = 'Foundation', 'UIKit'

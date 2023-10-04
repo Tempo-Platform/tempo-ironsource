@@ -23,7 +23,7 @@
   "source_files": "tempo-ios-ironsource-mediation/*.*",
   "dependencies": {
     "TempoSDK": [
-      "1.2.6-rc.0"
+      "1.2.6-rc.2"
     ],
     "IronSourceSDK": [
       "~> 7.5.0"
