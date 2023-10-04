@@ -1,13 +1,4 @@
-//
-//  TempoLocation.swift
-//  TempoSDK
-//
-//  Created by Stephen Baker on 3/10/2023.
-//
-
 import Foundation
-
-
 import CoreLocation
 
 class TempoLocation: NSObject, CLLocationManagerDelegate {
@@ -18,8 +9,7 @@ class TempoLocation: NSObject, CLLocationManagerDelegate {
         super.init()
         if #available(iOS 14.0, *) {
             locationManager.delegate = self
-            //        locationManager.requestWhenInUseAuthorization()
-            //        locationManager.startUpdatingLocation()
+            //requestLocationConsent()
         }
     }
 
@@ -27,11 +17,13 @@ class TempoLocation: NSObject, CLLocationManagerDelegate {
         location = locations.last
     }
     
+    /// Public function for prompting consent (used for testing)
     public func requestLocationConsent() {
         locationManager.requestWhenInUseAuthorization()
-        // locationManager.startUpdatingLocation() TODO: what dis do?
+        // locationManager.startUpdatingLocation() TODO: ??
     }
 
+    /// Get CLAuthorizationStatus location consent value
     private func getLocationAuthorisationStatus() -> CLAuthorizationStatus {
         var locationAuthorizationStatus : CLAuthorizationStatus
         if #available(iOS 14.0, *) {
@@ -43,6 +35,7 @@ class TempoLocation: NSObject, CLLocationManagerDelegate {
         return locationAuthorizationStatus
     }
     
+    /// Main public function for running a consent check - escaping completion function for running loadAds when value found
     public func checkLocationServicesConsent(
         completion: @escaping (Constants.LocationConsent, Bool, Float?, String?) -> Void,
         isInterstitial: Bool,
@@ -90,66 +83,4 @@ class TempoLocation: NSObject, CLLocationManagerDelegate {
             completion(Constants.LocationConsent.NONE, isInterstitial, cpmFloor, placementId)
         }
     }
-
-    
-
-
-
-    
-    
-    
-//    public func hasLocationServicesConsent() -> Constants.LocationConsent {
-//        
-//        var hasConsent: Bool
-//        
-//        if CLLocationManager.locationServicesEnabled() {
-//            switch CLLocationManager.authorizationStatus() {
-//            case .authorizedAlways:
-//                print("Access - always ")
-//                hasConsent = true
-//                break
-//            case  .authorizedWhenInUse:
-//                print("Access - authorizedWhenInUse ")
-//                hasConsent = true
-//                break
-//            case .restricted:
-//                hasConsent = false
-//                print("No access - restricted")
-//                break
-//            case .denied:
-//                hasConsent = false
-//                print("No access - denied")
-//                break
-//            case .notDetermined:
-//                fallthrough
-//            default:
-//                hasConsent = false
-//                print("No access - notDetermined")
-//                break
-//            }
-//            
-//            if(hasConsent) {
-//                // Determine precise/general
-//                var lm: CLLocationManager?
-//                if #available(iOS 14.0, *) {
-//                    if let accuracyStatus = lm?.accuracyAuthorization {
-//                        if(accuracyStatus == .reducedAccuracy){
-//                            return Constants.LocationConsent.HasGeneral
-//                        }
-//                        else{
-//                            
-//                            return Constants.LocationConsent.HasGeneral
-//                        }
-//                    }
-//                } else {
-//                    return Constants.LocationConsent.HasPrecise //TODO: Is pre-14 precise/general?
-//                }
-//                
-//            }
-//        } else {
-//           print("Location services not enabled")
-//        }
-//        
-//        return Constants.LocationConsent.None
-//    }
 }
