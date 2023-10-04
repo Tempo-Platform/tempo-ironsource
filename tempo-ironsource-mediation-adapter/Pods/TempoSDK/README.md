@@ -109,3 +109,4 @@ When a pull request is closed and pushed to master, release drafter will either 
 ### Publishing
 
 Once you are satisfied with a release, publish it to then trigger the push to CocoaPods.
+Go to Releases -> Newest draft version -> Edit -> Publish

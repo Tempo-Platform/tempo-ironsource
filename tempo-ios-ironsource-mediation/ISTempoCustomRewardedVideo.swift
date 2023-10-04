@@ -26,12 +26,20 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
         } else {
             print("The CPM is not a valid Double")
         }
-        
+
         // Create ad instance and load new ad
-        self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
         DispatchQueue.main.async {
-            self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
-          }
+            if(self.rewarded == nil) {
+                self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
+                if(self.rewarded == nil) {
+                    // TODO: Handle this
+                } else {
+                    self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+                }
+            } else {
+                self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+            }
+        }
     }
     
     /// Callback from ironSource API which checks the availbility as determined by the 'isAdReady' property
@@ -71,8 +79,6 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     public func onTempoAdClosed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdClosed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidClose()
-        self.delegate?.adDidShowSucceed()
-        self.delegate?.adRewarded()
         isAdReady = false
     }
     
@@ -80,6 +86,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     public func onTempoAdDisplayed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdDisplayed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidOpen()
+        self.delegate?.adRewarded()
     }
     
     /// Tempo listener - to be called when ad is clicked

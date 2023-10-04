@@ -34,6 +34,10 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
         IronSource.showInterstitial(with: self)
     }
     
+    @IBAction func LocationConsent(_ sender: Any) {
+        TempoUtils.requestLocation()
+    }
+    
     /// Initial actions on when view loads
     override func viewDidLoad() {
         super.viewDidLoad()

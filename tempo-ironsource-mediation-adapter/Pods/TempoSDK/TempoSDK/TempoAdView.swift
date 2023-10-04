@@ -3,7 +3,6 @@ import UIKit
 import WebKit
 import AdSupport
 
-
 public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessageHandler  {
     
     enum AdState { case dormant, loading, showing }
@@ -32,7 +31,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     var consent: Bool?
     var currentConsentType: String?
     var geo: String?
-    
+    public var locationConsent: String = Constants.LocationConsent.NONE.rawValue
 
     public init(listener: TempoAdListener, appId: String) {
         super.init(nibName: nil, bundle: nil)
@@ -46,6 +45,15 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         consent = self.listener.hasUserConsent()
         adId = getAdId()
     }
+    
+//    public func hasLocationServicesConsent() {
+//        let tempoLoc = TempoLocation()
+//        tempoLoc.checkLocationServicesConsent(completion: self.handleLocationConsent)
+//    }
+//    
+//    public func handleLocationConsent(consentType: Constants.LocationConsent) {
+//        locationConsent = consentType.rawValue
+//    }
     
     // Ingore requirement to implement required initializer ‘init(coder:) in it.
     @available(*, unavailable, message: "Nibs are unsupported")
@@ -357,7 +365,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                             cpm: self.cpmFloor ?? 0.0,
                             adapter_type: self.adapterType,
                             consent: self.consent,
-                            consent_type: nil
+                            consent_type: nil,
+                            location_consent: locationConsent
         )
         
         self.metricList.append(metric)

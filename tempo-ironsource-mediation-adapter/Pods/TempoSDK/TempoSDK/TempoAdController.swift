@@ -7,7 +7,7 @@ import UIKit
 public class TempoAdController: NSObject {
     
     static var isInitialised: Bool = false
-    var adView: TempoAdView?
+    public var adView: TempoAdView?
     
     public init(tempoAdListener: TempoAdListener, appId: String!) {
         super.init()
@@ -33,6 +33,22 @@ public class TempoAdController: NSObject {
             cpmFloor: cpmFloor,
             placementId: placementId)
     }
+    
+    
+    public func checkLocationConsentAndLoad(isInterstitial: Bool, cpmFloor: Float?, placementId: String?)
+    { 
+        let tempoLoc = TempoLocation()
+        tempoLoc.checkLocationServicesConsent(completion: self.handleLocationConsent, isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
+    }
+    
+    public func handleLocationConsent(consentType: Constants.LocationConsent, isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
+        adView?.locationConsent = consentType.rawValue
+        TempoUtils.Say(msg: "TempoLocationConsent: \(consentType.rawValue)")
+        DispatchQueue.main.async {
+            self.loadAd(isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
+        }
+    }
+    
     
     /// Public SHOW function for mediation adapters to call
     public func showAd(parentViewController: UIViewController?) {

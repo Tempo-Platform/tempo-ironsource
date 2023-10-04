@@ -5,7 +5,4 @@ platform :ios, '11.0'
 
 target 'tempo-ironsource-mediation-adapter' do
   pod 'tempo-ios-ironsource-mediation', :path => '../'
-  #pod 'IronSourceSDK', '7.3.0.0'
-  #pod 'TempoSDK', '1.0.3'
-  
 end
