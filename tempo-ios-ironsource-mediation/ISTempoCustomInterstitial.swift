@@ -53,12 +53,19 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
     
     /// Callback from ironSource API when IronSource.showRewardedAds() called
     public override func showAd(with viewController: UIViewController, adData: ISAdData, delegate: ISInterstitialAdDelegate) {
-        TempoUtils.Say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
+        //TempoUtils.Say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
+        // Implement callback delegate
         self.delegate = delegate
+        
+        // Nil error handling
         if (!isAdReady) {
            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
            return
+        } else if (self.interstitial == nil) {
+            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad controller has not be created yet. Cannot display ad")
+            return
         }
+        
         self.interstitial!.showAd(parentViewController: viewController)
     }
     
