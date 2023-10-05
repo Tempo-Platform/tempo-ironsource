@@ -32,7 +32,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
             if(self.rewarded == nil) {
                 self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
                 if(self.rewarded == nil) {
-                    // TODO: Handle this
+                    self.onTempoAdFetchFailed(isInterstitial: true)
                 } else {
                     self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
                 }
@@ -50,15 +50,19 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     
     /// Callback from ironSource API when IronSource.showRewardedAds() called
     public override func showAd(with viewController: UIViewController, adData: ISAdData, delegate: ISRewardedVideoAdDelegate) {
-        TempoUtils.Say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
-        
+        //TempoUtils.Say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
         // Implement callback delegate
         self.delegate = delegate
                 
+        // Nil error handling
         if (!isAdReady) {
            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
            return
+        } else if (self.rewarded == nil) {
+            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad controller has not be created yet. Cannot display ad")
+            return
         }
+        
         self.rewarded!.showAd(parentViewController: viewController)
     }
     
@@ -72,7 +76,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     /// Tempo listener - to be called when ad failed to load
     public func onTempoAdFetchFailed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdFetchFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
-        self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.noFill, errorCode: 0, errorMessage: "Ad fetch failed for some reason")
+        self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.internal, errorCode: 0, errorMessage: "Ad fetch failed for some reason")
     }
     
     /// Tempo listener - to be called when ad is closed
