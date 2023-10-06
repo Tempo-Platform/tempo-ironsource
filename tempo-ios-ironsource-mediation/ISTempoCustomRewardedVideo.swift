@@ -4,6 +4,7 @@ import IronSource
 
 @objc(ISTempoCustomRewardedVideo)
 public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
+
     
     var rewarded: TempoAdController? = nil
     var isAdReady: Bool = false
@@ -32,7 +33,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
             if(self.rewarded == nil) {
                 self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
                 if(self.rewarded == nil) {
-                    self.onTempoAdFetchFailed(isInterstitial: true)
+                    self.onTempoAdFetchFailed(isInterstitial: true, reason: "Ad controll is null")
                 } else {
                     self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
                 }
@@ -59,6 +60,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
            return
         } else if (self.rewarded == nil) {
+            onTempoAdShowFailed(isInterstitial: false, reason: "Ad controller is null")
             delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad controller has not be created yet. Cannot display ad")
             return
         }
@@ -74,7 +76,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     }
     
     /// Tempo listener - to be called when ad failed to load
-    public func onTempoAdFetchFailed(isInterstitial: Bool) {
+    public func onTempoAdFetchFailed(isInterstitial: Bool, reason: String?) {
         TempoUtils.Say(msg: "onAdFetchFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.internal, errorCode: 0, errorMessage: "Ad fetch failed for some reason")
     }
@@ -91,6 +93,12 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
         TempoUtils.Say(msg: "onAdDisplayed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidOpen()
         self.delegate?.adRewarded()
+    }
+    
+    public func onTempoAdShowFailed(isInterstitial: Bool, reason: String?) {
+        TempoUtils.Say(msg: "onAdShowFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial)): \(reason ?? "Unknown")");
+        
+        self.delegate?.adDidFailToShowWithErrorCode(0, errorMessage: reason ?? "Unknown")
     }
     
     /// Tempo listener - to be called when ad is clicked

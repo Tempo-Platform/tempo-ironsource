@@ -5,6 +5,7 @@ import IronSource
 @objc(ISTempoCustomInterstitial)
 public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
 
+
     var interstitial: TempoAdController?
     var isAdReady: Bool = false
     var delegate:ISInterstitialAdDelegate? = nil
@@ -35,7 +36,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
                 self.interstitial = TempoAdController(tempoAdListener: self, appId: appId)
                 if(self.interstitial == nil) {
                     // Failed is still nuill
-                    self.onTempoAdFetchFailed(isInterstitial: true)
+                    self.onTempoAdFetchFailed(isInterstitial: true, reason: "Ad controller is null")
                 } else {
                     self.interstitial!.checkLocationConsentAndLoad(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
                 }
@@ -59,7 +60,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
         
         // Nil error handling
         if (!isAdReady) {
-           delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
+            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
            return
         } else if (self.interstitial == nil) {
             delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad controller has not be created yet. Cannot display ad")
@@ -77,9 +78,9 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
     }
     
     /// Tempo listener - to be called when ad failed to load
-    public func onTempoAdFetchFailed(isInterstitial: Bool) {
+    public func onTempoAdFetchFailed(isInterstitial: Bool, reason: String?) {
         TempoUtils.Say(msg: "onAdFetchFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
-        self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.internal, errorCode: 0, errorMessage: "Ad fetch failed")
+        self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.internal, errorCode: 0, errorMessage: reason ?? "Ad fetch failed")
     }
     
     /// Tempo listener - to be called when ad is closed
@@ -94,6 +95,11 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
     public func onTempoAdDisplayed(isInterstitial: Bool) {
         TempoUtils.Say(msg: "onAdDisplayed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidOpen()
+    }
+    
+    public func onTempoAdShowFailed(isInterstitial: Bool, reason: String?) {
+        TempoUtils.Say(msg: "onAdShowFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial)): \(reason ?? "Unknown")");
+        self.delegate?.adDidFailToShowWithErrorCode(0, errorMessage: reason ?? "Unknown")
     }
     
     /// Tempo listener - to be called when ad is clicked
