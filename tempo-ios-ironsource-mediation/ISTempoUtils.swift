@@ -1,10 +1,3 @@
-//
-//  ISTempoUtils.swift
-//  tempo-ironsource-mediation
-//
-//  Created by Stephen Baker on 1/6/2023.
-//
-
 import Foundation
 import IronSource
 

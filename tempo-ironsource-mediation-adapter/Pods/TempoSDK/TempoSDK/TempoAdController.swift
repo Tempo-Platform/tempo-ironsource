@@ -34,21 +34,20 @@ public class TempoAdController: NSObject {
             placementId: placementId)
     }
     
-    
-    public func checkLocationConsentAndLoad(isInterstitial: Bool, cpmFloor: Float?, placementId: String?)
-    { 
+    /// Creates TempoLocation object and calls checker function with handler callback
+    public func checkLocationConsentAndLoad(isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
         let tempoLoc = TempoLocation()
-        tempoLoc.checkLocationServicesConsent(completion: self.handleLocationConsent, isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
+        tempoLoc.checkLocationServicesConsent(completion: self.handleLocationConsentAndLoadAd, isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
     }
     
-    public func handleLocationConsent(consentType: Constants.LocationConsent, isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
+    /// Consent callback handler that updates global value for metrics and loads ad
+    public func handleLocationConsentAndLoadAd(consentType: Constants.LocationConsent, isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
         adView?.locationConsent = consentType.rawValue
         TempoUtils.Say(msg: "TempoLocationConsent: \(consentType.rawValue)")
         DispatchQueue.main.async {
             self.loadAd(isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
         }
     }
-    
     
     /// Public SHOW function for mediation adapters to call
     public func showAd(parentViewController: UIViewController?) {
