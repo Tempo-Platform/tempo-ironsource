@@ -30,16 +30,31 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
 
         // Create ad instance and load new ad
         DispatchQueue.main.async {
-            if(self.rewarded == nil) {
+            
+            if self.rewarded == nil {
                 self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
-                if(self.rewarded == nil) {
-                    self.onTempoAdFetchFailed(isInterstitial: true, reason: "Ad controll is null")
-                } else {
-                    self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+                
+                if self.rewarded == nil {
+                    self.onTempoAdFetchFailed(isInterstitial: false, reason: "Ad controller is null")
+                    return
                 }
-            } else {
-                self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
             }
+            
+            // Load ad, provided the ad controller is not null
+            self.rewarded?.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+            //self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+//            if(self.rewarded == nil) {
+//                self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
+//                
+//                if(self.rewarded == nil) {
+//                    self.onTempoAdFetchFailed(isInterstitial: true, reason: "Ad controll is null")
+//                } else {
+//                    self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+//                    //self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+//                }
+//            } else {
+//                self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+//            }
         }
     }
     

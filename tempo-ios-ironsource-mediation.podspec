@@ -6,7 +6,7 @@
 
 Pod::Spec.new do |spec|
   spec.name          = 'tempo-ios-ironsource-mediation'
-  spec.version       = '1.4.3'
+  spec.version       = '1.4.4-rc.0'
   spec.swift_version = '5.0'
   spec.author        = { 'Tempo Engineering' => 'development@tempoplatform.com' }
   spec.license       = { :type => 'Apache License, Version 2.0', :file => 'LICENSE' }

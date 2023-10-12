@@ -9,12 +9,14 @@ import UIKit
 import IronSource
 import TempoSDK
 import tempo_ios_ironsource_mediation
+import CoreLocation
 
-let kAPPKEY = Constants.isProd ? "1ade2c39d" : "1a4922385"
+
+let kAPPKEY = Constants.isProd ? "1ade2c39d" : "1a470a75d"
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoManualDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
     
-
+    var locationManager: CLLocationManager?
     // Button outlet/actions
     @IBOutlet weak var rewardedLoadBtn: UIButton!
     @IBOutlet weak var rewardedShowBtn: UIButton!
@@ -35,7 +37,10 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     }
     
     @IBAction func LocationConsent(_ sender: Any) {
-        TempoUtils.requestLocation()
+        //TempoUtils.requestLocation()
+        print("🤷‍♂️ requestWhenInUseAuthorization (button)")
+        locationManager = CLLocationManager()
+        locationManager!.requestWhenInUseAuthorization()
     }
     
     /// Initial actions on when view loads
