@@ -121,4 +121,5 @@ public struct Metric : Codable {
     var consent: Bool?
     var consent_type: String?
     var location_consent: String = ""
+    var location_data: LocationData? = nil
 }

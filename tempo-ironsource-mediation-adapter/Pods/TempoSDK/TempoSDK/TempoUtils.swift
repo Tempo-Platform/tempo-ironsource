@@ -26,7 +26,7 @@ public class TempoUtils {
     /// Log for general test  output -, never shows in production
     public static func Say(msg: String) {
         if(Constants.isTesting) {
-            print("✅ TempoSDK: \(msg)");
+            print("🟣 TempoSDK: \(msg)");
         }
     }
 
@@ -150,9 +150,10 @@ public class TempoUtils {
         return isInterstitial ? "INTERSTITIAL": "REWARDED"
     }
     
-    public static func requestLocation() {
-        let tempoLoc = TempoLocation()
-        tempoLoc.requestLocationConsent()
+    public static func requestLocationDirectly(listener: TempoAdListener) {
+        let tempView =  TempoAdView(listener: listener, appId: "")
+        let tempoProfile = TempoProfile(adView:  tempView )
+        tempoProfile.requestLocationConsentNowAsTesting()
     }
     
 //    public static func hasLocationServicesConsent() {
