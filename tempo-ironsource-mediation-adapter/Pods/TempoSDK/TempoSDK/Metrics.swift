@@ -35,15 +35,26 @@ public class Metrics {
         
         // Prints out metrics types being sent in this push
         let outMetricList = backupUrl != nil ? TempoDataBackup.fileMetric[backupUrl!]: metricListCopy
-        if(outMetricList != nil)
+        if(outMetricList == nil || outMetricList!.count <= 0)
         {
-            var metricOutput = "Metrics: "
-            for metric in outMetricList!{
-                metricOutput += "\n  - \(metric.metric_type ?? "<TYPE_UNKNOWN>")"
-            }
-            TempoUtils.Say(msg: "📊 \(metricOutput)")
-            TempoUtils.Say(msg: "📊 Payload: " + String(data: metricData ?? Data(), encoding: .utf8)!)
+            TempoUtils.Say(msg: "📊 Metrics (0 - nothing sent)")
+            return
         }
+        
+        // For printout only (Metric type list)
+        var metricOutput = "Metrics (x\(outMetricList?.count ?? 0))"
+        for metric in outMetricList!{
+            metricOutput += "\n  - \(metric.metric_type ?? "<TYPE_UNKNOWN>")"
+        }
+        TempoUtils.Say(msg: "📊 \(metricOutput)")
+        
+        // For printout only (Metrics JSON payload)
+        var jsonString = String(data: metricData ?? Data(), encoding: .utf8)!
+        jsonString = jsonString.replacingOccurrences(of: "[", with: "[\n")
+        jsonString = jsonString.replacingOccurrences(of: "]", with: "\n]")
+        jsonString = jsonString.replacingOccurrences(of: "},{", with: "},\n\n{")
+        jsonString = jsonString.replacingOccurrences(of: ",", with: ", ")
+        TempoUtils.Say(msg: "📊 Payload: " + jsonString)
         
         // HTTP Headers
         request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_CONTENT_TYPE)
@@ -78,7 +89,7 @@ public class Metrics {
                 switch(httpResponse.statusCode)
                 {
                 case 200:
-                    TempoUtils.Say(msg: "📊 Passed metrics - do not backup: \(httpResponse.statusCode)")
+                    TempoUtils.Say(msg: "📊 Sent metrics - safe pass: \(httpResponse.statusCode)")
                     break
                 case 400:
                     fallthrough
@@ -120,6 +131,5 @@ public struct Metric : Codable {
     var adapter_type: String?
     var consent: Bool?
     var consent_type: String?
-    var location_consent: String = ""
     var location_data: LocationData? = nil
 }

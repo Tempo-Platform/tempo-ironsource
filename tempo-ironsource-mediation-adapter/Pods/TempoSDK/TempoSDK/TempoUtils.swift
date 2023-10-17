@@ -63,8 +63,7 @@ public class TempoUtils {
         return adsWebUrl
     }
     
-    
-    
+    /// Returns web URL of ad content with customised parameters
     public static func getFullWebUrl(isInterstitial: Bool, campaignId: String) -> String {
         var webAdUrl: String
         
@@ -77,11 +76,12 @@ public class TempoUtils {
             webAdUrl = "\(getRewardedUrl())/\(checkedCampaignId!)"
         }
         
-        TempoUtils.Shout(msg: "🌏 Web URL: \(webAdUrl)")
+        TempoUtils.Say(msg: "🌏 Web URL: \(webAdUrl)")
         
         return webAdUrl
     }
     
+    ///
     internal static func checkForTestCampaign(campaignId: String!) -> String! {
         
         let customCampaignTrimmed: String? = TempoTesting.instance?.customCampaignId?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -115,6 +115,7 @@ public class TempoUtils {
         }
     }
     
+    /// Returns URL
     public static func getInterstitialUrl() -> String {
         if((TempoTesting.instance?.isTestingDeployVersion ?? false) && TempoTesting.instance?.currentDeployVersion != nil) {
             let deployPreviewUrl = Constants.Web.ADS_DOM_PREFIX_URL_PREVIEW +
@@ -148,20 +149,5 @@ public class TempoUtils {
     /// Retuns string of 'INTERSTITIAL' or 'REWARDED' for debugging purposes
     public static func getAdTypeString(isInterstitial: Bool) -> String {
         return isInterstitial ? "INTERSTITIAL": "REWARDED"
-    }
-    
-    public static func requestLocationDirectly(listener: TempoAdListener) {
-        let tempView =  TempoAdView(listener: listener, appId: "")
-        let tempoProfile = TempoProfile(adView:  tempView )
-        tempoProfile.requestLocationConsentNowAsTesting()
-    }
-    
-//    public static func hasLocationServicesConsent() {
-//        let tempoLoc = TempoLocation()
-//        tempoLoc.checkLocationServicesConsent(completion: handleLocationConsent)
-//    }
-    
-    public static func handleLocationConsent(consentType: Constants.LocationConsent) {
-        print("💥💥💥💥💥 \(consentType)")
     }
 }

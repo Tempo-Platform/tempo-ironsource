@@ -3,61 +3,32 @@ import UIKit
 import WebKit
 import AdSupport
 
-class FullScreenWKWebView: WKWebView {
-    
-    override var safeAreaInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
-    }
-    
-    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
-        super.init(frame: frame, configuration: configuration)
-        self.allowsBackForwardNavigationGestures = true
-        self.scrollView.isScrollEnabled = false
-        self.scrollView.bounces = false
-        self.scrollView.contentInsetAdjustmentBehavior = .never
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class FullScreenUIView: UIView {
-    override var safeAreaInsets: UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-}
-
 public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessageHandler  {
-    
-    enum AdState { case dormant, loading, showing }
-    var adState: AdState! = AdState.dormant
     var listener: TempoAdListener!
-    var adapterVersion: String!
     var parentVC: UIViewController?
-    var appId: String!
-    
     var webViewWithBackground: FullScreenUIView!
     var webView: FullScreenWKWebView!
-    var metricList: [Metric] = []
     
-    var observation: NSKeyValueObservation?
-    var previousParentBGColor: UIColor?
+    // Ad state - followed for catching WebView crashes
+    enum AdState { case dormant, loading, showing }
+    var adState: AdState! = AdState.dormant
     
     // Session instance properties
+    var appId: String!
     var uuid: String?
     var adId: String?
     var campaignId: String?
     var placementId: String?
     var isInterstitial: Bool = true // eventually need to make this a enum for undefined
     var sdkVersion: String!
+    var adapterVersion: String!
     var cpmFloor: Float?
     var adapterType: String?
     var consent: Bool?
     var currentConsentType: String?
     var geo: String?
-    public var locationConsent: String?
     var locationData: LocationData?
+    var metricList: [Metric] = []
 
     public init(listener: TempoAdListener, appId: String) {
         super.init(nibName: nil, bundle: nil)
@@ -150,30 +121,17 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         webView?.removeFromSuperview()
         webView = nil
         webViewWithBackground = nil
-        pushHeldMetricsWithUpdatedLocationData()
-        Metrics.pushMetrics(currentMetrics: &metricList, backupUrl: nil)
-        TempoProfile.locationState = LocationState.UNCHECKED
-        listener?.onTempoAdClosed(isInterstitial: self.isInterstitial)
-    }
-    
-    /// Test function used to test specific campaign ID using dummy values fo other metrics
-    public func loadSpecificCampaignAd(isInterstitial: Bool, campaignId:String) {
-        adState = AdState.loading
-        print("load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
-        if(!self.setupWKWebview()) {
-            sendAdFetchFailed(reason: "Could not create WKWebView")
+        
+        // Send metrics regadless - check if needs to be retroactively updated to reflect new location data
+        if(TempoProfile.locationState == .UNCHECKED || TempoProfile.locationState == .CHECKING) {
+            pushHeldMetricsWithUpdatedLocationData()
+            TempoProfile.locationState = .FAILED
+        } else {
+            Metrics.pushMetrics(currentMetrics: &metricList, backupUrl: nil)
         }
-        uuid = "TEST"
-        adId = "TEST"
-        appId = "TEST"
-        self.isInterstitial = isInterstitial
-        //let urlComponent = isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW
-        self.addMetric(metricType: "CUSTOM_AD_LOAD_REQUEST")
-        //let url = URL(string: "https://ads.tempoplatform.com/\(urlComponent)/\(campaignId)/ios")!
-        let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: isInterstitial, campaignId: campaignId))!
-        //self.campaignId = campaignId
-        self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
-        self.webView.load(URLRequest(url: url))
+        
+        // Invoke close callback
+        listener?.onTempoAdClosed(isInterstitial: self.isInterstitial)
     }
     
     // Cnecks is consented Ad ID exists and returns (nullable) value
@@ -194,7 +152,9 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        TempoUtils.Say(msg: "🌏 REST-ADS-API: " + (components.url?.absoluteString ?? "❌ URL STRING ?!"))
+        var urlStringOutput = components.url?.absoluteString ?? "❌ INVALID URL STRING?!"
+        urlStringOutput = urlStringOutput.replacingOccurrences(of: "com/ad", with: "com/ad\n")
+        TempoUtils.Say(msg: "🌏 REST-ADS-API: " + urlStringOutput)
         
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
@@ -366,11 +326,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             configuration.mediaTypesRequiringUserActionForPlayback = []
         }
         
-//        // Please explain
-//        if #available(iOS 13.0, *) {
-//            configuration.defaultWebpagePreferences.preferredContentMode = .mobile
-//        }
-        
         return configuration
     }
     
@@ -398,12 +353,29 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             
             // Show success when content load
             if(webMsg == Constants.MetricType.IMAGES_LOADED) {
-                print("🥳 IMAGES_LOADED = onTempoAdFetchSucceeded")
                 listener.onTempoAdFetchSucceeded(isInterstitial: self.isInterstitial)
                 self.addMetric(metricType: Constants.MetricType.LOAD_SUCCESS)
             }
         }
     }
+    
+    /// Creates and returns new LocationData from current static singleton that doesn't retain its memory references
+    private func getCleanedLocation() -> LocationData {
+        
+        var newLocData = LocationData()
+        let newConsent = TempoProfile.locData?.consent ?? Constants.LocationConsent.NONE.rawValue
+        
+        newLocData.consent = newConsent
+        if(newConsent != Constants.LocationConsent.NONE.rawValue) {
+            let state = TempoProfile.locData?.state
+            let postcode = TempoProfile.locData?.postcode
+            newLocData.state = state
+            newLocData.postcode = postcode
+        }
+        
+        return newLocData
+    }
+    
     
     /// Create a new Metric instance based on current ad's class properties, and adds to Metrics array
     private func addMetric(metricType: String) {
@@ -424,23 +396,21 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                             adapter_type: self.adapterType,
                             consent: self.consent,
                             consent_type: nil,
-                            location_consent: self.locationConsent ?? "",
-                            location_data: TempoProfile.locData ?? nil
-                            
+                            location_data: getCleanedLocation()
         )
         
         self.metricList.append(metric)
         
         // State invalid if UNCHECKED/CHECKING (Waiting for results before we decide to send or not)
-        let validState = TempoProfile.locationState != LocationState.UNCHECKED && TempoProfile.locationState != LocationState.CHECKING
+        let validState = TempoProfile.locationState != .UNCHECKED && TempoProfile.locationState != .CHECKING
         
         // Hold if still waiting for profile LocationData (or if consent != NONE)
-        if(!validState && TempoProfile.locData?.lc != Constants.LocationConsent.NONE.rawValue) {
-            print("🔒🔒🔒 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
+        if(!validState && TempoProfile.locData?.consent != Constants.LocationConsent.NONE.rawValue) {
+            print("🛑 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
                   "Not sending metrics just yet: [postcode=\(TempoProfile.locData?.postcode ?? "NIL") | state=\(TempoProfile.locData?.state ?? "NIL")]")
             return
         } else {
-            print("🕺🕺🕺 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
+            print("🟢 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
                   "Sending metrics! [postcode=\(TempoProfile.locData?.postcode ?? "NIL") | state=\(TempoProfile.locData?.state ?? "NIL")]")
         }
         
@@ -449,18 +419,21 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         }
     }
     
-    ///
+    /// Cycles through all unpushed metrics and updates all LocationData values based on consent value at time of creation
     func pushHeldMetricsWithUpdatedLocationData() {
        
         if(!metricList.isEmpty) {
             for (index, _) in metricList.enumerated() {
                 
-                if(metricList[index].location_consent == "") {
-                    metricList[index].location_consent = Constants.LocationConsent.NONE.rawValue
-                }
+                let prePostcode = metricList[index].location_data?.postcode
+                let preState = metricList[index].location_data?.state
                 
-                if(metricList[index].location_consent != Constants.LocationConsent.NONE.rawValue) {
-                    
+                if(metricList[index].location_data?.consent == Constants.LocationConsent.NONE.rawValue) {
+                    // Delete any data related to personal location
+                    metricList[index].location_data?.postcode = nil
+                    metricList[index].location_data?.state = nil
+                    print("🧹 xx \(metricList[index].metric_type ?? "TYPE?"): postcode=[\(prePostcode ?? "nil"):NIL)], state=[\(preState ?? "nil"):NIL]")
+                } else {
                     // Confirm postcode has a value
                     let prePostcode = metricList[index].location_data?.postcode
                     if let currentPostcode = TempoProfile.locData?.postcode, !currentPostcode.isEmpty {
@@ -470,23 +443,20 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                     }
                     
                     // Confirm state has a value
-                    let preState = metricList[index].location_data?.state
                     if let currentState = TempoProfile.locData?.state, !currentState.isEmpty {
                         metricList[index].location_data?.state = currentState
                     } else {
                         metricList[index].location_data?.state = nil
                     }
                     
-                    print("🔍✅ \(metricList[index].metric_type ?? "TYPE?"): postcode=[\(prePostcode ?? "nil"):\(metricList[index].location_data?.postcode ?? "nil")], " +
+                    print("🧹 => \(metricList[index].metric_type ?? "TYPE?"): postcode=[\(prePostcode ?? "nil"):\(metricList[index].location_data?.postcode ?? "nil")], " +
                           "state=[\(preState ?? "nil"):\(metricList[index].location_data?.state ?? "nil")]")
-                } else {
-                    print("🔍❌ \(metricList[index].metric_type ?? "TYPE?"): was not change as permission was NONE at time of capture")
                 }
             }
             
             Metrics.pushMetrics(currentMetrics: &metricList, backupUrl: nil)
         } else {
-            print("🫙 No metrics to push (EMPTY)")
+            print("🧹.. No metrics to push (EMPTY)")
         }
         
     }
@@ -537,19 +507,64 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     /// WebView fail delegate (ProvisionalNavigation)
     public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        TempoUtils.Shout(msg: "❌ didFailProvisionalNavigation FAILURE")
+        //TempoUtils.Shout(msg: "❌ didFailProvisionalNavigation FAILURE")
         abortTempo()
     }
     
     /// WebView fail delegate (General fail)
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        TempoUtils.Shout(msg: "❌ didFail FAILURE")
+        //TempoUtils.Shout(msg: "❌ didFail FAILURE")
         abortTempo()
     }
     
     /// WebView success delegate
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        TempoUtils.Say(msg: "✅ didFinish SUCCESS")
+        //TempoUtils.Say(msg: "✅ didFinish SUCCESS")
+    }
+    
+    
+    /// Test function used to test specific campaign ID using dummy values fo other metrics
+    public func loadSpecificCampaignAd(isInterstitial: Bool, campaignId:String) {
+        adState = AdState.loading
+        print("load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
+        if(!self.setupWKWebview()) {
+            sendAdFetchFailed(reason: "Could not create WKWebView")
+        }
+        uuid = "TEST"
+        adId = "TEST"
+        appId = "TEST"
+        self.isInterstitial = isInterstitial
+        //let urlComponent = isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW
+        self.addMetric(metricType: "CUSTOM_AD_LOAD_REQUEST")
+        //let url = URL(string: "https://ads.tempoplatform.com/\(urlComponent)/\(campaignId)/ios")!
+        let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: isInterstitial, campaignId: campaignId))!
+        //self.campaignId = campaignId
+        self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
+        self.webView.load(URLRequest(url: url))
     }
 }
 
+class FullScreenWKWebView: WKWebView {
+    
+    override var safeAreaInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
+    }
+    
+    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
+        super.init(frame: frame, configuration: configuration)
+        self.allowsBackForwardNavigationGestures = true
+        self.scrollView.isScrollEnabled = false
+        self.scrollView.bounces = false
+        self.scrollView.contentInsetAdjustmentBehavior = .never
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class FullScreenUIView: UIView {
+    override var safeAreaInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+}

@@ -47,21 +47,6 @@ public class TempoAdController: NSObject {
         // Check for lates location consent autorisation - after which run loadAds()
         // This does not take long, it's just run async on background thread
         tempoProfile?.doTaskAfterLocAuthUpdate(completion: loadAdCallback)
-        
-//        if(TempoProfile.locationState == LocationState.UNCHECKED)
-//        {
-//            print("⬆️ LoadAd ads after auth check: \(TempoProfile.locationState)")
-//            tempoProfile?.doTaskAfterLocAuthUpdate(completion: loadAdCallback)
-//        } else {
-//            print("⬆️ LoadAd straight away: \(TempoProfile.locationState)")
-//            loadAdCallback()
-//        }
-        
-//        // Load ad when checks are done
-//        adView!.loadAd (
-//            isInterstitial: isInterstitial,
-//            cpmFloor: cpmFloor,
-//            placementId: placementId)
     }
     
     
@@ -84,48 +69,10 @@ public class TempoAdController: NSObject {
         tempoProfile?.doTaskAfterLocAuthUpdate(completion: showAdCallback)
     }
     
-
-    
-//    /// Consent callback handler that updates global value for metrics and loads ad
-//    public func handleLocationConsentAndLoadAd(isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
-//        
-//        // Update the local variable (classic 'current_x' type)
-//        adView?.locationConsent = TempoProfile.locData?.lc ?? ""
-//        
-//        //adView?.locationData = locData
-//        TempoUtils.Say(msg: "TempoLocationConsent: \(TempoProfile.locData?.lc ?? "???")")
-//        
-//        DispatchQueue.main.async {
-//            self.loadAd(isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
-//        }
-//    }
-    
-    
     /// Public LOAD function for internal testing with specific campaign ID
     public func loadSpecificAd(isInterstitial: Bool, campaignId:String){
         adView!.loadSpecificCampaignAd(
             isInterstitial: isInterstitial,
             campaignId: campaignId)
     }
-    
-    
-    
-    /* --------------- DELETE ---------------*/
-    //    /// Creates TempoLocation object and calls checker function with handler callback
-    //    public func checkLocationConsentAndLoad(isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
-    //        if(adView != nil) {
-    //            tempoProfile = TempoProfile(adView: adView!)
-    ////
-    ////            let myParameterlessMethod: () -> Void = {
-    ////                DispatchQueue.main.async {
-    ////                    self.loadAd(isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
-    ////                }
-    ////            }
-    ////
-    //            //tempoProfile?.doTaskAfterLocAuthUpdate(completion: myParameterlessMethod)
-    //            //tempoProfile?.checkLocConsent(completion: self.handleLocationConsentAndLoadAd, isInterstitial: isInterstitial, cpmFloor: cpmFloor, placementId: placementId)
-    //        } else {
-    //            TempoUtils.Shout(msg: "AdView was nil, could not continue with ad load")
-    //        }
-    //    }
 }
