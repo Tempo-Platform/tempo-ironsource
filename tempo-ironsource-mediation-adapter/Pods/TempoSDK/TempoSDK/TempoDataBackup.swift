@@ -152,6 +152,22 @@ public class TempoDataBackup
         }
     }
     
+    
+    public static func getMostRecentLocationData() -> LocationData {
+        
+        // To retrieve the instance from UserDefaults:
+        if let savedLocationData = UserDefaults.standard.data(forKey: "locationData"),
+            let decodedLocation = try? JSONDecoder().decode(LocationData.self, from: savedLocationData) {
+            // Use the retrieved location data
+            print("👉 =========> Backup: \(decodedLocation)")
+            return decodedLocation
+        } else {
+            print("👉 =========> Backup: NONE")
+        }
+        
+        return LocationData()
+    }
+    
     /// Clears ALL references in the dedicated local backup folder
     static func clearAllData()  {
         let jsonDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)

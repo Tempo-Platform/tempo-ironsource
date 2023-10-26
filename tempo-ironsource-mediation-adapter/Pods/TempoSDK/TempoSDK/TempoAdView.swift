@@ -142,78 +142,157 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         return advertisingIdentifier.uuidString != Constants.ZERO_AD_ID ? advertisingIdentifier.uuidString : nil
     }
     
+    
+    public struct xxx {
+        var yyy: String?
+    }
+    
     /// Generate REST-ADS-API web request with current session data
     func sendAdRequest() {
     
-        // Create request string
-        let components = createUrlComponents()
+        // Update locData with backup if nil
+        if(TempoProfile.locData == nil) {
+            TempoUtils.Say(msg: "🌏 Updating with backup")
+            TempoProfile.locData = TempoDataBackup.getMostRecentLocationData()
+        } else {
+            TempoUtils.Say(msg: "🌏 LocData is not null, no backup needed")
+        }
         
+        // Create request
+        let components = createUrlComponents()
         var request = URLRequest(url: components.url!)
         request.httpMethod = "GET"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        // Reformat the url string for easier readibility
         var urlStringOutput = components.url?.absoluteString ?? "❌ INVALID URL STRING?!"
         urlStringOutput = urlStringOutput.replacingOccurrences(of: "com/ad", with: "com/ad\n")
         TempoUtils.Say(msg: "🌏 REST-ADS-API: " + urlStringOutput)
         
+        // Create request task and send
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
+            
+            // Fail on errors
             if error != nil {
                 DispatchQueue.main.async {
                     self.sendAdFetchFailed(reason: "Invalid data error: \(error!.localizedDescription)")
                 }
+                return
             }
-            else if data == nil {
+            
+            // Fail on no data
+            if data == nil {
                 DispatchQueue.main.async {
                     self.sendAdFetchFailed(reason: "Invalid data sent")
                 }
-            } else {
-                guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                    DispatchQueue.main.async {
-                        self.sendAdFetchFailed(reason: "Invalid HTTP response")
-                    }
-                    return
-                }
-                do {
-                    var validResponse = false
-                    let json = try JSONSerialization.jsonObject(with: data!)
-                    DispatchQueue.main.async {
-                        if let jsonDict = json as? Dictionary<String, Any> {
-                            if let status = jsonDict["status"] {
-                                if let statusString = status as? String {
-                                    if statusString == Constants.NO_FILL {
-                                        print("Tempo SDK: Failed loading the Ad. Received NO_FILL response from API.")
-                                        self.listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial, reason: Constants.NO_FILL)
-                                        self.addMetric(metricType: Constants.NO_FILL)
-                                        validResponse = true
-                                    } else if (statusString == Constants.OK) {
-                                        
-                                        // Loads ad from URL with id reference
-                                        if let id = jsonDict["id"] {
-                                            if let idString = id as? String {
-                                                TempoUtils.Say(msg: "Ad Received \(jsonDict).")
-                                                let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial, campaignId: idString))!
-                                                self.campaignId = TempoUtils.checkForTestCampaign(campaignId: idString)
-                                                self.webView.load(URLRequest(url: url))
-                                                validResponse = true
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        if (!validResponse) {
-                            DispatchQueue.main.async {
-                                self.sendAdFetchFailed(reason: "Invalid response from ad server")
-                            }
-                        }
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        self.sendAdFetchFailed(reason: "Reason unknown")
-                    }
-                }
+                return
             }
+            
+            // Fail on invalid HTTP response
+            guard let httpResponse = response as? HTTPURLResponse else {
+                DispatchQueue.main.async {
+                    self.sendAdFetchFailed(reason: "Invalid HTTP response")
+                }
+                return
+            }
+            
+            print("🤖🤖🤖 ==== response ====> \((response as! HTTPURLResponse).statusCode)")
+         
+            switch(httpResponse.statusCode) {
+            case 200:
+                do {
+                    // Output values
+                    let responseSuccess = try JSONDecoder().decode(ResponseSuccess.self, from: data!)
+                    print("Status: \(responseSuccess.status ?? "No status provided")")
+                    print("Campaign ID: \(responseSuccess.id ?? "No campaign ID provided")")
+                    print("CPM: \(responseSuccess.cpm ?? 0)")
+                    print("Suffix: \(responseSuccess.location_url_suffix ?? "n/a")")
+        
+                    
+                    // NO FILL
+                    if(responseSuccess.status == Constants.NO_FILL) {
+                        DispatchQueue.main.async {
+                            print("Tempo SDK: Failed loading the Ad. Received NO_FILL response from API.")
+                            self.listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial, reason: Constants.NO_FILL)
+                            self.addMetric(metricType: Constants.NO_FILL)
+                        }
+                    }
+                    
+                    // OK
+                    else if(responseSuccess.status == Constants.OK) {
+                        
+                        DispatchQueue.main.async {
+                            // Loads ad from URL with id reference
+                            guard let campaignId = responseSuccess.id, !campaignId.isEmpty else {
+                                print("CampaignId is nil/empty.")
+                                return
+                            }
+                            
+                            let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial, campaignId: campaignId, urlSuffix: nil))!
+                            self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
+                            self.webView.load(URLRequest(url: url))
+                        }
+                    }
+                    
+                    // UNKNOWN
+                    else {
+                        DispatchQueue.main.async {
+                            self.sendAdFetchFailed(reason: "200 - Unexpected data returned")
+                        }
+                    }
+                    
+                } catch let decodingError {
+                    print("Error decoding 200 JSON: \(decodingError)")
+                    // Send failure trigger
+                    DispatchQueue.main.async {
+                        self.sendAdFetchFailed(reason: "200 - Unexpected data returned")
+                    }
+                }
+                break
+            case 400:
+                do {
+                    // Output values
+                    let responseBadRequest = try JSONDecoder().decode(ResponseBadRequest.self, from: data!)
+                    print("Status: \(responseBadRequest.status ?? "No status provided")")
+                    print("Error: \(responseBadRequest.error ?? "No error provided")")
+                } catch let decodingError {
+                    print("Error decoding 400 JSON: \(decodingError)")
+                }
+                // Send failure trigger
+                DispatchQueue.main.async {
+                    self.sendAdFetchFailed(reason: "400 - Bad Request")
+                }
+                break
+            case 422:
+                do {
+                    // Output values
+                    let responseUnprocessable = try JSONDecoder().decode(ResponseUnprocessable.self, from: data!)
+                    if(responseUnprocessable.detail != nil && responseUnprocessable.detail!.count > 0) {
+                        for detail in responseUnprocessable.detail! {
+                            print("Msg: \(detail.msg ?? "No msg provided")")
+                            print("Type: \(detail.type ?? "No type provided")")
+                            print("--- LOC: \(detail.loc)")
+                        }
+                    }
+                } catch let decodingError {
+                    print("Error decoding 422 JSON: \(decodingError)")
+                }
+                
+                // Send failure trigger
+                DispatchQueue.main.async {
+                    self.sendAdFetchFailed(reason: "422 - Unprocessable Request")
+                }
+                
+                break
+            default:
+                // Send failure trigger
+                DispatchQueue.main.async {
+                    self.sendAdFetchFailed(reason: "Reason unknown: \(httpResponse.statusCode)")
+                }
+                print("Status code not relevant - ignoring")
+            }
+            
             self.adState = AdState.dormant
         })
         
@@ -238,9 +317,36 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             URLQueryItem(name: Constants.URL.ADAPTER_VERSION, value: String(adapterVersion ?? "")),
         ]
         
-        // Only ad adapter_type if value exists or cause invalid response
+        // Only ad these value if they exists or cause invalid response
         if adapterType != nil {
             components.queryItems?.append(URLQueryItem(name: Constants.URL.ADAPTER_TYPE, value: adapterType))
+        }
+        
+        
+        
+        
+        
+        if(TempoProfile.locData != nil && TempoProfile.locData?.consent != Constants.LocationConsent.NONE.rawValue) {
+            if(TempoProfile.locData?.country_code != nil) {
+                components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_COUNTRY_CODE, value: TempoProfile.locData?.country_code))
+            }
+            if(TempoProfile.locData?.postal_code != nil) {
+                components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_POSTAL_CODE, value: TempoProfile.locData?.postal_code))
+            }
+            if(TempoProfile.locData?.admin_area != nil) {
+                components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_ADMIN_AREA, value: TempoProfile.locData?.admin_area))
+            }
+            if(TempoProfile.locData?.sub_admin_area != nil) {
+                components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_SUB_ADMIN_AREA, value: TempoProfile.locData?.sub_admin_area))
+            }
+            if(TempoProfile.locData?.locality != nil) {
+                components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_LOCALITY, value: TempoProfile.locData?.locality))
+            }
+            if(TempoProfile.locData?.sub_locality != nil) {
+                components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_SUB_LOCALITY, value: TempoProfile.locData?.sub_locality))
+            }
+        } else {
+            TempoUtils.Say(msg: "No locData was sent with Ads call")
         }
         
         // Clean any '+' references with safe '%2B'
@@ -359,18 +465,32 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         }
     }
     
-    /// Creates and returns new LocationData from current static singleton that doesn't retain its memory references
-    private func getCleanedLocation() -> LocationData {
+    /// Creates and returns new LocationData from current static singleton that doesn't retain its memory references (clears all if NONE consent)
+    public func getClonedAndCleanedLocation() -> LocationData {
         
         var newLocData = LocationData()
         let newConsent = TempoProfile.locData?.consent ?? Constants.LocationConsent.NONE.rawValue
         
         newLocData.consent = newConsent
         if(newConsent != Constants.LocationConsent.NONE.rawValue) {
+            
             let state = TempoProfile.locData?.state
             let postcode = TempoProfile.locData?.postcode
+            let countryCode = TempoProfile.locData?.country_code
+            let postalCode = TempoProfile.locData?.postal_code
+            let adminArea = TempoProfile.locData?.admin_area
+            let subAdminArea = TempoProfile.locData?.sub_admin_area
+            let locality = TempoProfile.locData?.locality
+            let subLocality = TempoProfile.locData?.sub_locality
+            
             newLocData.state = state
             newLocData.postcode = postcode
+            newLocData.country_code = countryCode
+            newLocData.postal_code = postalCode
+            newLocData.admin_area = adminArea
+            newLocData.sub_admin_area = subAdminArea
+            newLocData.locality = locality
+            newLocData.sub_locality = subLocality
         }
         
         return newLocData
@@ -396,7 +516,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                             adapter_type: self.adapterType,
                             consent: self.consent,
                             consent_type: nil,
-                            location_data: getCleanedLocation()
+                            location_data: getClonedAndCleanedLocation()
         )
         
         self.metricList.append(metric)
@@ -405,13 +525,13 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         let validState = TempoProfile.locationState != .UNCHECKED && TempoProfile.locationState != .CHECKING
         
         // Hold if still waiting for profile LocationData (or if consent != NONE)
-        if(!validState && TempoProfile.locData?.consent != Constants.LocationConsent.NONE.rawValue) {
+        if(!validState && metric.location_data?.consent != Constants.LocationConsent.NONE.rawValue) {
             print("🛑 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
-                  "Not sending metrics just yet: [postcode=\(TempoProfile.locData?.postcode ?? "NIL") | state=\(TempoProfile.locData?.state ?? "NIL")]")
+                  "Not sending metrics just yet: [admin=\(metric.location_data?.admin_area ?? "NIL") | locality=\(metric.location_data?.locality ?? "NIL")]")
             return
         } else {
             print("🟢 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
-                  "Sending metrics! [postcode=\(TempoProfile.locData?.postcode ?? "NIL") | state=\(TempoProfile.locData?.state ?? "NIL")]")
+                  "Sending metrics! [admin=\(metric.location_data?.admin_area ?? "NIL") | locality=\(metric.location_data?.locality ?? "NIL")]")
         }
         
         if (Constants.MetricType.METRIC_SEND_NOW.contains(metricType)) {
@@ -425,17 +545,24 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         if(!metricList.isEmpty) {
             for (index, _) in metricList.enumerated() {
                 
-                let prePostcode = metricList[index].location_data?.postcode
-                let preState = metricList[index].location_data?.state
+                let preAdmin = metricList[index].location_data?.admin_area
+                let preLocality = metricList[index].location_data?.locality
                 
                 if(metricList[index].location_data?.consent == Constants.LocationConsent.NONE.rawValue) {
+                    
                     // Delete any data related to personal location
                     metricList[index].location_data?.postcode = nil
                     metricList[index].location_data?.state = nil
-                    print("🧹 xx \(metricList[index].metric_type ?? "TYPE?"): postcode=[\(prePostcode ?? "nil"):NIL)], state=[\(preState ?? "nil"):NIL]")
+                    metricList[index].location_data?.postal_code = nil
+                    metricList[index].location_data?.country_code = nil
+                    metricList[index].location_data?.admin_area = nil
+                    metricList[index].location_data?.sub_admin_area = nil
+                    metricList[index].location_data?.locality = nil
+                    metricList[index].location_data?.sub_locality = nil
+                    
+                    print("🧹 xx \(metricList[index].metric_type ?? "TYPE?"): admin=[\(preAdmin ?? "nil"):NIL)], locality=[\(preLocality ?? "nil"):NIL]")
                 } else {
                     // Confirm postcode has a value
-                    let prePostcode = metricList[index].location_data?.postcode
                     if let currentPostcode = TempoProfile.locData?.postcode, !currentPostcode.isEmpty {
                         metricList[index].location_data?.postcode = currentPostcode
                     } else {
@@ -449,8 +576,50 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                         metricList[index].location_data?.state = nil
                     }
                     
-                    print("🧹 => \(metricList[index].metric_type ?? "TYPE?"): postcode=[\(prePostcode ?? "nil"):\(metricList[index].location_data?.postcode ?? "nil")], " +
-                          "state=[\(preState ?? "nil"):\(metricList[index].location_data?.state ?? "nil")]")
+                    // Confirm postal code has a value
+                    if let currentPostalCode = TempoProfile.locData?.postal_code, !currentPostalCode.isEmpty {
+                        metricList[index].location_data?.postal_code = currentPostalCode
+                    } else {
+                        metricList[index].location_data?.postal_code = nil
+                    }
+                    
+                    // Confirm country code has a value
+                    if let currentCountryCode = TempoProfile.locData?.country_code, !currentCountryCode.isEmpty {
+                        metricList[index].location_data?.country_code = currentCountryCode
+                    } else {
+                        metricList[index].location_data?.country_code = nil
+                    }
+                    
+                    // Confirm admin area has a value
+                    if let currentAdminArea = TempoProfile.locData?.admin_area, !currentAdminArea.isEmpty {
+                        metricList[index].location_data?.admin_area = currentAdminArea
+                    } else {
+                        metricList[index].location_data?.admin_area = nil
+                    }
+                    
+                    // Confirm sub-admin area has a value
+                    if let currentSubAdminArea = TempoProfile.locData?.sub_admin_area, !currentSubAdminArea.isEmpty {
+                        metricList[index].location_data?.sub_admin_area = currentSubAdminArea
+                    } else {
+                        metricList[index].location_data?.sub_admin_area = nil
+                    }
+                    
+                    // Confirm locality has a value
+                    if let currentLocality = TempoProfile.locData?.locality, !currentLocality.isEmpty {
+                        metricList[index].location_data?.locality = currentLocality
+                    } else {
+                        metricList[index].location_data?.locality = nil
+                    }
+                    
+                    // Confirm locality has a value
+                    if let currentSubLocality = TempoProfile.locData?.sub_locality, !currentSubLocality.isEmpty {
+                        metricList[index].location_data?.sub_locality = currentSubLocality
+                    } else {
+                        metricList[index].location_data?.sub_locality = nil
+                    }
+                    
+                    print("🧹 => \(metricList[index].metric_type ?? "TYPE?"): admin=[\(preAdmin ?? "nil"):\(metricList[index].location_data?.postcode ?? "nil")], " +
+                          "locality=[\(preLocality ?? "nil"):\(metricList[index].location_data?.state ?? "nil")]")
                 }
             }
             
@@ -537,7 +706,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         //let urlComponent = isInterstitial ? TempoConstants.URL_INT : TempoConstants.URL_REW
         self.addMetric(metricType: "CUSTOM_AD_LOAD_REQUEST")
         //let url = URL(string: "https://ads.tempoplatform.com/\(urlComponent)/\(campaignId)/ios")!
-        let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: isInterstitial, campaignId: campaignId))!
+        let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: isInterstitial, campaignId: campaignId, urlSuffix: nil))!
         //self.campaignId = campaignId
         self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
         self.webView.load(URLRequest(url: url))

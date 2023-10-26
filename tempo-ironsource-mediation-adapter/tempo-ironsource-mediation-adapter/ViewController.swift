@@ -12,6 +12,9 @@ import tempo_ios_ironsource_mediation
 import CoreLocation
 
 
+let prodKey = "1ade2c39d"
+let devKey = "1a470a75d"
+
 let kAPPKEY = Constants.isProd ? "1ade2c39d" : "1a470a75d"
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoManualDelegate, ISInitializationDelegate, ISImpressionDataDelegate {

@@ -15,22 +15,25 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
     init(adView: TempoAdView) {
         self.adView = adView
         super.init()
-        if #available(iOS 14.0, *) {
-            
-            // Create a new locData object for the static reference if first initialisation
-            TempoProfile.locData = TempoProfile.locData ?? LocationData()
-            TempoProfile.updateLocState(newState: TempoProfile.locationState ?? LocationState.UNCHECKED)
-            
-            // Assign manager delegate
-            locManager.delegate = self
-            locManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-            
-            // For testing, loads when initialised
-            if(requestOnLoad_testing) {
-                locManager.requestWhenInUseAuthorization()
-                locManager.requestLocation()
-                requestLocationWithChecks()
-            }
+        
+        // Update locData with backup if nil
+        if(TempoProfile.locData == nil) {
+            TempoUtils.Say(msg: "🌏 Updating with backup")
+            TempoProfile.locData = TempoDataBackup.getMostRecentLocationData()
+        } else {
+            TempoUtils.Say(msg: "🌏 LocData is not null, no backup needed")
+        }
+        TempoProfile.updateLocState(newState: TempoProfile.locationState ?? LocationState.UNCHECKED)
+        
+        // Assign manager delegate
+        locManager.delegate = self
+        locManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        
+        // For testing, loads when initialised
+        if(requestOnLoad_testing) {
+            locManager.requestWhenInUseAuthorization()
+            locManager.requestLocation()
+            requestLocationWithChecks()
         }
     }
     
@@ -81,8 +84,22 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
                     }
                 case .restricted, .denied:
                     print("⛔️ No access - restricted or denied [UPDATE]")
+                    // Need to update latest valid consent as confirmed NONE
+                    TempoProfile.locData = self.adView.getClonedAndCleanedLocation()
+                    TempoProfile.updateLocState(newState: LocationState.UNAVAILABLE)
+                    self.updateLocConsentValues(consentType: Constants.LocationConsent.NONE)
+                    self.saveLatestValidLocData()
+                    completion?()
+                    return
                 case .notDetermined:
                     print("⛔️ No access - notDetermined [UPDATE]")
+                    // Need to update latest valid consent as confirmed NONE
+                    TempoProfile.locData = self.adView.getClonedAndCleanedLocation()
+                    TempoProfile.updateLocState(newState: LocationState.UNAVAILABLE)
+                    self.updateLocConsentValues(consentType: Constants.LocationConsent.NONE)
+                    self.saveLatestValidLocData()
+                    completion?()
+                    return
                 @unknown default:
                     print("⛔️ Unknown authorization status [UPDATE]")
                 }
@@ -115,7 +132,7 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         return locationAuthorizationStatus
     }
     
-    /// Shortcut output for locaation property types while returning string refererence for metrics
+    /// Shortcut output for location property types while returning string refererence for metrics
     func getLocationPropertyValue(labelName: String, property: String?) -> String? {
         // TODO: Work out the tabs by string length..?
         if let checkedValue = property {
@@ -128,7 +145,7 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         }
     }
     
-    /// Shortcut output for locaation property types while returning string refererence for metrics
+    /// Shortcut output for location property types while returning string refererence for metrics
     func getLocationPropertyValue(labelName: String, property: [String]?) -> [String]? {
         // TODO: Work out the tabs by string length..?
         if let checkedValue = property {
@@ -199,25 +216,36 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
                     TempoProfile.locData?.state = self.getLocationPropertyValue(labelName: "State", property: placemark.administrativeArea)
                     TempoProfile.locData?.postcode = self.getLocationPropertyValue(labelName: "Postcode", property: placemark.postalCode)
                     
+                    TempoProfile.locData?.postal_code = self.getLocationPropertyValue(labelName: "Postal Code", property: placemark.postalCode)
+                    TempoProfile.locData?.country_code = self.getLocationPropertyValue(labelName: "Country Code", property: placemark.isoCountryCode)
+                    TempoProfile.locData?.admin_area = self.getLocationPropertyValue(labelName: "Admin Area", property: placemark.administrativeArea)
+                    TempoProfile.locData?.sub_admin_area = self.getLocationPropertyValue(labelName: "Sub Admin Area", property: placemark.subAdministrativeArea)
+                    TempoProfile.locData?.locality = self.getLocationPropertyValue(labelName: "Locality", property: placemark.locality)
+                    TempoProfile.locData?.sub_locality = self.getLocationPropertyValue(labelName: "Sub Locality", property: placemark.subLocality)
+                    
                     let testingOutput = false
                     if(testingOutput) {
-                        print("🌐 => \(location.coordinate.latitude)/\(location.coordinate.longitude)" )
-                        self.getLocationPropertyValue(labelName: "name", property: placemark.name) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "thoroughfare", property: placemark.thoroughfare) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "subThoroughfare", property: placemark.subThoroughfare) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "locality", property: placemark.locality) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "subLocality", property: placemark.subLocality) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "administrativeArea", property: placemark.administrativeArea) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "subAdministrativeArea", property: placemark.subAdministrativeArea) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "postalCode", property: placemark.postalCode) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "isoCountryCode", property: placemark.isoCountryCode) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "country", property: placemark.country) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "inlandWater", property: placemark.inlandWater) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "ocean", property: placemark.ocean) ?? "n/a"
-                        self.getLocationPropertyValue(labelName: "areasOfInterest", property: placemark.areasOfInterest) ?? []
+//                        print("🌐 => \(location.coordinate.latitude)/\(location.coordinate.longitude)" )
+//                        self.getLocationPropertyValue(labelName: "name", property: placemark.name) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "thoroughfare", property: placemark.thoroughfare) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "subThoroughfare", property: placemark.subThoroughfare) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "locality", property: placemark.locality) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "subLocality", property: placemark.subLocality) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "administrativeArea", property: placemark.administrativeArea) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "subAdministrativeArea", property: placemark.subAdministrativeArea) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "postalCode", property: placemark.postalCode) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "isoCountryCode", property: placemark.isoCountryCode) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "country", property: placemark.country) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "inlandWater", property: placemark.inlandWater) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "ocean", property: placemark.ocean) ?? "n/a"
+//                        self.getLocationPropertyValue(labelName: "areasOfInterest", property: placemark.areasOfInterest) ?? []
                     }
                     
                     print("🚩🚩🚩 onUpdate.success -> [postcode=\(TempoProfile.locData?.postcode ?? "NIL") | state=\(TempoProfile.locData?.state ?? "NIL")] | Values have been updated")
+                    
+                    // Save data instance as most recently validated data
+                    self.saveLatestValidLocData()
+                    
                     TempoProfile.updateLocState(newState: LocationState.CHECKED)
                     self.adView.pushHeldMetricsWithUpdatedLocationData()
                     return
@@ -230,6 +258,22 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
             return
         }
     }
+    
+    
+    private func saveLatestValidLocData() {
+        
+        // Save the instance to UserDefaults
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(TempoProfile.locData) {
+            let defaults = UserDefaults.standard
+            defaults.set(encoded, forKey: "locationData")
+            TempoUtils.Say(msg: "***********************   saveLocData SAVING")
+        }
+        else {
+            TempoUtils.Say(msg: "***********************   saveLocData FAILED")
+        }
+    }
+    
     
     /// Location Manager callback: didFailWithError
     public func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -273,6 +317,13 @@ public struct LocationData : Codable {
     var consent: String?
     var postcode: String?
     var state: String?
+    
+    var postal_code: String?
+    var country_code: String?
+    var admin_area: String?
+    var sub_admin_area: String?
+    var locality: String?
+    var sub_locality: String?
 }
 
 public enum LocationState: String {

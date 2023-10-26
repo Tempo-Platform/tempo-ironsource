@@ -42,7 +42,7 @@ public class TempoAdController: NSObject {
         }
         
         // Create tempoProfile instance if does not already exist
-        tempoProfile =  tempoProfile ?? TempoProfile(adView: adView!)
+        tempoProfile = tempoProfile ?? TempoProfile(adView: adView!)
         
         // Check for lates location consent autorisation - after which run loadAds()
         // This does not take long, it's just run async on background thread
