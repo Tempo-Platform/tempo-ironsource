@@ -26,10 +26,10 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     var adapterType: String?
     var consent: Bool?
     var currentConsentType: String?
-    var geo: String?
+    internal var countryCode: String? = "XX"// CountryCode.getIsoCountryCode2Digit()
     var locationData: LocationData?
     var metricList: [Metric] = []
-
+    
     public init(listener: TempoAdListener, appId: String) {
         super.init(nibName: nil, bundle: nil)
         
@@ -71,7 +71,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         
         // Update session values from global checks
         uuid = UUID().uuidString
-        geo = Constants.TEMP_GEO_US  // TODO: This will eventually need to be taken from mediation parameters
+        //geo = CountryCode.getIsoCountryCode2Digit()  // TODO: This will eventually need to be taken from mediation parameters
         
         // Create ad load metrics with updated ad data
         self.addMetric(metricType: Constants.MetricType.LOAD_REQUEST)
@@ -82,10 +82,10 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     /// Plays currently loaded ad for current session (interstitial/reward)
     public func showAd(parentVC: UIViewController?) {
- 
+        
         // Update parent VC with received value
         self.parentVC = parentVC
-                
+        
         // Make sure parentVC/webview are not nil
         if(self.parentVC == nil || self.webView == nil || self.webViewWithBackground == nil) {
             self.sendAdShowFailed(reason: "unexpected null object")
@@ -109,7 +109,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         // Note: Method return type not recognised by WKWebKit so we add null return.
         self.webView.evaluateJavaScript(script) { (result, error) in
             if let error = error {
-                print("Error playing video: \(error)")
+                TempoUtils.Warn(msg: "Error playing video: \(error)")
             }
         }
     }
@@ -142,14 +142,9 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         return advertisingIdentifier.uuidString != Constants.ZERO_AD_ID ? advertisingIdentifier.uuidString : nil
     }
     
-    
-    public struct xxx {
-        var yyy: String?
-    }
-    
     /// Generate REST-ADS-API web request with current session data
     func sendAdRequest() {
-    
+        
         // Update locData with backup if nil
         if(TempoProfile.locData == nil) {
             TempoUtils.Say(msg: "🌏 Updating with backup")
@@ -162,7 +157,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         let components = createUrlComponents()
         var request = URLRequest(url: components.url!)
         request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_CONTENT_TYPE)
         
         // Reformat the url string for easier readibility
         var urlStringOutput = components.url?.absoluteString ?? "❌ INVALID URL STRING?!"
@@ -173,127 +168,91 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
             
-            // Fail on errors
+            // Faluire reason to be updated if any errors encountered
+            var errorMsg = "Unknown"
+            
+            // Fail if errors or not data
             if error != nil {
-                DispatchQueue.main.async {
-                    self.sendAdFetchFailed(reason: "Invalid data error: \(error!.localizedDescription)")
-                }
-                return
+                errorMsg = "Invalid data error: \(error!.localizedDescription)"
             }
-            
-            // Fail on no data
-            if data == nil {
-                DispatchQueue.main.async {
-                    self.sendAdFetchFailed(reason: "Invalid data sent")
-                }
-                return
+            else if data == nil {
+                errorMsg = "Invalid data sent"
             }
-            
-            // Fail on invalid HTTP response
-            guard let httpResponse = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    self.sendAdFetchFailed(reason: "Invalid HTTP response")
-                }
-                return
-            }
-            
-            print("🤖🤖🤖 ==== response ====> \((response as! HTTPURLResponse).statusCode)")
-         
-            switch(httpResponse.statusCode) {
-            case 200:
-                do {
-                    // Output values
-                    let responseSuccess = try JSONDecoder().decode(ResponseSuccess.self, from: data!)
-                    print("Status: \(responseSuccess.status ?? "No status provided")")
-                    print("Campaign ID: \(responseSuccess.id ?? "No campaign ID provided")")
-                    print("CPM: \(responseSuccess.cpm ?? 0)")
-                    print("Suffix: \(responseSuccess.location_url_suffix ?? "n/a")")
-        
-                    
-                    // NO FILL
-                    if(responseSuccess.status == Constants.NO_FILL) {
-                        DispatchQueue.main.async {
-                            print("Tempo SDK: Failed loading the Ad. Received NO_FILL response from API.")
-                            self.listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial, reason: Constants.NO_FILL)
-                            self.addMetric(metricType: Constants.NO_FILL)
-                        }
-                    }
-                    
-                    // OK
-                    else if(responseSuccess.status == Constants.OK) {
-                        
-                        DispatchQueue.main.async {
-                            // Loads ad from URL with id reference
-                            guard let campaignId = responseSuccess.id, !campaignId.isEmpty else {
-                                print("CampaignId is nil/empty.")
-                                return
-                            }
-                            
-                            let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial, campaignId: campaignId, urlSuffix: nil))!
-                            self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
-                            self.webView.load(URLRequest(url: url))
-                        }
-                    }
-                    
-                    // UNKNOWN
-                    else {
-                        DispatchQueue.main.async {
-                            self.sendAdFetchFailed(reason: "200 - Unexpected data returned")
-                        }
-                    }
-                    
-                } catch let decodingError {
-                    print("Error decoding 200 JSON: \(decodingError)")
-                    // Send failure trigger
+            // Has data and no errors - can continue
+            else {
+                // Fail on invalid HTTP response
+                guard let httpResponse = response as? HTTPURLResponse else {
                     DispatchQueue.main.async {
-                        self.sendAdFetchFailed(reason: "200 - Unexpected data returned")
+                        self.sendAdFetchFailed(reason: "Invalid HTTP response")
+                        self.adState = AdState.dormant
                     }
+                    return
                 }
-                break
-            case 400:
-                do {
-                    // Output values
-                    let responseBadRequest = try JSONDecoder().decode(ResponseBadRequest.self, from: data!)
-                    print("Status: \(responseBadRequest.status ?? "No status provided")")
-                    print("Error: \(responseBadRequest.error ?? "No error provided")")
-                } catch let decodingError {
-                    print("Error decoding 400 JSON: \(decodingError)")
-                }
-                // Send failure trigger
-                DispatchQueue.main.async {
-                    self.sendAdFetchFailed(reason: "400 - Bad Request")
-                }
-                break
-            case 422:
-                do {
-                    // Output values
-                    let responseUnprocessable = try JSONDecoder().decode(ResponseUnprocessable.self, from: data!)
-                    if(responseUnprocessable.detail != nil && responseUnprocessable.detail!.count > 0) {
-                        for detail in responseUnprocessable.detail! {
-                            print("Msg: \(detail.msg ?? "No msg provided")")
-                            print("Type: \(detail.type ?? "No type provided")")
-                            print("--- LOC: \(detail.loc)")
+                TempoUtils.Say(msg: "🤖🤖🤖 Response: \((response as! HTTPURLResponse).statusCode)")
+                
+                switch(httpResponse.statusCode) {
+                case 200:
+                    do {
+                        let responseSuccess = try JSONDecoder().decode(ResponseSuccess.self, from: data!)
+                        responseSuccess.outputValues()
+                        
+                        // Handle status type
+                        switch(responseSuccess.status) {
+                        case Constants.NO_FILL:
+                            errorMsg = "200 - Failed loading ad: \(Constants.NO_FILL)"
+                            self.addMetric(metricType: Constants.NO_FILL)
+                        case Constants.OK:
+                            // Loads ad from URL with id reference
+                            DispatchQueue.main.async {
+                                guard let campaignId = responseSuccess.id, !campaignId.isEmpty else {
+                                    // Send failure trigger and reset state
+                                    errorMsg = "200 - CampaignId was nil"
+                                    self.adState = AdState.dormant
+                                    self.sendAdFetchFailed(reason: errorMsg)
+                                    return
+                                }
+                                
+                                let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial, campaignId: campaignId, urlSuffix: responseSuccess.location_url_suffix))!
+                                self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
+                                self.webView.load(URLRequest(url: url))
+                                self.adState = AdState.dormant
+                            }
+                            return
+                        default:
+                            errorMsg = "200 - Unexpected data returned"
                         }
+                    } catch let decodingError {
+                        errorMsg = "200 - Unexpected data returned, error decoding JSON: \(decodingError)"
                     }
-                } catch let decodingError {
-                    print("Error decoding 422 JSON: \(decodingError)")
+                    break
+                case 400:
+                    do {
+                        let responseBadRequest = try JSONDecoder().decode(ResponseBadRequest.self, from: data!)
+                        responseBadRequest.outputValues()
+                        errorMsg = "400 - Bad Request"
+                    } catch let decodingError {
+                        errorMsg = "400 - Bad Request, error decoding JSON: \(decodingError)"
+                    }
+                    break
+                case 422:
+                    do {
+                        let responseUnprocessable = try JSONDecoder().decode(ResponseUnprocessable.self, from: data!)
+                        responseUnprocessable.outputValues()
+                        errorMsg = "422 - Unprocessable Request"
+                    } catch let decodingError {
+                        errorMsg = "422 - Unprocessable Request, error decoding JSON: \(decodingError)"
+                    }
+                    break
+                default:
+                    errorMsg = "Status code not relevant (\(httpResponse.statusCode) - ignoring"
                 }
-                
-                // Send failure trigger
-                DispatchQueue.main.async {
-                    self.sendAdFetchFailed(reason: "422 - Unprocessable Request")
-                }
-                
-                break
-            default:
-                // Send failure trigger
-                DispatchQueue.main.async {
-                    self.sendAdFetchFailed(reason: "Reason unknown: \(httpResponse.statusCode)")
-                }
-                print("Status code not relevant - ignoring")
             }
             
-            self.adState = AdState.dormant
+            // Send failure trigger and reset state
+            DispatchQueue.main.async {
+                self.adState = AdState.dormant
+                self.sendAdFetchFailed(reason: errorMsg)
+            }
         })
         
         task.resume()
@@ -311,7 +270,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             URLQueryItem(name: Constants.URL.AD_ID, value: adId),
             URLQueryItem(name: Constants.URL.APP_ID, value: appId),
             URLQueryItem(name: Constants.URL.CPM_FLOOR, value: String(cpmFloor ?? 0.0)),
-            URLQueryItem(name: Constants.URL.LOCATION, value: geo),
+            URLQueryItem(name: Constants.URL.LOCATION, value: countryCode),
             URLQueryItem(name: Constants.URL.IS_INTERSTITIAL, value: String(isInterstitial)),
             URLQueryItem(name: Constants.URL.SDK_VERSION, value: String(sdkVersion ?? "")),
             URLQueryItem(name: Constants.URL.ADAPTER_VERSION, value: String(adapterVersion ?? "")),
@@ -321,11 +280,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         if adapterType != nil {
             components.queryItems?.append(URLQueryItem(name: Constants.URL.ADAPTER_TYPE, value: adapterType))
         }
-        
-        
-        
-        
-        
         if(TempoProfile.locData != nil && TempoProfile.locData?.consent != Constants.LocationConsent.NONE.rawValue) {
             if(TempoProfile.locData?.country_code != nil) {
                 components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_COUNTRY_CODE, value: TempoProfile.locData?.country_code))
@@ -346,7 +300,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                 components.queryItems?.append(URLQueryItem(name: Constants.URL.LOC_SUB_LOCALITY, value: TempoProfile.locData?.sub_locality))
             }
         } else {
-            TempoUtils.Say(msg: "No locData was sent with Ads call")
+            TempoUtils.Warn(msg: "No LocationData was sent with Ads call")
         }
         
         // Clean any '+' references with safe '%2B'
@@ -358,7 +312,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     // Combines fetch fail callback and metric send
     func sendAdFetchFailed(reason: String?) {
         let endTag = reason?.isEmpty == true ? "" : ": \(reason!)"
-        print("Tempo SDK: Failed loading the Ad\(endTag)")
+        TempoUtils.Warn(msg: "AdFetchFailed:\(endTag)")
         self.addMetric(metricType: Constants.MetricType.LOAD_FAILED)
         self.listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial, reason: reason)
     }
@@ -366,14 +320,14 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     // Combines show fail callback and metric send
     func sendAdShowFailed(reason: String?) {
         let endTag = reason?.isEmpty == true ? "" : ": \(reason!)"
-        print("Tempo SDK: Failed showing the Ad\(endTag)")
+        TempoUtils.Warn(msg: "AdShowFailed:\(endTag)")
         self.addMetric(metricType: Constants.MetricType.SHOW_FAIL)
         self.listener.onTempoAdShowFailed(isInterstitial: self.isInterstitial, reason: reason)
     }
-
+    
     /// Creates the custom WKWebView including safe areas, background color and pulls custom configurations
     private func setupWKWebview() -> Bool {
-    
+        
         // Create webview frame parameters
         var safeAreaTop: CGFloat = 0.0
         var safeAreaBottom: CGFloat = 0.0
@@ -390,7 +344,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         
         // Create webview config
         let configuration = getWKWebViewConfiguration()
-    
+        
         // Create WKWebView object
         webView = FullScreenWKWebView(frame: webViewFrame, configuration: configuration)
         if(webView == nil) {
@@ -401,7 +355,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         // Add black base background
         webViewWithBackground = FullScreenUIView(frame: UIScreen.main.bounds)
         if(webViewWithBackground == nil) {
-           return false
+            return false
         }
         
         // Add main view to black background
@@ -445,7 +399,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             
             // Send metric for web message
             self.addMetric(metricType: webMsg)
-           
+            
             // Can close ad
             if(webMsg == Constants.MetricType.CLOSE_AD){
                 self.closeAd()
@@ -454,7 +408,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             // Output metric message
             if(Constants.MetricType.METRIC_OUTPUT_TYPES.contains(webMsg))
             {
-                print(webMsg)
+                TempoUtils.Say(msg: "WEB: \(webMsg)", absoluteDisplay: true)
             }
             
             // Show success when content load
@@ -496,7 +450,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         return newLocData
     }
     
-    
     /// Create a new Metric instance based on current ad's class properties, and adds to Metrics array
     private func addMetric(metricType: String) {
         let metric = Metric(metric_type: metricType,
@@ -507,7 +460,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                             bundle_id: Bundle.main.bundleIdentifier!,
                             campaign_id: self.campaignId ?? "",
                             session_id: self.uuid!,
-                            location: self.geo ?? "US",
+                            location: self.countryCode ?? "",
+                            country_code: self.countryCode ?? "",
                             placement_id: self.placementId ?? "",
                             os: "iOS \(UIDevice.current.systemVersion)",
                             sdk_version: self.sdkVersion ?? "",
@@ -526,12 +480,12 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         
         // Hold if still waiting for profile LocationData (or if consent != NONE)
         if(!validState && metric.location_data?.consent != Constants.LocationConsent.NONE.rawValue) {
-            print("🛑 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
-                  "Not sending metrics just yet: [admin=\(metric.location_data?.admin_area ?? "NIL") | locality=\(metric.location_data?.locality ?? "NIL")]")
+            TempoUtils.Warn(msg: "[\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
+                            "Not sending metrics just yet: [admin=\(metric.location_data?.admin_area ?? "nil") | locality=\(metric.location_data?.locality ?? "nil")]")
             return
         } else {
-            print("🟢 [\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
-                  "Sending metrics! [admin=\(metric.location_data?.admin_area ?? "NIL") | locality=\(metric.location_data?.locality ?? "NIL")]")
+            TempoUtils.Say(msg: "[\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
+                           "Sending metrics! [admin=\(metric.location_data?.admin_area ?? "nil") | locality=\(metric.location_data?.locality ?? "nil")]")
         }
         
         if (Constants.MetricType.METRIC_SEND_NOW.contains(metricType)) {
@@ -541,7 +495,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     /// Cycles through all unpushed metrics and updates all LocationData values based on consent value at time of creation
     func pushHeldMetricsWithUpdatedLocationData() {
-       
+        
         if(!metricList.isEmpty) {
             for (index, _) in metricList.enumerated() {
                 
@@ -560,7 +514,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                     metricList[index].location_data?.locality = nil
                     metricList[index].location_data?.sub_locality = nil
                     
-                    print("🧹 xx \(metricList[index].metric_type ?? "TYPE?"): admin=[\(preAdmin ?? "nil"):NIL)], locality=[\(preLocality ?? "nil"):NIL]")
+                    TempoUtils.Say(msg: "🧹 NONE => \(metricList[index].metric_type ?? "TYPE?"): admin=[\(preAdmin ?? "nil"):nil)], locality=[\(preLocality ?? "nil"):nil]")
                 } else {
                     // Confirm postcode has a value
                     if let currentPostcode = TempoProfile.locData?.postcode, !currentPostcode.isEmpty {
@@ -586,6 +540,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                     // Confirm country code has a value
                     if let currentCountryCode = TempoProfile.locData?.country_code, !currentCountryCode.isEmpty {
                         metricList[index].location_data?.country_code = currentCountryCode
+                        metricList[index].country_code = currentCountryCode
+                        metricList[index].location = currentCountryCode
                     } else {
                         metricList[index].location_data?.country_code = nil
                     }
@@ -618,16 +574,14 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                         metricList[index].location_data?.sub_locality = nil
                     }
                     
-                    print("🧹 => \(metricList[index].metric_type ?? "TYPE?"): admin=[\(preAdmin ?? "nil"):\(metricList[index].location_data?.postcode ?? "nil")], " +
-                          "locality=[\(preLocality ?? "nil"):\(metricList[index].location_data?.state ?? "nil")]")
+                    TempoUtils.Say(msg: "🧹\(metricList[index].location_data?.consent ?? "NOT_NONE") => \(metricList[index].metric_type ?? "TYPE?"): admin=[\(preAdmin ?? "nil"):\(metricList[index].location_data?.postcode ?? "nil")], locality=[\(preLocality ?? "nil"):\(metricList[index].location_data?.state ?? "nil")]")
                 }
             }
             
             Metrics.pushMetrics(currentMetrics: &metricList, backupUrl: nil)
         } else {
-            print("🧹.. No metrics to push (EMPTY)")
+            TempoUtils.Say(msg:"🧹 No metrics to push (EMPTY)")
         }
-        
     }
     
     /// Calculate gap at top needed based on device ttype
@@ -695,7 +649,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     /// Test function used to test specific campaign ID using dummy values fo other metrics
     public func loadSpecificCampaignAd(isInterstitial: Bool, campaignId:String) {
         adState = AdState.loading
-        print("load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
+        TempoUtils.Say(msg: "load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
         if(!self.setupWKWebview()) {
             sendAdFetchFailed(reason: "Could not create WKWebView")
         }
@@ -712,6 +666,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         self.webView.load(URLRequest(url: url))
     }
 }
+
 
 class FullScreenWKWebView: WKWebView {
     

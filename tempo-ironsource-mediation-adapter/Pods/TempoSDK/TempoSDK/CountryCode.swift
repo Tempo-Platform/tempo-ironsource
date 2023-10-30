@@ -2,7 +2,7 @@
 import Foundation
 
 
-public class TempoUserInfo {
+public class CountryCode {
     
     static let currentLocale = Locale.current
     static let unknown = "???"

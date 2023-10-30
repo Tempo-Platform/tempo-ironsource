@@ -6,10 +6,23 @@ import CoreLocation
 public class ResponseBadRequest: Decodable {
     var error: String?
     var status: String?
+    
+    public func outputValues() {
+        TempoUtils.Warn(msg: "[400]: status=\(status ?? "nil"), error=\(error ?? "nil")")
+    }
 }
 
 public class ResponseUnprocessable: Decodable {
     var detail: [UnprocessableDetail]?
+    
+    public func outputValues() {
+        if(detail != nil && detail!.count > 0) {
+            for detail in detail! {
+                TempoUtils.Warn(msg: "[422]: msg=\(detail.msg ?? "nil"), type=\(detail.type ?? "nil"), loc=\(detail.loc ?? ["n/a"])")
+            }
+        }
+        
+    }
 }
 
 public class UnprocessableDetail: Decodable {
@@ -29,6 +42,7 @@ public class UnprocessableDetail: Decodable {
             msg = try container.decodeIfPresent(String.self, forKey: .msg)
             type = try container.decode(String.self, forKey: .type)
         }
+    
 }
 
 
@@ -37,36 +51,40 @@ public class ResponseSuccess: Decodable {
     var cpm: Float?
     var id: String?
     var location_url_suffix: String?
+    
+    public func outputValues() {
+        TempoUtils.Say(msg: "[200]: Status=\(status ?? "nil"), CampaignID=\(id ?? "nil"), CPM=\(cpm ?? 0), Suffix=\(location_url_suffix ?? "nil")", absoluteDisplay: true)
+    }
 }
-
-/**
- * Global tools to use within the Tempo SDK module
- */
+    
+    /**
+     * Global tools to use within the Tempo SDK module
+     */
 public class TempoUtils {
     
-    /// Log for URGENT output with 💥 marker - not to be used in production
+    /// Log for URGENT output with 🔴 marker - not to be used in production
     public static func Shout(msg: String) {
         if(Constants.isTesting) {
-            print("💥 TempoSDK: \(msg)");
+            print("🔴 TempoSDK: \(msg)");
         }
     }
-
-    /// Log for URGENT output with 💥 marker, even when TESTING is on - not to be used in production
+    
+    /// Log for URGENT output with 🔴 marker, even when TESTING is on - not to be used in production
     public static func Shout(msg: String, absoluteDisplay: Bool) {
         if (absoluteDisplay) {
-            print("💥 TempoSDK: \(msg)");
+            print("🔴 TempoSDK: \(msg)");
         } else if (Constants.isTesting) {
             // Nothing - muted
         }
     }
-
+    
     /// Log for general test  output -, never shows in production
     public static func Say(msg: String) {
         if(Constants.isTesting) {
             print("🟣 TempoSDK: \(msg)");
         }
     }
-
+    
     /// Log for general output with - option of toggling production output or off completely
     public static func Say(msg: String, absoluteDisplay: Bool) {
         if (absoluteDisplay) {
@@ -76,14 +94,14 @@ public class TempoUtils {
         }
     }
     
-    /// Log for WARNING output with 💥 marker - not to be used in production
+    /// Log for WARNING output with ⚠️ marker - not to be used in production
     public static func Warn(msg: String) {
         if(Constants.isTesting) {
             print("⚠️ TempoSDK: \(msg)");
         }
     }
-
-    /// Log for WARNING output with 💥 marker, option of toggling production output or off completely
+    
+    /// Log for WARNING output with ⚠️ marker, option of toggling production output or off completely
     public static func Warn(msg: String, absoluteDisplay: Bool) {
         if (absoluteDisplay) {
             print("⚠️ TempoSDK: \(msg)");
@@ -92,14 +110,14 @@ public class TempoUtils {
         }
     }
     
-    /// Returns HTML-ADS url based on current environment and adType/campaignID parameters
-    public static func getAdsWebUrl(isInterstitial: Bool, campaignId: String) -> String! {
-        let urlDomain = Constants.isProd ? Constants.Web.ADS_DOM_URL_PROD : Constants.Web.ADS_DOM_URL_DEV
-        let adsWebUrl = "\(urlDomain)/\(isInterstitial ? Constants.Web.URL_INT : Constants.Web.URL_REW)/\(campaignId)/ios";
-        Say(msg: "🌏 WEB URL: \(adsWebUrl)")
-        return adsWebUrl
-    }
-    
+    //    /// Returns HTML-ADS url based on current environment and adType/campaignID parameters
+    //    public static func getAdsWebUrl(isInterstitial: Bool, campaignId: String) -> String! {
+    //        let urlDomain = Constants.isProd ? Constants.Web.ADS_DOM_URL_PROD : Constants.Web.ADS_DOM_URL_DEV
+    //        let adsWebUrl = "\(urlDomain)/\(isInterstitial ? Constants.Web.URL_INT : Constants.Web.URL_REW)/\(campaignId)/ios";
+    //        Say(msg: "🌏 WEB URL: \(adsWebUrl)")
+    //        return adsWebUrl
+    //    }
+    //
     /// Returns web URL of ad content with customised parameters
     public static func getFullWebUrl(isInterstitial: Bool, campaignId: String, urlSuffix: String?) -> String {
         var webAdUrl: String
@@ -115,7 +133,7 @@ public class TempoUtils {
         
         // If additional URL suffix valid, place at the end of the string
         if let suffix = urlSuffix, !suffix.isEmpty {
-            webAdUrl.append("/\(suffix)")
+            webAdUrl.append("\(suffix)")
         }
         
         TempoUtils.Say(msg: "🌏 Web URL: \(webAdUrl)")
@@ -129,14 +147,14 @@ public class TempoUtils {
         let customCampaignTrimmed: String? = TempoTesting.instance?.customCampaignId?.trimmingCharacters(in: .whitespacesAndNewlines)
         let invalidString = customCampaignTrimmed?.isEmpty ?? true
         //print("💥 customCampaignTrimmed: \(customCampaignTrimmed ?? "NOTHING") | invalidString: \(invalidString)")
-     
+        
         if (!invalidString && (TempoTesting.instance?.isTestingCustomCampaigns ?? false)) {
             return TempoTesting.instance?.customCampaignId
         }
         
         return campaignId
     }
-
+    
     /// Returns URL for Rewarded Ads
     public static func getRewardedUrl() -> String {
         if((TempoTesting.instance?.isTestingDeployVersion ?? false) && TempoTesting.instance?.currentDeployVersion != nil) {

@@ -120,11 +120,11 @@ public struct Metric : Codable {
     var campaign_id: String = ""
     var session_id: String = ""
     var location: String = ""
+    var country_code: String = ""
 //    var gender: String = ""
 //    var age_range: String = ""
 //    var income_range: String = ""
     var placement_id: String = ""
-    var country_code: String? = TempoUserInfo.getIsoCountryCode2Digit()
     var os: String = ""
     var sdk_version: String
     var adapter_version: String

@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.3.2-rc.3"
+    public static let SDK_VERSIONS = "1.3.2-rc.5"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -12,6 +12,7 @@ public struct Constants {
     struct Backup {
         static let METRIC_BACKUP_FOLDER = "metricJsons"
         static let METRIC_BACKUP_APPEND = ".tempo"
+        static let LOC_BACKUP_REF = "locationData"
         static let MAX_BACKUPS: Int = 100
         static let EXPIRY_DAYS: Int = 7
     }
