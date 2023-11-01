@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.3.1"
+    public static let SDK_VERSIONS = "1.4.0"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -12,6 +12,7 @@ public struct Constants {
     struct Backup {
         static let METRIC_BACKUP_FOLDER = "metricJsons"
         static let METRIC_BACKUP_APPEND = ".tempo"
+        static let LOC_BACKUP_REF = "locationData"
         static let MAX_BACKUPS: Int = 100
         static let EXPIRY_DAYS: Int = 7
     }
@@ -53,6 +54,13 @@ public struct Constants {
         static let SDK_VERSION = "sdk_version"
         static let ADAPTER_VERSION = "adapter_version"
         static let ADAPTER_TYPE = "adapter_type"
+        
+        static let LOC_COUNTRY_CODE = "country_code"
+        static let LOC_POSTAL_CODE = "postal_code"
+        static let LOC_ADMIN_AREA = "admin_area"
+        static let LOC_SUB_ADMIN_AREA = "sub_admin_area"
+        static let LOC_LOCALITY = "locality"
+        static let LOC_SUB_LOCALITY = "locality"
     }
     
     struct MetricType {

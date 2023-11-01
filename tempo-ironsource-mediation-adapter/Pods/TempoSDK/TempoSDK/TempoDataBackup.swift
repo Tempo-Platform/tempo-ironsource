@@ -32,7 +32,7 @@ public class TempoDataBackup
                 do {
                     try FileManager.default.createDirectory(at: jsonDirectory, withIntermediateDirectories: true, attributes: nil)
                 } catch {
-                    print("Error creating document directory: \(error.localizedDescription)")
+                    TempoUtils.Shout(msg: "Error creating document directory: \(error.localizedDescription)")
                     return
                 }
                 
@@ -61,7 +61,7 @@ public class TempoDataBackup
                     
                 }
                 catch{
-                    print("Error either creating or saving JSON: \(error.localizedDescription)")
+                    TempoUtils.Shout(msg: "Error either creating or saving JSON: \(error.localizedDescription)")
                     return
                 }
             }
@@ -120,7 +120,7 @@ public class TempoDataBackup
                     }
                     
                 } catch {
-                    print("Error checking backup file date: \(error)")
+                    TempoUtils.Shout(msg: "Error checking backup file date: \(error)")
                 }
                 
                 let data = try Data(contentsOf: fileURL)
@@ -135,7 +135,7 @@ public class TempoDataBackup
                 }
                 
             } catch let error {
-                print("Error reading file at \(fileURL): \(error)")
+                TempoUtils.Shout(msg: "Error reading file at \(fileURL): \(error)")
                 continue
             }
         }
@@ -148,8 +148,23 @@ public class TempoDataBackup
             try FileManager.default.removeItem(at: backupUrl)
             TempoUtils.Say(msg: "Removing file: \(backupUrl)")
         } catch {
-            print("Error while attempting to remove '\(backupUrl)' from backup folder: \(error)")
+            TempoUtils.Shout(msg: "Error while attempting to remove '\(backupUrl)' from backup folder: \(error)")        }
+    }
+    
+    
+    public static func getMostRecentLocationData() -> LocationData {
+        
+        // To retrieve the instance from UserDefaults:
+        if let savedLocationData = UserDefaults.standard.data(forKey: Constants.Backup.LOC_BACKUP_REF),
+            let decodedLocation = try? JSONDecoder().decode(LocationData.self, from: savedLocationData) {
+            // Use the retrieved location data
+            TempoUtils.Say(msg: "🌎 Most recent location backed up: admin=\(decodedLocation.admin_area ?? "nil"), locality=\(decodedLocation.locality ?? "nil")")
+            return decodedLocation
+        } else {
+            TempoUtils.Warn(msg: "🌎 Failed to backup most recent location")
         }
+        
+        return LocationData()
     }
     
     /// Clears ALL references in the dedicated local backup folder
@@ -165,7 +180,7 @@ public class TempoDataBackup
                 try FileManager.default.removeItem(at: fileURL)
             }
         } catch {
-            print("Error while attempting to clear backup folder: \(error)")
+            TempoUtils.Shout(msg: "Error while attempting to clear backup folder: \(error)")
         }
     }
     
@@ -174,7 +189,7 @@ public class TempoDataBackup
         if(readyForCheck) {
             // Request creation of backup metrics dictionary
             initCheck()
-            //print("Resending: \(TempoDataBackup.fileMetric.count)")
+            //TempoUtils.Say(msg: "Resending: \(TempoDataBackup.fileMetric.count)")
             
             var emptyArray: [Metric] = []
             

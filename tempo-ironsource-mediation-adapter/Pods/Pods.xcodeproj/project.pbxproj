@@ -22,24 +22,24 @@
 /* Begin PBXBuildFile section */
 		0579E51CBDB74802B688E279770778D1 /* ISTempoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB403DC4D868EFF471DFC81E77B215 /* ISTempoUtils.swift */; };
 		11A2C20E4F864B2BB1868E018EAA17FA /* Pods-tempo-ironsource-mediation-adapter-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81012DF6FF8AEA6DB1AE22163CFD766C /* Pods-tempo-ironsource-mediation-adapter-dummy.m */; };
-		12C786A2A553D63AD99D1ED1D74F924C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB161428F28288CBBEA635276C930048 /* Constants.swift */; };
+		1273E68E5A9B902EDDB2E88DE008486C /* TempoAdListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3263B5664E9C096B0B7C7E2BFE1B285A /* TempoAdListener.swift */; };
+		18D59DF6A57EFC53D479CFBD6F76CFF2 /* TempoAdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265263288D618C0FC2847FF35A0EBA6A /* TempoAdController.swift */; };
 		2BD9250D49DD15E920607A09EE5F2761 /* Pods-tempo-ironsource-mediation-adapter-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 508D7B8E239132434D5B732E5A314EEF /* Pods-tempo-ironsource-mediation-adapter-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		38B0A42F9497B44A60326AD6F56FD9B8 /* TempoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA40E47E2BC6126314F875D599F299F5 /* TempoLocation.swift */; };
 		43F1668519C18A55050DF831A3E2B776 /* tempo-ios-ironsource-mediation-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 58E8E4CF935A9C77660110D9594BA777 /* tempo-ios-ironsource-mediation-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		46EE98E5221FEC46908127EC7DBEFD7A /* TempoSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A78F8C80F96716912319D1016E60F84 /* TempoSDK-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		49EABF5ED5EE398FB1A634593F9A8F21 /* TempoAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDED1171A193A231222BCB94B5C5D083 /* TempoAdView.swift */; };
-		49F952A54C5ECE7ED47A76A7127127DA /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC1878EE4C40440B246625C5A87AA94 /* Metrics.swift */; };
+		46EE98E5221FEC46908127EC7DBEFD7A /* TempoSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 86F9E8314FE860CB820578E57F8DCA32 /* TempoSDK-umbrella.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		51BFBDD8E9BE0F825E2C89BC2CC0C877 /* tempo-ios-ironsource-mediation-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D5A685AAF01DB978283B3EFC8D8660A3 /* tempo-ios-ironsource-mediation-dummy.m */; };
-		7108EFE2C9DFFCDF6DDFB2F41EEA8A0F /* TempoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2FBCB7073B68422D39C8389E2BCCEE /* TempoUtils.swift */; };
+		5A16F189C7A476CD0DFD0F326446BB0C /* TempoSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 740A39AEF4791A57E0B236E399AA73A4 /* TempoSDK-dummy.m */; };
+		64A715AD7655957188E5BD8C14B267E0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A89ECF14D95AB8B19B4AD48B5766B21B /* Constants.swift */; };
+		78CBC4AB67708642E889A03A3FC276CC /* TempoDataBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE44CBB5DD3F461C346B690F1EC5134 /* TempoDataBackup.swift */; };
 		7B4CC50B9B4AF70B37BD9C71F0608C6C /* ISTempoCustomInterstitial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F18B145737C548102CE87412A162380 /* ISTempoCustomInterstitial.swift */; };
 		81C99117A72D9107CCD84C6DA54F2F11 /* ISTempoCustomRewardedVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9F689ADB0D3FE9EA42FD8A6DE95A9F /* ISTempoCustomRewardedVideo.swift */; };
-		92F0283D62B3F5CEDB614D7E614F81AF /* TempoTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C8322FB313C1046E84A4D0A7ED28F8 /* TempoTesting.swift */; };
-		95A147B36697686222B21665EED14A72 /* TempoSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C63637F1BC6B4359E8B8E1306DF1D18 /* TempoSDK-dummy.m */; };
-		A12C1D55269D7D22BC822E7D8B177B68 /* TempoAdListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595592CA4C6685F019FCAF049F9DD9B5 /* TempoAdListener.swift */; };
-		ADA6E2AF45754D6ED37C9D7CBA9F265D /* TempoAdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29BA471C7D78229025C4ED9821648F /* TempoAdController.swift */; };
-		B134673BE08D04D653DDC35685858409 /* TempoUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBC2F7ABBD396FC0B838EF3A8874D66 /* TempoUserInfo.swift */; };
-		C7F0AD8E8077E610BD6C9FAF6A9685AF /* TempoDataBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5848A443C43EE4A1887DC22D506D9FCD /* TempoDataBackup.swift */; };
+		BE1D6DE52E4454B7B074FA3194DF0DF5 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74E0E7108CEF4C902BFBC88175BBB31 /* Metrics.swift */; };
+		C0EA0E7B45BD64A46B887833DF20C754 /* TempoProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127FF3C662A602AA47FBB5FD0D75A87F /* TempoProfile.swift */; };
+		CA4363198A558E05199423B24900F038 /* TempoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BFE09DEC461A76D37008E3E5B27EC3 /* TempoUtils.swift */; };
+		E178C6E6B5E292320543594CEAA1A034 /* TempoTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A655A974F86A69451A7C74C4ECD1FDD /* TempoTesting.swift */; };
+		FB29F15106F6B79B6714080DC2A70049 /* TempoAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28403F17600C11211AC2A3B09C0FEBDC /* TempoAdView.swift */; };
 		FB7626A187D16F54924DF5D41465F0AB /* ISTempoCustomAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A157832F0D1B9A542E4975EA93C506AA /* ISTempoCustomAdapter.swift */; };
+		FFA0627112345E75C5725BED8FB0A98E /* CountryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B05128E86BB01CA707ACF3851F581DF /* CountryCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +88,7 @@
 		02FBF9DF54EA66F731C37EAC213BB33C /* ISInitProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInitProvider.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISInitProvider.h"; sourceTree = "<group>"; };
 		04A7F9FECA7A70B14FE625DFE52E87DD /* ISBaseAdAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseAdAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBaseAdAdapter.h"; sourceTree = "<group>"; };
 		058C198DD559F2ECCA1D14678468B9A3 /* tempo-ios-ironsource-mediation-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "tempo-ios-ironsource-mediation-prefix.pch"; sourceTree = "<group>"; };
+		087AEBBBBD679070FA3B0B95B5A94B82 /* TempoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TempoSDK.release.xcconfig; sourceTree = "<group>"; };
 		08E4D9308DCE93F2C1EA675D502D1750 /* ISRewardedVideoManualDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISRewardedVideoManualDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISRewardedVideoManualDelegate.h"; sourceTree = "<group>"; };
 		095055C84E2D125DAB69591164B85248 /* ISMetaData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISMetaData.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISMetaData.h"; sourceTree = "<group>"; };
 		098FD61BB9D3AD5395B193A1FF7D481D /* ISMetaDataConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISMetaDataConstants.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISMetaDataConstants.h"; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		0EFDE7B5546CFB7FFD403E2A60D2569A /* SSEUrlHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEUrlHandler.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEUrlHandler.h"; sourceTree = "<group>"; };
 		0FDB938E63EFC7B8B45A0CC2931B18E1 /* ISForegroundTimeCalculator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISForegroundTimeCalculator.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISForegroundTimeCalculator.h"; sourceTree = "<group>"; };
 		0FF70146BBBF2C7508D371C5CF546A7C /* ISNTrackingAuthorizationService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNTrackingAuthorizationService.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISNTrackingAuthorizationService.h"; sourceTree = "<group>"; };
+		127FF3C662A602AA47FBB5FD0D75A87F /* TempoProfile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoProfile.swift; path = TempoSDK/TempoProfile.swift; sourceTree = "<group>"; };
 		128F03E42A1A39118712432155BB1D93 /* ISBaseBannerAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseBannerAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBaseBannerAdapter.h"; sourceTree = "<group>"; };
 		1318F364819A8499AADCE141EE9C5ABE /* SSEOrientationContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEOrientationContext.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEOrientationContext.h"; sourceTree = "<group>"; };
 		13477B3F248225BB7F9A830D0680E096 /* ISAuctionProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAuctionProvider.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISAuctionProvider.h"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		1994D2FAD1661B4883FD62057E64D3C4 /* ISNetworkInitializationDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNetworkInitializationDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISNetworkInitializationDelegate.h"; sourceTree = "<group>"; };
 		199E3F8B3A120F50F203D9A980D810DB /* IronSource-Swift.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IronSource-Swift.h"; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/IronSource-Swift.h"; sourceTree = "<group>"; };
 		19CE26B307807F8E4C48FDEE9819ECAC /* SSEScreenContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEScreenContext.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEScreenContext.h"; sourceTree = "<group>"; };
+		1A6E3FC6CBCC0281258212DD95009C31 /* TempoSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = TempoSDK.modulemap; sourceTree = "<group>"; };
 		1B9F689ADB0D3FE9EA42FD8A6DE95A9F /* ISTempoCustomRewardedVideo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISTempoCustomRewardedVideo.swift; path = "tempo-ios-ironsource-mediation/ISTempoCustomRewardedVideo.swift"; sourceTree = "<group>"; };
 		1C744FF479F8645213018C0FCB8DE7EE /* ISGlobalDataWriter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISGlobalDataWriter.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISGlobalDataWriter.h"; sourceTree = "<group>"; };
 		1E30AC0F6C3BA32B5EB2382044DD73F0 /* ISLoggerManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISLoggerManager.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISLoggerManager.h"; sourceTree = "<group>"; };
@@ -117,7 +120,6 @@
 		1E8BD084BD0EA81517FD9D1C24D04CEB /* ISBannerSize.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBannerSize.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBannerSize.h"; sourceTree = "<group>"; };
 		1EB9FC3B68F4857645E3D71EE79B85FD /* ISConfigurations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISConfigurations.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISConfigurations.h"; sourceTree = "<group>"; };
 		1EE4B08BD3D7D8E206F5CC568D844DC8 /* ISBaseAdUnitAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseAdUnitAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBaseAdUnitAdapter.h"; sourceTree = "<group>"; };
-		1F2FBCB7073B68422D39C8389E2BCCEE /* TempoUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoUtils.swift; path = TempoSDK/TempoUtils.swift; sourceTree = "<group>"; };
 		21E97C13C9A42D1786BB5B793D16060D /* ISConfigurations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISConfigurations.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISConfigurations.h"; sourceTree = "<group>"; };
 		2233A44A42255782AC46EDDF21BCC1F1 /* ISBiddingDataDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBiddingDataDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBiddingDataDelegate.h"; sourceTree = "<group>"; };
 		22ACDD4411953510D89FDE500928F390 /* ISSetAPSDataProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISSetAPSDataProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISSetAPSDataProtocol.h"; sourceTree = "<group>"; };
@@ -127,18 +129,19 @@
 		25A6A9E3F65DFB8103117DEFECAFE213 /* ISBaseAdInteractionAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseAdInteractionAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseAdInteractionAdapter.h"; sourceTree = "<group>"; };
 		25AA8A7CD94E7592CC8A2C4FD2379A69 /* SSEApplicationContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEApplicationContext.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/SSEApplicationContext.h"; sourceTree = "<group>"; };
 		260A0EDA1C155B359232B882444A3FA3 /* ISAdapterSettingsProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterSettingsProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterSettingsProtocol.h"; sourceTree = "<group>"; };
+		265263288D618C0FC2847FF35A0EBA6A /* TempoAdController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoAdController.swift; path = TempoSDK/TempoAdController.swift; sourceTree = "<group>"; };
+		28403F17600C11211AC2A3B09C0FEBDC /* TempoAdView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoAdView.swift; path = TempoSDK/TempoAdView.swift; sourceTree = "<group>"; };
 		2C862B546F3C58436E73DF5CA11E66F6 /* ISProductSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISProductSettings.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISProductSettings.h"; sourceTree = "<group>"; };
-		2CBC2F7ABBD396FC0B838EF3A8874D66 /* TempoUserInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoUserInfo.swift; path = TempoSDK/TempoUserInfo.swift; sourceTree = "<group>"; };
 		2D25EABDF4B1064E51DEDA32AECA9E7B /* ISBidderSensitiveSmashPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBidderSensitiveSmashPicker.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/PrivateHeaders/ISBidderSensitiveSmashPicker.h"; sourceTree = "<group>"; };
 		2E25456AD5D805953D45DBAF81FF24C3 /* LevelPlayInterstitialDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayInterstitialDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/LevelPlayInterstitialDelegate.h"; sourceTree = "<group>"; };
 		2F5F2B6A4D1A54609F9C552F029D0E66 /* ISBannerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBannerView.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBannerView.h"; sourceTree = "<group>"; };
 		318543BFCDD9D3A1DE7C68B9E7FD8196 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; sourceTree = "<group>"; };
+		3263B5664E9C096B0B7C7E2BFE1B285A /* TempoAdListener.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoAdListener.swift; path = TempoSDK/TempoAdListener.swift; sourceTree = "<group>"; };
 		3341FE86ED658DC9D2F0DF5380632300 /* Pods-tempo-ironsource-mediation-adapter-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-tempo-ironsource-mediation-adapter-acknowledgements.markdown"; sourceTree = "<group>"; };
 		33B97273E8A3830D5F06E01A2D3522A2 /* ISConsentViewDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISConsentViewDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISConsentViewDelegate.h"; sourceTree = "<group>"; };
 		3427958DE81A181BAC80110F63623439 /* ISAdapterBannerProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterBannerProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterBannerProtocol.h"; sourceTree = "<group>"; };
 		3539C37A9524CEA080B02521C2B556DE /* ISImpressionData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISImpressionData.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISImpressionData.h"; sourceTree = "<group>"; };
 		35509058AADD1DDF0251ABCC455D56B5 /* ISError.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISError.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISError.h"; sourceTree = "<group>"; };
-		355BCDA666FECFE74EB4A0885459DD5B /* TempoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TempoSDK.debug.xcconfig; sourceTree = "<group>"; };
 		36A114163B77F2A4C11F0E2F7080E9E3 /* ISConcurrentMutableDictionary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISConcurrentMutableDictionary.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISConcurrentMutableDictionary.h"; sourceTree = "<group>"; };
 		376629C6F7FC90C4A88B898086166992 /* ISImpressionData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISImpressionData.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISImpressionData.h"; sourceTree = "<group>"; };
 		379093B02564F410D7921A7B3B4FCA53 /* ISProductSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISProductSettings.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISProductSettings.h"; sourceTree = "<group>"; };
@@ -157,7 +160,6 @@
 		44E73E75E3B06A214EDDBE33D57D7D5D /* ISOfferwallAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISOfferwallAdapterProtocol.h"; sourceTree = "<group>"; };
 		454B95C3339C419130D065BB458668A4 /* ISOfferwallAdapterDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallAdapterDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISOfferwallAdapterDelegate.h"; sourceTree = "<group>"; };
 		46006EC4A3F01C56374D84102246B61C /* ISBannerAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBannerAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBannerAdapterProtocol.h"; sourceTree = "<group>"; };
-		462DDFEE9F9E94CBBF17CBD8C8B30DB1 /* TempoSDK.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = TempoSDK.modulemap; sourceTree = "<group>"; };
 		47238588474B51B878575BDCC69C40AF /* ISWaterfallConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISWaterfallConfiguration.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISWaterfallConfiguration.h"; sourceTree = "<group>"; };
 		497B1FEF1BF12C5CCC33C0C8719310AB /* tempo-ios-ironsource-mediation */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "tempo-ios-ironsource-mediation"; path = "libtempo-ios-ironsource-mediation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49F4479AD134E17D0803B8EDBDB53AC2 /* LevelPlayRewardedVideoManualDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayRewardedVideoManualDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/LevelPlayRewardedVideoManualDelegate.h"; sourceTree = "<group>"; };
@@ -165,7 +167,6 @@
 		4A3F6B7E2C421C0EABF34277139948EB /* ISBidderSensitiveSmashPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBidderSensitiveSmashPicker.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/PrivateHeaders/ISBidderSensitiveSmashPicker.h"; sourceTree = "<group>"; };
 		4A48A2CAA165100C2E7433CF76CAFD19 /* LevelPlayRewardedVideoBaseDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayRewardedVideoBaseDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/LevelPlayRewardedVideoBaseDelegate.h"; sourceTree = "<group>"; };
 		4A64E1274E63DDE9A5E1AFFAD4EB83A4 /* LevelPlayBannerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayBannerDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/LevelPlayBannerDelegate.h"; sourceTree = "<group>"; };
-		4A78F8C80F96716912319D1016E60F84 /* TempoSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TempoSDK-umbrella.h"; sourceTree = "<group>"; };
 		4B799DE7F25670B17A48E6BCBDD8FB8C /* ISGender.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISGender.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISGender.h"; sourceTree = "<group>"; };
 		4FC9EBD8F65538F2B5ACBB2B49CF157C /* ISAdData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdData.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdData.h"; sourceTree = "<group>"; };
 		508D7B8E239132434D5B732E5A314EEF /* Pods-tempo-ironsource-mediation-adapter-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-tempo-ironsource-mediation-adapter-umbrella.h"; sourceTree = "<group>"; };
@@ -175,18 +176,15 @@
 		5516FF0396BC0CA6B57443B5C037A29C /* ISAdUnit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdUnit.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdUnit.h"; sourceTree = "<group>"; };
 		5679C1CBC882657427609DE7BE9C49B0 /* ISLoggersSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISLoggersSettings.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISLoggersSettings.h"; sourceTree = "<group>"; };
 		5799B70F727515963D6C207ABE0D3CE3 /* ISNSoundSamplerRingerChecker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNSoundSamplerRingerChecker.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISNSoundSamplerRingerChecker.h"; sourceTree = "<group>"; };
-		5848A443C43EE4A1887DC22D506D9FCD /* TempoDataBackup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoDataBackup.swift; path = TempoSDK/TempoDataBackup.swift; sourceTree = "<group>"; };
 		58E8E4CF935A9C77660110D9594BA777 /* tempo-ios-ironsource-mediation-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "tempo-ios-ironsource-mediation-umbrella.h"; sourceTree = "<group>"; };
-		595592CA4C6685F019FCAF049F9DD9B5 /* TempoAdListener.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoAdListener.swift; path = TempoSDK/TempoAdListener.swift; sourceTree = "<group>"; };
 		598534320E5873D2F8166C27DB05F7D0 /* ISAdData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdData.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdData.h"; sourceTree = "<group>"; };
+		5A655A974F86A69451A7C74C4ECD1FDD /* TempoTesting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoTesting.swift; path = TempoSDK/TempoTesting.swift; sourceTree = "<group>"; };
 		5B393DBB9ACAE19B537B84F2462C090D /* ISAdInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdInfo.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdInfo.h"; sourceTree = "<group>"; };
 		5B87734CB4F8B4D7331701B8356EE437 /* ISServerResponseParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISServerResponseParser.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISServerResponseParser.h"; sourceTree = "<group>"; };
-		5C63637F1BC6B4359E8B8E1306DF1D18 /* TempoSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TempoSDK-dummy.m"; sourceTree = "<group>"; };
 		5D746BEB9191C847838B38924F488983 /* NSMeasurement+ISMeasurement.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSMeasurement+ISMeasurement.h"; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/NSMeasurement+ISMeasurement.h"; sourceTree = "<group>"; };
 		5FD82530FC2882143B795F9C0AC741E3 /* ISAdapterAdInteractionDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterAdInteractionDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterAdInteractionDelegate.h"; sourceTree = "<group>"; };
 		6120B90FD86B53E7C2F51546A681D3E4 /* ISRewardedVideoManualDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISRewardedVideoManualDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISRewardedVideoManualDelegate.h"; sourceTree = "<group>"; };
 		612B3DCDA274C4DE1B76A86E6BE9EC34 /* ISNLightCacheManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNLightCacheManager.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISNLightCacheManager.h"; sourceTree = "<group>"; };
-		63E0D3F31C01BCA3A47F6478D7BA4A4B /* TempoSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TempoSDK-prefix.pch"; sourceTree = "<group>"; };
 		64AE95D9449CA966DB8BBD56095A6BD1 /* ISBaseInterstitial.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseInterstitial.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBaseInterstitial.h"; sourceTree = "<group>"; };
 		64EF7F3CED2F0E1DD50837691B9D8351 /* ISPlacementInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISPlacementInfo.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISPlacementInfo.h"; sourceTree = "<group>"; };
 		650CFB71257A24B249050391B35E1AB3 /* IronSourceSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = IronSourceSDK.debug.xcconfig; sourceTree = "<group>"; };
@@ -199,9 +197,9 @@
 		6CC2556B3710DB8B80BE4E6D88BAFE0A /* ISReleaseMemoryAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISReleaseMemoryAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISReleaseMemoryAdapterProtocol.h"; sourceTree = "<group>"; };
 		6E275237E4C96E65D219A8A69AD536DE /* LevelPlayRewardedVideoDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayRewardedVideoDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/LevelPlayRewardedVideoDelegate.h"; sourceTree = "<group>"; };
 		6E58177C43F84EAE3F888E1FBAC19498 /* ISDemandOnlyBannerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDemandOnlyBannerView.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISDemandOnlyBannerView.h"; sourceTree = "<group>"; };
-		6EC1878EE4C40440B246625C5A87AA94 /* Metrics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Metrics.swift; path = TempoSDK/Metrics.swift; sourceTree = "<group>"; };
 		6F0E4EA16FA523A166C59CD7EB8E4C58 /* TempoSDK */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = TempoSDK; path = libTempoSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7103EA2AB61936B01B180F409915782E /* ISGlobalDataConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISGlobalDataConstants.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISGlobalDataConstants.h"; sourceTree = "<group>"; };
+		740A39AEF4791A57E0B236E399AA73A4 /* TempoSDK-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TempoSDK-dummy.m"; sourceTree = "<group>"; };
 		7740276197E1FB7A50C630CADAE13900 /* ISInterstitialAdapterDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInterstitialAdapterDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISInterstitialAdapterDelegate.h"; sourceTree = "<group>"; };
 		79E16DEC400A39E3C440BB6C7B8FA5BE /* UIView+ISViewUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+ISViewUtils.h"; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/UIView+ISViewUtils.h"; sourceTree = "<group>"; };
 		7AC05C112DF2D469EF65C8B493BCF74D /* ISBannerSize.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBannerSize.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBannerSize.h"; sourceTree = "<group>"; };
@@ -219,7 +217,9 @@
 		83A40D30B586FDBA69EC17220F0A3D28 /* ISAdapterErrorType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterErrorType.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterErrorType.h"; sourceTree = "<group>"; };
 		83ADA253E4DF20F4457FC14835157E92 /* ISBaseRewardedVideoAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseRewardedVideoAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseRewardedVideoAdapter.h"; sourceTree = "<group>"; };
 		83C9B8D3BC6AF96ABB7F3ECD80318C03 /* SSESKAdNetworkService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSESKAdNetworkService.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/SSESKAdNetworkService.h"; sourceTree = "<group>"; };
+		846F50C426DAE36FF74EF56D40867115 /* TempoSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TempoSDK.debug.xcconfig; sourceTree = "<group>"; };
 		849E80F0DFE84474F61C4CCF2C1FE366 /* ISInterstitialAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInterstitialAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISInterstitialAdapterProtocol.h"; sourceTree = "<group>"; };
+		86F9E8314FE860CB820578E57F8DCA32 /* TempoSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TempoSDK-umbrella.h"; sourceTree = "<group>"; };
 		871C408D9BF835C4A0D8EE123A444540 /* ISUncaughtExceptionHandler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISUncaughtExceptionHandler.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISUncaughtExceptionHandler.h"; sourceTree = "<group>"; };
 		87710904FA8EAEFDB4103582FBCDA0A9 /* ISAdapterSettingsProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterSettingsProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterSettingsProtocol.h"; sourceTree = "<group>"; };
 		87BBA299D9975DEE9CC5F28DC2D709ED /* ISAdInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdInfo.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdInfo.h"; sourceTree = "<group>"; };
@@ -232,6 +232,7 @@
 		8D873C431050CABA2030BE08A6D58A4F /* ISBaseBannerAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseBannerAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseBannerAdapter.h"; sourceTree = "<group>"; };
 		8F92E9D0FC4CE071CE42EF4C6DF255C4 /* ISBaseRewardedVideo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseRewardedVideo.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseRewardedVideo.h"; sourceTree = "<group>"; };
 		8F9CBF9C262291D37D9785AB0C72BEA9 /* ISBaseAdInteractionAdapter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBaseAdInteractionAdapter.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBaseAdInteractionAdapter.h"; sourceTree = "<group>"; };
+		8FE44CBB5DD3F461C346B690F1EC5134 /* TempoDataBackup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoDataBackup.swift; path = TempoSDK/TempoDataBackup.swift; sourceTree = "<group>"; };
 		90A76C3E25CFA7D11CC75D73CCABCBA2 /* ISAdapterAdDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterAdDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterAdDelegate.h"; sourceTree = "<group>"; };
 		91845007F3AF49285B48FE61A77F1D14 /* ISAdapterMetaDataProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterMetaDataProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterMetaDataProtocol.h"; sourceTree = "<group>"; };
 		91BD88D88E7B35F1D81F1D255C367C0F /* ISReleaseMemoryAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISReleaseMemoryAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISReleaseMemoryAdapterProtocol.h"; sourceTree = "<group>"; };
@@ -239,12 +240,14 @@
 		931E5838975EA3699F409B079FA153A9 /* ISIntegrationHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISIntegrationHelper.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISIntegrationHelper.h"; sourceTree = "<group>"; };
 		9351B6892EB6AD3A75BB6127E3DCCF29 /* tempo-ios-ironsource-mediation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "tempo-ios-ironsource-mediation.release.xcconfig"; sourceTree = "<group>"; };
 		935E9D10C635A89116F0F77D3E0504C9 /* ISPlacementInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISPlacementInfo.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISPlacementInfo.h"; sourceTree = "<group>"; };
+		93A596656C652D179CCBF257ABC541B7 /* TempoSDK-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TempoSDK-prefix.pch"; sourceTree = "<group>"; };
 		93C5E09FB1E5E655A28AEDBC9036CA35 /* ISRewardedVideoAdapterDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISRewardedVideoAdapterDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISRewardedVideoAdapterDelegate.h"; sourceTree = "<group>"; };
 		95015D5B80334F5C2A02919BCFE94863 /* ISSupersonicAdsConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISSupersonicAdsConfiguration.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISSupersonicAdsConfiguration.h"; sourceTree = "<group>"; };
 		951D9D1E62C834F8B74EEA8C325CABC3 /* SSEDeviceStatus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEDeviceStatus.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEDeviceStatus.h"; sourceTree = "<group>"; };
 		95300DC7A3558EE00D710B80811F3E48 /* ISAdapterAdViewDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterAdViewDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterAdViewDelegate.h"; sourceTree = "<group>"; };
 		95F44D63B1D055E9CCC8F2ECA5E02B22 /* tempo-ios-ironsource-mediation.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = "tempo-ios-ironsource-mediation.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		98C80A6D91816B45D59000AADEBB32CE /* ISInterstitialAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInterstitialAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISInterstitialAdapterProtocol.h"; sourceTree = "<group>"; };
+		9B05128E86BB01CA707ACF3851F581DF /* CountryCode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CountryCode.swift; path = TempoSDK/CountryCode.swift; sourceTree = "<group>"; };
 		9BD5871B45A89ECCB386691BAEDA502A /* SSEScreenContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEScreenContext.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/SSEScreenContext.h"; sourceTree = "<group>"; };
 		9C2A0663A501A501F4AC69168A49009D /* ISForegroundTimeCalculator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISForegroundTimeCalculator.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISForegroundTimeCalculator.h"; sourceTree = "<group>"; };
 		9C5A14DAB4CE35527F0571BA375E1931 /* ISAdapterErrorType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterErrorType.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterErrorType.h"; sourceTree = "<group>"; };
@@ -264,6 +267,8 @@
 		A4CFA2F194C174135D82ED736CF97E72 /* ISDemandOnlyBannerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDemandOnlyBannerView.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISDemandOnlyBannerView.h"; sourceTree = "<group>"; };
 		A54D44DD3E89A3BCB4BC3D9B07C821CB /* ISMetaData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISMetaData.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISMetaData.h"; sourceTree = "<group>"; };
 		A609E7FB607A0E745ECF54D77498B3CD /* SSEApplicationContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEApplicationContext.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEApplicationContext.h"; sourceTree = "<group>"; };
+		A74E0E7108CEF4C902BFBC88175BBB31 /* Metrics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Metrics.swift; path = TempoSDK/Metrics.swift; sourceTree = "<group>"; };
+		A89ECF14D95AB8B19B4AD48B5766B21B /* Constants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = TempoSDK/Constants.swift; sourceTree = "<group>"; };
 		A8F638E43775FB3D347ACF2ADA4746FC /* SSEnvironment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSEnvironment.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/SSEnvironment.h"; sourceTree = "<group>"; };
 		A922E67DCE69F49C38B488BE04AAE5B8 /* ISAdapterErrors.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterErrors.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdapterErrors.h"; sourceTree = "<group>"; };
 		A9642E11C78B1F30B383EB1A3E627D57 /* ISEventsSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISEventsSettings.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISEventsSettings.h"; sourceTree = "<group>"; };
@@ -272,7 +277,6 @@
 		AB3421A0587FE6041334F683A5325D94 /* ISAdapterAdInteractionDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterAdInteractionDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterAdInteractionDelegate.h"; sourceTree = "<group>"; };
 		AB34275064F183E2205C72C77ECF8752 /* ISConcurrentMutableDictionary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISConcurrentMutableDictionary.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISConcurrentMutableDictionary.h"; sourceTree = "<group>"; };
 		AB7A107782546EC530524D9AFBBE3C2A /* LevelPlayBannerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayBannerDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/LevelPlayBannerDelegate.h"; sourceTree = "<group>"; };
-		AD29BA471C7D78229025C4ED9821648F /* TempoAdController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoAdController.swift; path = TempoSDK/TempoAdController.swift; sourceTree = "<group>"; };
 		AD8668AFE3FA16B3CC553C722EE4AFE1 /* ISOrientationData.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOrientationData.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/Environment/ISOrientationData.h"; sourceTree = "<group>"; };
 		ADF52104DDE12C2B73F4275262822C3C /* ISAdapterConsentProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterConsentProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterConsentProtocol.h"; sourceTree = "<group>"; };
 		AEC960AA8E5CC65AB823F598C032A124 /* ISDemandOnlyInterstitialDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDemandOnlyInterstitialDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISDemandOnlyInterstitialDelegate.h"; sourceTree = "<group>"; };
@@ -296,8 +300,6 @@
 		B80A5BFC4CF2BA3503E4A376DF6043DD /* ISImpressionDataDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISImpressionDataDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISImpressionDataDelegate.h"; sourceTree = "<group>"; };
 		B8336B112FF7812C252F18FE3D935146 /* ISAdapterConfig.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdapterConfig.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISAdapterConfig.h"; sourceTree = "<group>"; };
 		B91B8B016DCCEA8C4A29294357D5756A /* ISRewardedVideoAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISRewardedVideoAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISRewardedVideoAdapterProtocol.h"; sourceTree = "<group>"; };
-		BA40E47E2BC6126314F875D599F299F5 /* TempoLocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoLocation.swift; path = TempoSDK/TempoLocation.swift; sourceTree = "<group>"; };
-		BB161428F28288CBBEA635276C930048 /* Constants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = TempoSDK/Constants.swift; sourceTree = "<group>"; };
 		BBF52C8A76FB969D85CF5CDE2891CFB0 /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; sourceTree = "<group>"; };
 		BC3BC595BFAD38E7195902C2F763B1AD /* ISBaseAdapter+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ISBaseAdapter+Internal.h"; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBaseAdapter+Internal.h"; sourceTree = "<group>"; };
 		BCE4CE17BD3D8A70E128079E7561FE6D /* ISDemandOnlyRewardedVideoDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDemandOnlyRewardedVideoDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISDemandOnlyRewardedVideoDelegate.h"; sourceTree = "<group>"; };
@@ -318,10 +320,8 @@
 		C997540ED9C4EC85723876FB5A03D4FA /* ISSupersonicAdsConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISSupersonicAdsConfiguration.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISSupersonicAdsConfiguration.h"; sourceTree = "<group>"; };
 		CAA8EA58C501E3C94B21B5EE9660B876 /* ISBannerDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBannerDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBannerDelegate.h"; sourceTree = "<group>"; };
 		CB4468D600EC30177FDE340C7A725221 /* ISEventsSettings.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISEventsSettings.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISEventsSettings.h"; sourceTree = "<group>"; };
-		CBE39F1FC9A31B9ED85782666EF2DDA8 /* TempoSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TempoSDK.release.xcconfig; sourceTree = "<group>"; };
 		CC5C19120EB01AC6AA5274E0FB413F8B /* ISDataKeys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDataKeys.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISDataKeys.h"; sourceTree = "<group>"; };
 		CD70774AABAFFAC6B3E2BF0DE872BE03 /* ISOfferwallAdapterDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISOfferwallAdapterDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISOfferwallAdapterDelegate.h"; sourceTree = "<group>"; };
-		CDED1171A193A231222BCB94B5C5D083 /* TempoAdView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoAdView.swift; path = TempoSDK/TempoAdView.swift; sourceTree = "<group>"; };
 		CEEC1D2BCDD2AC1F5F13DEE41035CDE7 /* ISBiddingDataAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBiddingDataAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISBiddingDataAdapterProtocol.h"; sourceTree = "<group>"; };
 		D0E7FA3DC0CD2F8F6D94F0F4F7F6188B /* ISAdUnitAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISAdUnitAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/ISAdUnitAdapterProtocol.h"; sourceTree = "<group>"; };
 		D5A685AAF01DB978283B3EFC8D8660A3 /* tempo-ios-ironsource-mediation-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "tempo-ios-ironsource-mediation-dummy.m"; sourceTree = "<group>"; };
@@ -353,10 +353,10 @@
 		EC6FBEA3775A608DE406BEDF75AC58B2 /* LevelPlayRewardedVideoBaseDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LevelPlayRewardedVideoBaseDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64_x86_64-simulator/IronSource.framework/Headers/LevelPlayRewardedVideoBaseDelegate.h"; sourceTree = "<group>"; };
 		EC87A99BDBF3C7150C49CA0FADB7DF7B /* TokenConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TokenConstants.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/TokenConstants.h"; sourceTree = "<group>"; };
 		ED5E9A426A05BFAC99FE16BD98E7F06C /* ISInitializationDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISInitializationDelegate.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISInitializationDelegate.h"; sourceTree = "<group>"; };
+		F0BFE09DEC461A76D37008E3E5B27EC3 /* TempoUtils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoUtils.swift; path = TempoSDK/TempoUtils.swift; sourceTree = "<group>"; };
 		F15BC6816317B9643E90FF8DB54F95CE /* ISSegment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISSegment.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISSegment.h"; sourceTree = "<group>"; };
 		F25122077D1DC82711A87AA5FDFB2670 /* ISTimer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISTimer.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISTimer.h"; sourceTree = "<group>"; };
 		F36904832E74AEDA0F9F5CAE542EE217 /* ISBiddingDataAdapterProtocol.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISBiddingDataAdapterProtocol.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISBiddingDataAdapterProtocol.h"; sourceTree = "<group>"; };
-		F3C8322FB313C1046E84A4D0A7ED28F8 /* TempoTesting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TempoTesting.swift; path = TempoSDK/TempoTesting.swift; sourceTree = "<group>"; };
 		F3F88451BB21BCF078CCE1AA2C67B7C4 /* ISMetaDataUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISMetaDataUtils.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISMetaDataUtils.h"; sourceTree = "<group>"; };
 		F8553823FD7C9AA5D832A36718E62A7F /* ISNTrackingAuthorizationService.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISNTrackingAuthorizationService.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/Environment/ISNTrackingAuthorizationService.h"; sourceTree = "<group>"; };
 		F880F10B025D0BCCFE68D6984F0E6321 /* ISDataKeys.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ISDataKeys.h; path = "IronSource/IronSource.xcframework/ios-arm64/IronSource.framework/Headers/ISDataKeys.h"; sourceTree = "<group>"; };
@@ -394,6 +394,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0377C3D48DF577E6C3A0AD4CB4CEF851 /* TempoSDK */ = {
+			isa = PBXGroup;
+			children = (
+				A89ECF14D95AB8B19B4AD48B5766B21B /* Constants.swift */,
+				9B05128E86BB01CA707ACF3851F581DF /* CountryCode.swift */,
+				A74E0E7108CEF4C902BFBC88175BBB31 /* Metrics.swift */,
+				265263288D618C0FC2847FF35A0EBA6A /* TempoAdController.swift */,
+				3263B5664E9C096B0B7C7E2BFE1B285A /* TempoAdListener.swift */,
+				28403F17600C11211AC2A3B09C0FEBDC /* TempoAdView.swift */,
+				8FE44CBB5DD3F461C346B690F1EC5134 /* TempoDataBackup.swift */,
+				127FF3C662A602AA47FBB5FD0D75A87F /* TempoProfile.swift */,
+				5A655A974F86A69451A7C74C4ECD1FDD /* TempoTesting.swift */,
+				F0BFE09DEC461A76D37008E3E5B27EC3 /* TempoUtils.swift */,
+				59A818E75F6829551350C8B137749AFE /* Support Files */,
+			);
+			name = TempoSDK;
+			path = TempoSDK;
+			sourceTree = "<group>";
+		};
 		186F8F797414A013FF32A216A2EBAF07 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,28 +441,9 @@
 			isa = PBXGroup;
 			children = (
 				8C8FC03142A874E78920C57545355771 /* IronSourceSDK */,
-				3C171D28D2D8ABB6A078355ABFB6233C /* TempoSDK */,
+				0377C3D48DF577E6C3A0AD4CB4CEF851 /* TempoSDK */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		3C171D28D2D8ABB6A078355ABFB6233C /* TempoSDK */ = {
-			isa = PBXGroup;
-			children = (
-				BB161428F28288CBBEA635276C930048 /* Constants.swift */,
-				6EC1878EE4C40440B246625C5A87AA94 /* Metrics.swift */,
-				AD29BA471C7D78229025C4ED9821648F /* TempoAdController.swift */,
-				595592CA4C6685F019FCAF049F9DD9B5 /* TempoAdListener.swift */,
-				CDED1171A193A231222BCB94B5C5D083 /* TempoAdView.swift */,
-				5848A443C43EE4A1887DC22D506D9FCD /* TempoDataBackup.swift */,
-				BA40E47E2BC6126314F875D599F299F5 /* TempoLocation.swift */,
-				F3C8322FB313C1046E84A4D0A7ED28F8 /* TempoTesting.swift */,
-				2CBC2F7ABBD396FC0B838EF3A8874D66 /* TempoUserInfo.swift */,
-				1F2FBCB7073B68422D39C8389E2BCCEE /* TempoUtils.swift */,
-				E8508E890797669A4468B083CB992C7F /* Support Files */,
-			);
-			name = TempoSDK;
-			path = TempoSDK;
 			sourceTree = "<group>";
 		};
 		47B835DBB667A0D6A0FAF335269960F7 /* Support Files */ = {
@@ -458,6 +458,20 @@
 			);
 			name = "Support Files";
 			path = "tempo-ironsource-mediation-adapter/Pods/Target Support Files/tempo-ios-ironsource-mediation";
+			sourceTree = "<group>";
+		};
+		59A818E75F6829551350C8B137749AFE /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1A6E3FC6CBCC0281258212DD95009C31 /* TempoSDK.modulemap */,
+				740A39AEF4791A57E0B236E399AA73A4 /* TempoSDK-dummy.m */,
+				93A596656C652D179CCBF257ABC541B7 /* TempoSDK-prefix.pch */,
+				86F9E8314FE860CB820578E57F8DCA32 /* TempoSDK-umbrella.h */,
+				846F50C426DAE36FF74EF56D40867115 /* TempoSDK.debug.xcconfig */,
+				087AEBBBBD679070FA3B0B95B5A94B82 /* TempoSDK.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/TempoSDK";
 			sourceTree = "<group>";
 		};
 		7CAE448C4696877C8BC39CBAFD2F76FE /* Support Files */ = {
@@ -791,20 +805,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E8508E890797669A4468B083CB992C7F /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				462DDFEE9F9E94CBBF17CBD8C8B30DB1 /* TempoSDK.modulemap */,
-				5C63637F1BC6B4359E8B8E1306DF1D18 /* TempoSDK-dummy.m */,
-				63E0D3F31C01BCA3A47F6478D7BA4A4B /* TempoSDK-prefix.pch */,
-				4A78F8C80F96716912319D1016E60F84 /* TempoSDK-umbrella.h */,
-				355BCDA666FECFE74EB4A0885459DD5B /* TempoSDK.debug.xcconfig */,
-				CBE39F1FC9A31B9ED85782666EF2DDA8 /* TempoSDK.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/TempoSDK";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -840,7 +840,7 @@
 			buildConfigurationList = DD18BC677512905DBE2E3CD45724EE2E /* Build configuration list for PBXNativeTarget "TempoSDK" */;
 			buildPhases = (
 				840380E91B7C7969BC5AF234DAF3E1A3 /* Headers */,
-				41469B45E11427209740CABFA819126E /* Sources */,
+				97219D92DB1934FA24BF464772A93FD6 /* Sources */,
 				DDFD6142D799D74047F9F970A4C84CB0 /* Frameworks */,
 				054FB673F27B757D8E1691F296092FA2 /* Copy generated compatibility header */,
 			);
@@ -1003,21 +1003,21 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		41469B45E11427209740CABFA819126E /* Sources */ = {
+		97219D92DB1934FA24BF464772A93FD6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12C786A2A553D63AD99D1ED1D74F924C /* Constants.swift in Sources */,
-				49F952A54C5ECE7ED47A76A7127127DA /* Metrics.swift in Sources */,
-				ADA6E2AF45754D6ED37C9D7CBA9F265D /* TempoAdController.swift in Sources */,
-				A12C1D55269D7D22BC822E7D8B177B68 /* TempoAdListener.swift in Sources */,
-				49EABF5ED5EE398FB1A634593F9A8F21 /* TempoAdView.swift in Sources */,
-				C7F0AD8E8077E610BD6C9FAF6A9685AF /* TempoDataBackup.swift in Sources */,
-				38B0A42F9497B44A60326AD6F56FD9B8 /* TempoLocation.swift in Sources */,
-				95A147B36697686222B21665EED14A72 /* TempoSDK-dummy.m in Sources */,
-				92F0283D62B3F5CEDB614D7E614F81AF /* TempoTesting.swift in Sources */,
-				B134673BE08D04D653DDC35685858409 /* TempoUserInfo.swift in Sources */,
-				7108EFE2C9DFFCDF6DDFB2F41EEA8A0F /* TempoUtils.swift in Sources */,
+				64A715AD7655957188E5BD8C14B267E0 /* Constants.swift in Sources */,
+				FFA0627112345E75C5725BED8FB0A98E /* CountryCode.swift in Sources */,
+				BE1D6DE52E4454B7B074FA3194DF0DF5 /* Metrics.swift in Sources */,
+				18D59DF6A57EFC53D479CFBD6F76CFF2 /* TempoAdController.swift in Sources */,
+				1273E68E5A9B902EDDB2E88DE008486C /* TempoAdListener.swift in Sources */,
+				FB29F15106F6B79B6714080DC2A70049 /* TempoAdView.swift in Sources */,
+				78CBC4AB67708642E889A03A3FC276CC /* TempoDataBackup.swift in Sources */,
+				C0EA0E7B45BD64A46B887833DF20C754 /* TempoProfile.swift in Sources */,
+				5A16F189C7A476CD0DFD0F326446BB0C /* TempoSDK-dummy.m in Sources */,
+				E178C6E6B5E292320543594CEAA1A034 /* TempoTesting.swift in Sources */,
+				CA4363198A558E05199423B24900F038 /* TempoUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,7 +1079,7 @@
 /* Begin XCBuildConfiguration section */
 		36885144B9D5593DF2DBF277598B3D76 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 355BCDA666FECFE74EB4A0885459DD5B /* TempoSDK.debug.xcconfig */;
+			baseConfigurationReference = 846F50C426DAE36FF74EF56D40867115 /* TempoSDK.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1166,7 +1166,7 @@
 		};
 		7BCF4407307E43F896D2F4CD9A70849A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CBE39F1FC9A31B9ED85782666EF2DDA8 /* TempoSDK.release.xcconfig */;
+			baseConfigurationReference = 087AEBBBBD679070FA3B0B95B5A94B82 /* TempoSDK.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";

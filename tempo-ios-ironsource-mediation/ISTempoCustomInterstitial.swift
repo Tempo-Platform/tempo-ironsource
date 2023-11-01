@@ -32,17 +32,32 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
         
         // Create ad instance and load new ad
         DispatchQueue.main.async {
-            if(self.interstitial == nil) {
+            
+            if self.interstitial == nil {
                 self.interstitial = TempoAdController(tempoAdListener: self, appId: appId)
-                if(self.interstitial == nil) {
-                    // Failed is still nuill
+                
+                if self.interstitial == nil {
                     self.onTempoAdFetchFailed(isInterstitial: true, reason: "Ad controller is null")
-                } else {
-                    self.interstitial!.checkLocationConsentAndLoad(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
+                    return
                 }
-            } else {
-                self.interstitial!.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
             }
+            
+            // Load ad, provided the ad controller is not null
+            self.interstitial?.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
+            //self.interstitial!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+            
+//            if(self.interstitial == nil) {
+//                self.interstitial = TempoAdController(tempoAdListener: self, appId: appId)
+//                if(self.interstitial == nil) {
+//                    // Failed is still nuill
+//                    self.onTempoAdFetchFailed(isInterstitial: true, reason: "Ad controller is null")
+//                } else {
+//                    self.interstitial?.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
+//                    //self.interstitial!.checkLocationConsentAndLoad(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
+//                }
+//            } else {
+//                self.interstitial!.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
+//            }
         }
     }
     
