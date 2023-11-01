@@ -26,7 +26,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     var adapterType: String?
     var consent: Bool?
     var currentConsentType: String?
-    internal var countryCode: String? = "XX"// CountryCode.getIsoCountryCode2Digit()
+    internal var countryCode: String? = CountryCode.getIsoCountryCode2Digit()
     var locationData: LocationData?
     var metricList: [Metric] = []
     

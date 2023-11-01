@@ -25,36 +25,31 @@ public class CountryCode {
     /// Returns the ISO/countryCode as per the user's device region settings ISO 3166-1 (alpha-2)
     public static func getIsoCountryCode2Digit() -> String?
     {
-        var currencyCode: String?
+        //printOtherDetails()
+        var countryCode: String?
         
         // currentLocale.regionCode deprecated in iOS 16
         if #available(iOS 16, *) {
-            currencyCode = currentLocale.language.region?.identifier
+            countryCode = currentLocale.language.region?.identifier
         } else {
-            currencyCode = currentLocale.regionCode
-        }
-
-        if(currencyCode == nil)
-        {
-            currencyCode = iso1366Dict[getIsoCountryCode3Digit()]
+            countryCode = currentLocale.regionCode
         }
         
-        return currencyCode;
+        return countryCode;
     }
     
     /// Returns the ISO/countryCode as per the user's device region settings ISO 3166-1 (alpha-3)
     public static func getIsoCountryCode3Digit() -> String
     {
-//        let currencyCode = currentLocale.currencyCode
-//        if(currencyCode == nil || currencyCode == "") {
-//            print("3 digit country code not recognised, return \(unknown)")
-//            return unknown // Technically, Locale.current.currencyCode defaults to "XXX" so this should never happen
-//        }
-//        else {
-//            return currencyCode!
-//        }
-        
-        return "???"
+        let currencyCode = currentLocale.currencyCode
+        if(currencyCode == nil || currencyCode == "") {
+            print("3 digit country code not recognised, return \(unknown)")
+            return unknown // Technically, Locale.current.currencyCode defaults to "XXX" so this should never happen
+        }
+        else {
+            print("3 digit country recognised, return \(currencyCode!)")
+            return currencyCode!
+        }
     }
     
     // Dictionary of 3 -> 2 digit ISO-1366-1 counrty codes

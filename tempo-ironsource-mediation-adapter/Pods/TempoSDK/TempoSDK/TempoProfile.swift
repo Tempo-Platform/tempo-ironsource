@@ -9,7 +9,7 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
     let adView: TempoAdView
     
     // The static that can be retrieved at any time during the SDK's usage
-    static var outputtingLocationInfo = true
+    static var outputtingLocationInfo = false
     static var locationState: LocationState?
     static var locData: LocationData?
     
