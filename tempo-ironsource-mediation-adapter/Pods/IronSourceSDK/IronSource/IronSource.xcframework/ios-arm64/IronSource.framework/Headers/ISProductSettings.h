@@ -23,6 +23,8 @@
 @property (readonly,assign)     BOOL            isBiddingDataAsyncEnabled;
 @property (readonly,strong)     NSMeasurement   *biddingDataAsyncTimeout;
 @property (readonly,assign)     BOOL            disableRemoveAllViewsOnReload;
+@property (readonly,assign)     BOOL            threadPerManager;
+@property (readonly,assign)     BOOL            sharedManagersThread;
 
 
 - (instancetype) initWithplacements:(NSArray *)placements
@@ -36,5 +38,7 @@ delayLoadFailureNotificationInSeconds:(NSUInteger)delayLoadFailure
           isBiddingDataAsyncEnabled:(BOOL)isBiddingDataAsyncEnabled
             biddingDataAsyncTimeout:(NSMeasurement *)biddingDataAsyncTimeout
       disableRemoveAllViewsOnReload:(BOOL)disableRemoveAllViewsOnReload
-;
+                   threadPerManager:(BOOL)threadPerManager
+               sharedManagersThread:(BOOL)sharedManagersThread;
+
 @end

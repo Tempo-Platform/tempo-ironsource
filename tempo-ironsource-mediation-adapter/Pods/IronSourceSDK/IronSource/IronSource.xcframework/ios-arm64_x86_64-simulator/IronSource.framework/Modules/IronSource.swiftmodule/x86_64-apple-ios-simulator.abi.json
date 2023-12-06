@@ -136,5 +136,41 @@
     ],
     "json_format_version": 8
   },
-  "ConstValues": []
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/runner\/work\/ios-sdk6\/ios-sdk6\/IronSource\/IronSource\/Project\/Test.swift",
+      "kind": "IntegerLiteral",
+      "offset": 337,
+      "length": 1,
+      "value": "2"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-sdk6\/ios-sdk6\/IronSource\/IronSource\/Project\/Test.swift",
+      "kind": "IntegerLiteral",
+      "offset": 351,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-sdk6\/ios-sdk6\/IronSource\/IronSource\/Project\/Test.swift",
+      "kind": "BooleanLiteral",
+      "offset": 401,
+      "length": 4,
+      "value": "true"
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-sdk6\/ios-sdk6\/IronSource\/IronSource\/Project\/Test.swift",
+      "kind": "StringLiteral",
+      "offset": 421,
+      "length": 29,
+      "value": "\"Swift | isSmart: \""
+    },
+    {
+      "filePath": "\/Users\/runner\/work\/ios-sdk6\/ios-sdk6\/IronSource\/IronSource\/Project\/Test.swift",
+      "kind": "StringLiteral",
+      "offset": 449,
+      "length": 1,
+      "value": "\"\""
+    }
+  ]
 }

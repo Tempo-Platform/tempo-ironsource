@@ -11,14 +11,14 @@
 #import "ISRewardedVideoAdapterProtocol.h"
 #import "ISInterstitialAdapterProtocol.h"
 #import "ISOfferwallAdapterProtocol.h"
+#import "ISNativeAdAdapterProtocol.h"
 #import "ISBiddingDataAdapterProtocol.h"
-#import "ISAdUnitAdapterProtocol.h"
 
 #import "ISAdapterConfig.h"
 #import "ISLoadWhileShowSupportState.h"
-#import "Environment/ISConcurrentMutableDictionary.h"
+#import "ISConcurrentMutableDictionary.h"
 
-@interface ISBaseAdapter : NSObject <ISInterstitialAdapterProtocol, ISRewardedVideoAdapterProtocol, ISBannerAdapterProtocol, ISOfferwallAdapterProtocol, ISBiddingDataAdapterProtocol, ISAdUnitAdapterProtocol>
+@interface ISBaseAdapter : NSObject <ISInterstitialAdapterProtocol, ISRewardedVideoAdapterProtocol, ISBannerAdapterProtocol, ISOfferwallAdapterProtocol, ISBiddingDataAdapterProtocol, ISNativeAdAdapterProtocol>
 {
     @protected ISLoadWhileShowSupportState LWSState;
 }
@@ -41,10 +41,12 @@
 - (void)setRewardedVideoAdapter:(id<ISRewardedVideoAdapterProtocol>)rewardedVideoAdapter;
 - (void)setInterstitialAdapter:(id<ISInterstitialAdapterProtocol>)interstitialAdapter;
 - (void)setBannerAdapter:(id<ISBannerAdapterProtocol>)bannerAdapter;
+- (void)setNativeAdAdapter:(id<ISNativeAdAdapterProtocol>)nativeAdAdapter;
 
 - (id<ISRewardedVideoAdapterProtocol>)getRewardedVideoAdapter;
 - (id<ISInterstitialAdapterProtocol>)getInterstitialAdapter;
 - (id<ISBannerAdapterProtocol>)getBannerAdapter;
+- (id<ISNativeAdAdapterProtocol>)getNativeAdAdapter;
 
 // check if the network supports adaptive banners
 - (BOOL)getAdaptiveBannerSupport;

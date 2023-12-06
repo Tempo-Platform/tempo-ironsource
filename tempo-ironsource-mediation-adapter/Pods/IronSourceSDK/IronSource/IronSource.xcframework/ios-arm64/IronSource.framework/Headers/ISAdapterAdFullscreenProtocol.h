@@ -6,6 +6,7 @@
 //
 
 #import "ISAdapterAdInteractionDelegate.h"
+#import "ISAdData.h"
 
 @protocol ISAdapterAdFullscreenProtocol <NSObject>
 
@@ -29,4 +30,3 @@
 - (BOOL)isAdAvailableWithAdData:(ISAdData*)adData;
 
 @end
-

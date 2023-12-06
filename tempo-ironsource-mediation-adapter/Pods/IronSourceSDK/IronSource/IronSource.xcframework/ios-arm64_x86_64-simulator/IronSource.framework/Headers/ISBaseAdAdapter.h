@@ -19,11 +19,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) ISAdUnit                              *adUnit; 
 @property (nonatomic, readonly) ISAdapterConfig             *adapterConfig;
+@property (nonatomic, readonly, nullable) NSUUID            *adUnitObjectId;
+
+
 
 /// @param adUnit the ad unit represented by the adapter
 /// @param adapterConfig the configuration relevant for the adapter instance
 - (instancetype)initWithAdUnit:(ISAdUnit*)adUnit
                  adapterConfig:(ISAdapterConfig*)adapterConfig;
+
+
+/// @param adUnit the ad unit represented by the adapter
+/// @param adapterConfig the configuration relevant for the adapter instance
+/// @param adUnitObjectId the object id for the ad loaded
+
+- (instancetype)initWithAdUnit:(ISAdUnit*)adUnit
+                 adapterConfig:(ISAdapterConfig*)adapterConfig
+                adUnitObjectId:(nullable NSUUID*)adUnitObjectId;
 
 /// the network sdk version
 - (nullable id<ISAdapterBaseProtocol>)getNetworkAdapter;
