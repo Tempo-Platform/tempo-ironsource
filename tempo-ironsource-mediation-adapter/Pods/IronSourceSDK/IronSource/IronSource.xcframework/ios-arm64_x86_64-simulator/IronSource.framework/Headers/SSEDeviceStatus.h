@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Network/SSEReachability.h>
 @import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -63,6 +62,7 @@ static NSString* const kTCString                    = @"IABTCF_TCString";
 @property (readonly) BOOL                           lowPowerModeEnabled;
 @property (readonly) NSString*                      platformString;
 @property (readonly, nullable) NSNumber*            trackingAuthorizationStatus;
+@property (readonly) BOOL                           canMakePayments;
 
 + (UIWindow*)getKeyWindow;
 - (void)setBrowserUserAgent;

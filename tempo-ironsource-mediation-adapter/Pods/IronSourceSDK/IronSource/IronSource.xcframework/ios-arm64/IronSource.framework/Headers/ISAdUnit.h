@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(ISAdUnit*)IS_AD_UNIT_INTERSTITIAL;
 +(ISAdUnit*)IS_AD_UNIT_OFFERWALL;
 +(ISAdUnit*)IS_AD_UNIT_BANNER;
++(ISAdUnit*)IS_AD_UNIT_NATIVE_AD;
 
 - (instancetype)initWithValue:(NSString*)value;
 

@@ -41,6 +41,7 @@ static NSString * const kGD_IDFVKey                               = @"idfv";
 
 static NSString * const kGD_DeviceLanguageKey                     = @"lang";
 static NSString * const kGD_IsLimitedAdTrackingKey                = @"lat";
+static NSString * const kGD_CanMakePaymentsKey                    = @"cmp";
 
 static NSString * const kGD_DeviceMakeKey                         = @"make";
 static NSString * const kGD_MetaDataKey                           = @"md";
@@ -60,6 +61,7 @@ static NSString * const kGD_DeviceWidthKey                        = @"scrnw";
 static NSString * const kGD_SessionDepthISKey                     = @"sdia";
 static NSString * const kGD_SessionDepthRVKey                     = @"sdra";
 static NSString * const kGD_SessionDepthBNKey                     = @"sdba";
+static NSString * const kGD_SessionDepthNAKey                     = @"sdna";
 static NSString * const kGD_SDKVersionKey                         = @"sdkv";
 static NSString * const kGD_SessionIdKey                          = @"sid";
 static NSString * const kGD_ScreenScaleKey                        = @"sscl";
@@ -100,6 +102,8 @@ static NSString * const kGD_ApplicationUserIdKey                  = @"usid";
 
 static NSString * const kGD_SegmentKey                            = @"sg";
 
+static NSString * const kGD_ControllerType = @"cte";
+
 
 // Auction - const values
 static int const kGD_InstanceTypeNonBidderValue                   = 1;
@@ -113,6 +117,7 @@ static NSString * const kGD_AuctionDataKey                        = @"audt";
 static NSString * const kGD_ApplicationKey                        = @"apky";
 static NSString * const kGD_AuthorizationStatusKey                = @"att";
 static NSString * const kGD_AuidKey                               = @"auid";
+static NSString * const kGD_AbtKey                                = @"abt";
 
 static NSString * const kGD_BtKey                                 = @"bt";
 

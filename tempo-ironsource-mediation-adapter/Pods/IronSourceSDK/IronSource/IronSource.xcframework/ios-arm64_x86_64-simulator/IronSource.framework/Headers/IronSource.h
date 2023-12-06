@@ -70,15 +70,22 @@
 #import "LevelPlayInterstitialDelegate.h"
 #import "LevelPlayBannerDelegate.h"
 
+// Native Ads
+#import "LevelPlayNativeAd.h"
+#import "LevelPlayNativeAdDelegate.h"
+#import "LevelPlayMediaView.h"
+#import "ISNativeAdView.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define IS_REWARDED_VIDEO @"rewardedvideo"
 #define IS_INTERSTITIAL @"interstitial"
 #define IS_OFFERWALL @"offerwall"
 #define IS_BANNER @"banner"
+#define IS_NATIVE_AD @"nativead"
 
-static NSString * const MEDIATION_SDK_VERSION = @"7.5.1";
-static NSString * GitHash = @"7a88080d1";
+static NSString * const MEDIATION_SDK_VERSION = @"7.6.0";
+static NSString * GitHash = @"fc3ae92";
 
 /*
     This constant is for sending an external impression data from mopub
@@ -226,9 +233,9 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  
  It is recommended to use predefined constansts:
  
- IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER
+ IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER, IS_NATIVE_AD
  
- e.g: [IronSource initWithAppKey:appKey adUnits:@[IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER]];
+ e.g: [IronSource initWithAppKey:appKey adUnits:@[IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER, IS_NATIVE_AD]];
 
  @param appKey Application key.
  @param adUnits An array of ad units to initialize.
@@ -243,9 +250,9 @@ static NSString * const DataSource_MOPUB     = @"MoPub";
  
  It is recommended to use predefined constansts:
  
- IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER
+ IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER, IS_NATIVE_AD
  
- e.g: [IronSource initWithAppKey:appKey adUnits:@[IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER]];
+ e.g: [IronSource initWithAppKey:appKey adUnits:@[IS_REWARDED_VIDEO, IS_INTERSTITIAL, IS_OFFERWALL, IS_BANNER, IS_NATIVE_AD]];
  
  @param appKey Application key.
  @param adUnits An array of ad units to initialize.
