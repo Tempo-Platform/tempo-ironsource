@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <!-- "Privacy Tracking Enabled" (always false) -->
+        <key>NSPrivacyTracking</key>
+        <false/>
+
+        <!-- "Privacy Tracking Domains" (none used, empty array) -->
+        <key>NSPrivacyTrackingDomains</key>
+        <array/>
+
+        <!-- "Privacy Nutrition Label Types" (AppStore privacy use labels) -->
+        <key>NSPrivacyCollectedDataTypes</key>
+        <array/>
+        
+        <!-- "Privacy Accessed API Types" (potential risk APIs used) -->
+        <key>NSPrivacyAccessedAPITypes</key>
+        <array>
+            <!-- File timestamp APIs (creationDate TESTED - NOT NEEDED) -->
+            <dict>
+                <key>NSPrivacyAccessedAPIType</key>
+                <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+                <key>NSPrivacyAccessedAPITypeReasons</key>
+                <array>
+                    <string>3B52.1</string>
+                </array>
+            </dict>
+        </array>
+    </dict>
+</plist>
+
