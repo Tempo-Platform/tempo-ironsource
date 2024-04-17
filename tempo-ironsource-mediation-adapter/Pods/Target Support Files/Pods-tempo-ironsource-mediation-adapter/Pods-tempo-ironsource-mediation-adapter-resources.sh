@@ -99,12 +99,12 @@ EOM
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IronSourceSDK/IronSourcePrivacyInfo.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TempoSDK/TempoSDK.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/tempo-ios-ironsource-mediation/tempo-ios-ironsource-mediation.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/tempo-ios-ironsource-mediation/TempoAdapter.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/IronSourceSDK/IronSourcePrivacyInfo.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/TempoSDK/TempoSDK.bundle"
-  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/tempo-ios-ironsource-mediation/tempo-ios-ironsource-mediation.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/tempo-ios-ironsource-mediation/TempoAdapter.bundle"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
