@@ -28,6 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)adDidOpen;
 
+/// @param errorCode the error code if available, general ones in AdapterErrors
+/// @param errorMessage the error message if available
+- (void)adDidFailToShowWithErrorCode:(NSInteger)errorCode
+                        errorMessage:(nullable NSString*)errorMessage;
+
 - (void)adDidClick;
 
 @end

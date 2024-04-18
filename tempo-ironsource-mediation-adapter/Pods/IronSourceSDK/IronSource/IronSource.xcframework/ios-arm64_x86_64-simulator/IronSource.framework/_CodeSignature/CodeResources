@@ -18,7 +18,7 @@
 		</data>
 		<key>Headers/ISAdUnit.h</key>
 		<data>
-		Y/GZKRT7vb+rWMZ3XMFeU/E6754=
+		NNW/7zlvVNk8YtV1XHQPE2UBGl8=
 		</data>
 		<key>Headers/ISAdUnitAdapterProtocol.h</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Headers/ISAdapterAdDelegate.h</key>
 		<data>
-		LmMmroCkjjai6wH1nyxH5WZou2w=
+		8/FRatOkuBzvHIC7NJHn0gKGohg=
 		</data>
 		<key>Headers/ISAdapterAdFullscreenProtocol.h</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Headers/ISAdapterAdInteractionDelegate.h</key>
 		<data>
-		qu9aMp03qwFxuXqvsVGoO6arObU=
+		19gHyioKdmWQ8FHH74O0d9ORhv0=
 		</data>
 		<key>Headers/ISAdapterAdRewardedDelegate.h</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Headers/ISAdapterBannerProtocol.h</key>
 		<data>
-		iHRjKM3THs5/jy843Qi6FMfYgqY=
+		kHasNWQaSZOeesziOpm+g+62Vqg=
 		</data>
 		<key>Headers/ISAdapterBaseProtocol.h</key>
 		<data>
@@ -102,15 +102,11 @@
 		</data>
 		<key>Headers/ISBannerAdapterDelegate.h</key>
 		<data>
-		M+twHXXx88msogyBzXLxv2pA/Do=
+		xv34HQInTtoS5wjVeXNKTKkm2wg=
 		</data>
 		<key>Headers/ISBannerAdapterProtocol.h</key>
 		<data>
 		0qR3dtZcn+a1488/Nb+/XQiKjCU=
-		</data>
-		<key>Headers/ISBannerDelegate.h</key>
-		<data>
-		LMhotLM+u/0ezkOCX8ZwIRxXAyA=
 		</data>
 		<key>Headers/ISBannerSize.h</key>
 		<data>
@@ -134,15 +130,15 @@
 		</data>
 		<key>Headers/ISBaseAdapter+Internal.h</key>
 		<data>
-		2xPfTzSRoBJTy2wT2LdBQutjJPw=
+		t5pjOApjxY9AF58NVbaNO49l/yE=
 		</data>
 		<key>Headers/ISBaseAdapter.h</key>
 		<data>
-		mbK08Ohnwo53kkMbNoQ+qPLYLiU=
+		2CaBwHnIkz6yGNACbaGJ5soy+eM=
 		</data>
 		<key>Headers/ISBaseBanner.h</key>
 		<data>
-		dynUePAsKhT62L+1cYb8s8GZylc=
+		FvgJt3X4ErVOnIQE36KmEltkDcs=
 		</data>
 		<key>Headers/ISBaseBannerAdapter.h</key>
 		<data>
@@ -190,7 +186,7 @@
 		</data>
 		<key>Headers/ISConfigurations.h</key>
 		<data>
-		eV4kSMlH5HTY9jxizMzs6v32FYg=
+		S013cSfWuGOgCzBTs3gOYJVr74w=
 		</data>
 		<key>Headers/ISConsentViewDelegate.h</key>
 		<data>
@@ -256,10 +252,6 @@
 		<data>
 		APAfzA1tSlb4bgL72HYE3dQQmsA=
 		</data>
-		<key>Headers/ISInterstitialDelegate.h</key>
-		<data>
-		N1FglXgDT02w0Rsun8zuOzWaqLw=
-		</data>
 		<key>Headers/ISIronSourceAdapter.h</key>
 		<data>
 		jwpu/+VjFIze4QC6TpqFz+6jxdc=
@@ -280,13 +272,17 @@
 		<data>
 		Q+EWZFIOuB/xc/uxWVgLZILBkwc=
 		</data>
+		<key>Headers/ISMediationGlobalDataWriterFacade.h</key>
+		<data>
+		St/+lDSvPSESb0xZSLQ+xHRuZRE=
+		</data>
 		<key>Headers/ISMetaData.h</key>
 		<data>
 		RB6Om1a4v2WpDi9CxSg030kGJug=
 		</data>
 		<key>Headers/ISMetaDataConstants.h</key>
 		<data>
-		d9r0nmOmvrZtVF0q3hP+kK7Bpcs=
+		mxf083BlQt6Xn0CiGBt4CIZ5QgE=
 		</data>
 		<key>Headers/ISMetaDataUtils.h</key>
 		<data>
@@ -376,18 +372,6 @@
 		<data>
 		xeqnqVisp9BccF4KUAxU+LVmJM8=
 		</data>
-		<key>Headers/ISOfferwallAdapterDelegate.h</key>
-		<data>
-		UH36d2367Xe4V/q/J+zToMTvqP4=
-		</data>
-		<key>Headers/ISOfferwallAdapterProtocol.h</key>
-		<data>
-		/ZjKWaJmDIUJYd8I28BPGm5EiNk=
-		</data>
-		<key>Headers/ISOfferwallDelegate.h</key>
-		<data>
-		MqL9S6xbBTYELKr+Jg2rf9nTk7k=
-		</data>
 		<key>Headers/ISPlacementInfo.h</key>
 		<data>
 		V5i9ksNlt/1nb0zTZkWu5GXSPcM=
@@ -403,14 +387,6 @@
 		<key>Headers/ISRewardedVideoAdapterProtocol.h</key>
 		<data>
 		ev5UJ3QmFXphzdriTAckpxEMItw=
-		</data>
-		<key>Headers/ISRewardedVideoDelegate.h</key>
-		<data>
-		05xBbiz22i/d5LW30yYRvfvh3Rw=
-		</data>
-		<key>Headers/ISRewardedVideoManualDelegate.h</key>
-		<data>
-		nPhGfP7mUYuIAX9MZWpVD6GNbmw=
 		</data>
 		<key>Headers/ISSegment.h</key>
 		<data>
@@ -434,11 +410,11 @@
 		</data>
 		<key>Headers/IronSource.h</key>
 		<data>
-		0NbP7hOUDa3nHHv0kt6xFn/ZYPE=
+		ZkQHhXX72oIMvnvvRe9CEanBswg=
 		</data>
 		<key>Headers/IronSourceNetworkSwiftBridge.h</key>
 		<data>
-		kh8+Ai5Lf0RxNz4kyMLBWK5+htc=
+		pL28NpWntKxIX6GGP86R4AneyWI=
 		</data>
 		<key>Headers/LevelPlayBannerDelegate.h</key>
 		<data>
@@ -486,7 +462,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Qz5DQockPjCzrklt1TvP+5EywQc=
+		LEBdEXnhJ673+m5pIRxi9iJFx5c=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -536,11 +512,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Y/GZKRT7vb+rWMZ3XMFeU/E6754=
+			NNW/7zlvVNk8YtV1XHQPE2UBGl8=
 			</data>
 			<key>hash2</key>
 			<data>
-			sy8kNQG+OiJvZouL6UV1mrKbCLBUp0H0Cpv2h5fnyeM=
+			8LTvgEkAZXQS5ciZF47g2jUGLAM5PX18LSXNJj6XP9I=
 			</data>
 		</dict>
 		<key>Headers/ISAdUnitAdapterProtocol.h</key>
@@ -558,11 +534,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			LmMmroCkjjai6wH1nyxH5WZou2w=
+			8/FRatOkuBzvHIC7NJHn0gKGohg=
 			</data>
 			<key>hash2</key>
 			<data>
-			rojXNb8hfKNXqw1Sv+YDZOhIikV3skIamUr8kkQEZao=
+			SdTRqQ6vdJW7cMLHqijwPOt1UjWDkqAEK3SVTSYSzCg=
 			</data>
 		</dict>
 		<key>Headers/ISAdapterAdFullscreenProtocol.h</key>
@@ -580,11 +556,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qu9aMp03qwFxuXqvsVGoO6arObU=
+			19gHyioKdmWQ8FHH74O0d9ORhv0=
 			</data>
 			<key>hash2</key>
 			<data>
-			z+m/1EG9qzBlH8x97mheiTfshZLsydGAGUF2Q8VcF2U=
+			cQSSDUOHFZXYJlVqgfQ2EV/8Ahw9rYHDKKo4Pb/x2Dc=
 			</data>
 		</dict>
 		<key>Headers/ISAdapterAdRewardedDelegate.h</key>
@@ -613,11 +589,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			iHRjKM3THs5/jy843Qi6FMfYgqY=
+			kHasNWQaSZOeesziOpm+g+62Vqg=
 			</data>
 			<key>hash2</key>
 			<data>
-			t5+/Pld8NIk0Cof3dZgf4vsU4mZrTYsCZmNDJd33VL0=
+			o3QH1wojg32jt/iYuYxhAQvXOdeOqvwk6xc4z7LKucY=
 			</data>
 		</dict>
 		<key>Headers/ISAdapterBaseProtocol.h</key>
@@ -767,11 +743,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			M+twHXXx88msogyBzXLxv2pA/Do=
+			xv34HQInTtoS5wjVeXNKTKkm2wg=
 			</data>
 			<key>hash2</key>
 			<data>
-			UDpM8mMo/dRva/CxBm62J64mrUgGqQpxg3rdYY9MZ9U=
+			z6Yrd0+bao3tS5YHQmuEofA3YS1Y+zNz/awmCXKRdYM=
 			</data>
 		</dict>
 		<key>Headers/ISBannerAdapterProtocol.h</key>
@@ -783,17 +759,6 @@
 			<key>hash2</key>
 			<data>
 			agY6eyikUcb6PlBh7TKs7oUSe7DE94gwsjqufB2Ntaw=
-			</data>
-		</dict>
-		<key>Headers/ISBannerDelegate.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			LMhotLM+u/0ezkOCX8ZwIRxXAyA=
-			</data>
-			<key>hash2</key>
-			<data>
-			xXsdgy/Uy2EqcvFcfvoKeqANncwLwPFVoV9I7VwIm2U=
 			</data>
 		</dict>
 		<key>Headers/ISBannerSize.h</key>
@@ -855,33 +820,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2xPfTzSRoBJTy2wT2LdBQutjJPw=
+			t5pjOApjxY9AF58NVbaNO49l/yE=
 			</data>
 			<key>hash2</key>
 			<data>
-			ey4D58GRoLnnkHwiiMuRf6yrktkzS2aaPzB0J4Utvb4=
+			8ghPLnPw8szAIDFOabJBt4f4PLUROG8Nfima/1Y0al0=
 			</data>
 		</dict>
 		<key>Headers/ISBaseAdapter.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			mbK08Ohnwo53kkMbNoQ+qPLYLiU=
+			2CaBwHnIkz6yGNACbaGJ5soy+eM=
 			</data>
 			<key>hash2</key>
 			<data>
-			clkXILP/4VInznsOWIS26CCID5wInb7x4xd9RIsmTQY=
+			FIOxHhrj5ygxfgYwC1GDXrGVzzkGMB5SY7L6PXb9b0s=
 			</data>
 		</dict>
 		<key>Headers/ISBaseBanner.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dynUePAsKhT62L+1cYb8s8GZylc=
+			FvgJt3X4ErVOnIQE36KmEltkDcs=
 			</data>
 			<key>hash2</key>
 			<data>
-			pinX8y1pJZt97AxNoueLVdX5Mzo5q7Q3V/e1dfof9/0=
+			T8yNJKULv+mUeFdw2CKpyTaHlNTqzfZUvi4xD27EJ3Q=
 			</data>
 		</dict>
 		<key>Headers/ISBaseBannerAdapter.h</key>
@@ -1009,11 +974,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			eV4kSMlH5HTY9jxizMzs6v32FYg=
+			S013cSfWuGOgCzBTs3gOYJVr74w=
 			</data>
 			<key>hash2</key>
 			<data>
-			k/HOiE858khJUe1knpt9CT8rjqr42h2yZMmNNXCYOpA=
+			BzcYcAmGDsKHwmRr+5hskslgsm8tugtM4GEbK8eZkno=
 			</data>
 		</dict>
 		<key>Headers/ISConsentViewDelegate.h</key>
@@ -1192,17 +1157,6 @@
 			rj75KbLoBF2yz+Xjtr8NxRH7syTXIoyUkQgpntpk2eY=
 			</data>
 		</dict>
-		<key>Headers/ISInterstitialDelegate.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			N1FglXgDT02w0Rsun8zuOzWaqLw=
-			</data>
-			<key>hash2</key>
-			<data>
-			968F/wE3zgvNzDjBoMWNOUKpTwwRnP5fD2VX2w/zVJk=
-			</data>
-		</dict>
 		<key>Headers/ISIronSourceAdapter.h</key>
 		<dict>
 			<key>hash</key>
@@ -1258,6 +1212,17 @@
 			WvVMT0TUGzzHr3NxHvGogPi2GqDJxmhlkfru3Kkm2Dk=
 			</data>
 		</dict>
+		<key>Headers/ISMediationGlobalDataWriterFacade.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			St/+lDSvPSESb0xZSLQ+xHRuZRE=
+			</data>
+			<key>hash2</key>
+			<data>
+			/s4ZE4eSynBFq/0XGkLTk1ZnxQqzUj9kpEmRxaI9hBA=
+			</data>
+		</dict>
 		<key>Headers/ISMetaData.h</key>
 		<dict>
 			<key>hash</key>
@@ -1273,11 +1238,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			d9r0nmOmvrZtVF0q3hP+kK7Bpcs=
+			mxf083BlQt6Xn0CiGBt4CIZ5QgE=
 			</data>
 			<key>hash2</key>
 			<data>
-			ob1csvcbRSSdkR+qPMYG1gIBTUdRlkgazBOHMDiCtUU=
+			uamC8ulqJcT9WIcAUOQ33K9+NuxdgA8L+SGHtIxBCf0=
 			</data>
 		</dict>
 		<key>Headers/ISMetaDataUtils.h</key>
@@ -1522,39 +1487,6 @@
 			F9C0b+2fkrVQqAE9catpV02TGNMJ0H4UTMmxDZdTGGs=
 			</data>
 		</dict>
-		<key>Headers/ISOfferwallAdapterDelegate.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			UH36d2367Xe4V/q/J+zToMTvqP4=
-			</data>
-			<key>hash2</key>
-			<data>
-			550xQNOXn2TZPB9gf9hxXe7N0lH4uFIqHTgy+62y8O8=
-			</data>
-		</dict>
-		<key>Headers/ISOfferwallAdapterProtocol.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			/ZjKWaJmDIUJYd8I28BPGm5EiNk=
-			</data>
-			<key>hash2</key>
-			<data>
-			ELKPJxBnshWfOgZMTxXjG3TFSwNAmYhijiosGLkWS0A=
-			</data>
-		</dict>
-		<key>Headers/ISOfferwallDelegate.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			MqL9S6xbBTYELKr+Jg2rf9nTk7k=
-			</data>
-			<key>hash2</key>
-			<data>
-			z1rRzUkRHRWxfxwM1gq9m/7JQEJOOqQdUVC9DDgLOlM=
-			</data>
-		</dict>
 		<key>Headers/ISPlacementInfo.h</key>
 		<dict>
 			<key>hash</key>
@@ -1597,28 +1529,6 @@
 			<key>hash2</key>
 			<data>
 			Uzvck0SugT+RCwjC15rnGr9yAhzRPJKR4FQomlZ7Bog=
-			</data>
-		</dict>
-		<key>Headers/ISRewardedVideoDelegate.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			05xBbiz22i/d5LW30yYRvfvh3Rw=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZD9dEzO5dt7RIwWyJrhkxcsHw1QshWFhuEGYFYYKxt8=
-			</data>
-		</dict>
-		<key>Headers/ISRewardedVideoManualDelegate.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			nPhGfP7mUYuIAX9MZWpVD6GNbmw=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZVaB0odXtz7xExasJiKRux0rG4AMHN+gMIZJ2hUgm8M=
 			</data>
 		</dict>
 		<key>Headers/ISSegment.h</key>
@@ -1680,22 +1590,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			0NbP7hOUDa3nHHv0kt6xFn/ZYPE=
+			ZkQHhXX72oIMvnvvRe9CEanBswg=
 			</data>
 			<key>hash2</key>
 			<data>
-			GC/lHN3uzr+c4K6lfKyzgWuFmGuEC15Q8CcuaIA1GyQ=
+			CWFKtigvnrTP+OXfJdtdZc3o10ThYtZo8BIxbzQxb5w=
 			</data>
 		</dict>
 		<key>Headers/IronSourceNetworkSwiftBridge.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kh8+Ai5Lf0RxNz4kyMLBWK5+htc=
+			pL28NpWntKxIX6GGP86R4AneyWI=
 			</data>
 			<key>hash2</key>
 			<data>
-			p+5Xri/WeA7bYfCp8vntaJEogjCHVBMT/Rq27uS31bQ=
+			/HfYBFDiIYGVRpIdYLu8CaFfYTD7sUo3wP1n7iTcjW8=
 			</data>
 		</dict>
 		<key>Headers/LevelPlayBannerDelegate.h</key>
