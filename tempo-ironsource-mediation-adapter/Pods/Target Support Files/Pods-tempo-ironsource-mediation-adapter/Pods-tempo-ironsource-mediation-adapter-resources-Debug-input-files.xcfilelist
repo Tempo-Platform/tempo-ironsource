@@ -1,0 +1,4 @@
+${PODS_ROOT}/Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter-resources.sh
+${PODS_CONFIGURATION_BUILD_DIR}/IronSourceSDK/IronSourcePrivacyInfo.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/TempoSDK/TempoSDK.bundle
+${PODS_CONFIGURATION_BUILD_DIR}/tempo-ios-ironsource-mediation/TempoAdapter.bundle
