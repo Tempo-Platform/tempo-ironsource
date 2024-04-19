@@ -19,7 +19,7 @@ permissions:
 
 env:
   PODSPEC_PATH: ./tempo-ios-ironsource-mediation.podspec
-  ADAPTER_PATH: ./tempo-ios-ironsource-mediation/ISTempoCustomAdapter.swift
+  ADAPTER_PATH: ./TempoAdapter/ISTempoCustomAdapter.swift
 
 jobs:
   update-release-draft:
