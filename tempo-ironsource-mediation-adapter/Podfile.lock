@@ -1,6 +1,6 @@
 PODS:
   - IronSourceSDK (8.0.0.0)
-  - tempo-ios-ironsource-mediation (1.6.1-rc.0):
+  - tempo-ios-ironsource-mediation (1.6.3-rc.0):
     - IronSourceSDK (~> 8)
     - TempoSDK (= 1.5.0)
   - TempoSDK (1.5.0)
@@ -19,7 +19,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   IronSourceSDK: ab8b67818aab07d1eca58f5b949459b939c4c589
-  tempo-ios-ironsource-mediation: 34febcd283930f60fe93da8f91525fab5d66b6ae
+  tempo-ios-ironsource-mediation: e62d7209ed591ae785dfdc00dcab37248f386e27
   TempoSDK: 6922e6266e9b9dda238850b8d20c4f9229934b2b
 
 PODFILE CHECKSUM: 5fcef063653f1bfd65617275e54d605bffc60e8e
