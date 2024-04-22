@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   push-pod:
-    runs-on: macos-latest
+    runs-on: macos-13
     environment: production
 
     steps:
@@ -19,6 +19,13 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
+
+      # This repo requires the 'swiftCompatibility56' library, available since Xcode v14.3
+      # https://github.com/CocoaPods/CocoaPods/issues/11960
+      - name: Set Xcode Version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.3.1'
 
       # Using the podspec, push the latest version of the pod to CocoaPod
       - name: Push Pod
