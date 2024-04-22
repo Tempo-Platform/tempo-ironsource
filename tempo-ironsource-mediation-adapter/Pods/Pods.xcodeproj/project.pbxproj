@@ -1253,9 +1253,26 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		27F99F4BA1156E013AE6110D4AA37C19 /* Release */ = {
+		29795D1461B7BA4E57411CA9CF0AFE30 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D16ECC7E5DC8B4BC4B21619DAA347DB3 /* tempo-ios-ironsource-mediation.release.xcconfig */;
+			baseConfigurationReference = 5245E89F1FE390ACCBF2B94DC4C53B8F /* IronSourceSDK.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2CEC439E95D648F08ECAE1A69F37E3E5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCF8E9998C406137918F61622AD8B073 /* tempo-ios-ironsource-mediation.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1273,25 +1290,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		29795D1461B7BA4E57411CA9CF0AFE30 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5245E89F1FE390ACCBF2B94DC4C53B8F /* IronSourceSDK.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.6.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1588,6 +1587,32 @@
 			};
 			name = Debug;
 		};
+		B688A0C8E3191BBAB27B695B86898D7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D16ECC7E5DC8B4BC4B21619DAA347DB3 /* tempo-ios-ironsource-mediation.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/tempo-ios-ironsource-mediation/tempo-ios-ironsource-mediation-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MODULEMAP_FILE = "Headers/Public/tempo_ios_ironsource_mediation/tempo-ios-ironsource-mediation.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = tempo_ios_ironsource_mediation;
+				PRODUCT_NAME = "tempo-ios-ironsource-mediation";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.6.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		C7DC100B0DE64C853F46295C0C4B146D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 547AAB5D622C7CF59217C1C43C00CEEF /* TempoSDK.debug.xcconfig */;
@@ -1621,31 +1646,6 @@
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
-		};
-		DA300268E29A86B9DBAA9D9E0C1302CB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCF8E9998C406137918F61622AD8B073 /* tempo-ios-ironsource-mediation.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/tempo-ios-ironsource-mediation/tempo-ios-ironsource-mediation-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MODULEMAP_FILE = "Headers/Public/tempo_ios_ironsource_mediation/tempo-ios-ironsource-mediation.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = tempo_ios_ironsource_mediation;
-				PRODUCT_NAME = "tempo-ios-ironsource-mediation";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
 		};
 		E80D9C9DA5C0BC4212D209280D2B27F6 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1716,8 +1716,8 @@
 		B312A0400E0F5198203C7D55915D9137 /* Build configuration list for PBXNativeTarget "tempo-ios-ironsource-mediation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				DA300268E29A86B9DBAA9D9E0C1302CB /* Debug */,
-				27F99F4BA1156E013AE6110D4AA37C19 /* Release */,
+				2CEC439E95D648F08ECAE1A69F37E3E5 /* Debug */,
+				B688A0C8E3191BBAB27B695B86898D7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
