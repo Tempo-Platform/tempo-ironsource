@@ -15,6 +15,7 @@
 #import "ISBannerAdapterDelegate.h"
 #import "ISInterstitialAdapterDelegate.h"
 #import "ISNativeAdAdapterDelegate.h"
+#import "ISOfferwallAdapterDelegate.h"
 #import "ISRewardedVideoAdapterDelegate.h"
 
 #import "ISConfigurations.h"

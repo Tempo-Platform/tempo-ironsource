@@ -33,6 +33,4 @@
 
 - (void)adapterBannerDidShow;
 
-- (void)adapterBannerDidFailToShowWithError:(NSError *)error;
-
 @end
