@@ -18,3 +18,4 @@
 #define kMetaDataTrueValue @"true"
 #define kMetaDataFalseValue @"false"
 #define kMetaDataTestSuiteEnableValue @"enable"
+#define kMetaDataGoogleWaterMark @"google_water_mark"

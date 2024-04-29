@@ -18,14 +18,14 @@
  * @param adData data containing the configuration passed from the server and other related
  * parameters passed from the publisher like userId
  * @param viewController the application view controller
- * @param bannerSize the banner size the ad will be presented on
+ * @param size  the banner size the ad will be presented on
  * @param delegate the callback listener to return
  * mandatory callbacks based on the network - load success, load failure, ad opened
  * optional callbacks - clicked, left application, presented, dismissed
  */
 - (void)loadAdWithAdData:(nonnull ISAdData *)adData
-          viewController:(UIViewController *)viewController
-                    size:(ISBannerSize *)size
+          viewController:(nonnull UIViewController *)viewController
+                    size:(nonnull ISBannerSize *)size
                 delegate:(nonnull id<ISBannerAdDelegate>)delegate;
 
 /**
