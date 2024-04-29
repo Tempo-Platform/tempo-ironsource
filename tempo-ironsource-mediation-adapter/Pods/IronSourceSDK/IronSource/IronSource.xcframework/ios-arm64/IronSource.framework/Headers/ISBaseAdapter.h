@@ -11,6 +11,7 @@
 #import "ISBiddingDataAdapterProtocol.h"
 #import "ISInterstitialAdapterProtocol.h"
 #import "ISNativeAdAdapterProtocol.h"
+#import "ISOfferwallAdapterProtocol.h"
 #import "ISRewardedVideoAdapterProtocol.h"
 
 #import "ISAdapterConfig.h"
@@ -20,6 +21,7 @@
 @interface ISBaseAdapter : NSObject <ISInterstitialAdapterProtocol,
                                      ISRewardedVideoAdapterProtocol,
                                      ISBannerAdapterProtocol,
+                                     ISOfferwallAdapterProtocol,
                                      ISBiddingDataAdapterProtocol,
                                      ISNativeAdAdapterProtocol> {
  @protected

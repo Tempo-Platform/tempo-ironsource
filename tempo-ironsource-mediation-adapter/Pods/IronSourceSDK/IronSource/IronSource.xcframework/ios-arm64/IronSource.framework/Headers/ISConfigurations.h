@@ -17,6 +17,7 @@
 @property(nonatomic, strong) NSDictionary *customSegmentParams;
 @property(nonatomic, strong) ISSegment *segment;
 @property(nonatomic, strong) NSDictionary *rewardedVideoCustomParameters;
+@property(nonatomic, strong) NSDictionary *offerwallCustomParameters;
 @property(nonatomic, strong) NSString *version;
 @property(nonatomic, strong) NSNumber *adapterTimeOutInSeconds;
 @property(nonatomic, strong) NSNumber *maxNumOfAdaptersToLoadOnStart;
@@ -39,6 +40,12 @@
 @property(nonatomic, strong) NSDictionary *batchGenericParams;
 @property(nonatomic, strong) NSDictionary *eventGenericParams;
 @property(nonatomic, strong) NSDictionary *eventPixelParams;
+
+/*!
+ @deprecated This method has been deprecated and will be removed in a future version
+ */
++ (ISConfigurations *)configurations DEPRECATED_MSG_ATTRIBUTE(
+    "As of version 6.5.2, use class method: getConfigurations");
 
 + (ISConfigurations *)getConfigurations;
 

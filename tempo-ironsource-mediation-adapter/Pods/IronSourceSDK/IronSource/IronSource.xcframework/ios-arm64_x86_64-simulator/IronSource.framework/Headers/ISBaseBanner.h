@@ -29,8 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
  * optional callbacks - clicked, left application, presented, dismissed
  */
 - (void)loadAdWithAdData:(nonnull ISAdData *)adData
-          viewController:(nonnull UIViewController *)viewController
-                    size:(nonnull ISBannerSize *)size
+          viewController:(UIViewController *)viewController
+                    size:(ISBannerSize *)size
                 delegate:(nonnull id<ISBannerAdDelegate>)delegate;
 
 /**
