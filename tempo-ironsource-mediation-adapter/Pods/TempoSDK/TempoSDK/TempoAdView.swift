@@ -29,6 +29,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     internal var countryCode: String? = CountryCode.getIsoCountryCode2Digit()
     var locationData: LocationData?
     var metricList: [Metric] = []
+    var lastestURL: String? = nil
     
     public init(listener: TempoAdListener, appId: String) {
         super.init(nibName: nil, bundle: nil)
@@ -83,6 +84,57 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     /// Plays currently loaded ad for current session (interstitial/reward)
     public func showAd(parentVC: UIViewController?) {
         
+        checkWebsiteConnectivity(urlString: lastestURL ?? "", parentViewController: parentVC, completion: handleWebsiteCheck)
+    }
+    
+    
+    
+    func checkWebsiteConnectivity(urlString: String, parentViewController: UIViewController?, completion: @escaping (Bool, UIViewController?, Int?) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(false, parentViewController, nil)
+            TempoUtils.Shout(msg: "🔵🔵🔵🔵🔵🔵🔵 checkWebsiteConnectivity: URL string guard error")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        
+        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+            guard error == nil else {
+                TempoUtils.Shout(msg: "🔵🔵🔵🔵🔵🔵🔵 checkWebsiteConnectivity: URL Reponse guard error")
+                completion(false, parentViewController, nil)
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                TempoUtils.Shout(msg: "🔫🔫🔫🔫🔫🔫🔫 checkWebsiteConnectivity: URL request SUCCSSS")
+                completion(true, parentViewController, httpResponse.statusCode)
+            } else {
+                TempoUtils.Shout(msg: "🔵🔵🔵🔵🔵🔵🔵 checkWebsiteConnectivity: URL request ERROR")
+                completion(false, parentViewController, nil)
+            }
+        }
+        
+        task.resume()
+    }
+    
+    
+    func handleWebsiteCheck(success: Bool, parentVC: UIViewController?, responseCode: Int? ) {
+        if(success) {
+        
+            switch(responseCode){
+            case 200: 
+                DispatchQueue.main.async {self.showOnceConnectionConfirmed(parentVC: parentVC) }
+            default:
+                listener.onTempoAdShowFailed(isInterstitial: isInterstitial, reason: "\(responseCode ?? -1)")
+            }
+        } else {
+            listener.onTempoAdShowFailed(isInterstitial: isInterstitial, reason: "\(responseCode ?? -1)")
+        }
+    }
+    
+    private func showOnceConnectionConfirmed(parentVC: UIViewController?) {
+        
         // Update parent VC with received value
         self.parentVC = parentVC
         
@@ -112,6 +164,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                 TempoUtils.Warn(msg: "Error playing video: \(error)")
             }
         }
+        
     }
     
     /// Closes current WkWebView
@@ -213,6 +266,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                                 }
                                 
                                 let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial, campaignId: campaignId, urlSuffix: responseSuccess.location_url_suffix))!
+                                self.lastestURL = url.absoluteString
                                 self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
                                 self.webView.load(URLRequest(url: url))
                                 self.adState = AdState.dormant
