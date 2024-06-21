@@ -89,10 +89,9 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     }
     
     /// Checks target content URL prior to displaying, aborting if fails
-    func checkWebsiteConnectivity(urlString: String, parentViewController: UIViewController?, completion: @escaping (Bool, UIViewController?, Int?) -> Void) {
+    func checkWebsiteConnectivity(urlString: String, parentViewController: UIViewController?, completion: @escaping (Bool, UIViewController?, Int?, String?) -> Void) {
         guard let url = URL(string: urlString) else {
-            completion(false, parentViewController, nil)
-            TempoUtils.Shout(msg: "🔵🔵🔵🔵🔵🔵🔵 checkWebsiteConnectivity: URL string guard error")
+            completion(false, parentViewController, nil, "URL string guard error")
             return
         }
         
@@ -103,17 +102,14 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         // Check response and pass on parent ViewController
         let task = URLSession.shared.dataTask(with: request) { _, response, error in
             guard error == nil else {
-                TempoUtils.Shout(msg: "🔵🔵🔵🔵🔵🔵🔵 checkWebsiteConnectivity: URL Reponse guard error")
-                completion(false, parentViewController, nil)
+                completion(false, parentViewController, nil, "URL Reponse guard error")
                 return
             }
             
             if let httpResponse = response as? HTTPURLResponse {
-                TempoUtils.Shout(msg: "🔫🔫🔫🔫🔫🔫🔫 checkWebsiteConnectivity: URL request SUCCSSS")
-                completion(true, parentViewController, httpResponse.statusCode)
+                completion(true, parentViewController, httpResponse.statusCode, "URL request SUCCSSS")
             } else {
-                TempoUtils.Shout(msg: "🔵🔵🔵🔵🔵🔵🔵 checkWebsiteConnectivity: URL request ERROR")
-                completion(false, parentViewController, nil)
+                completion(false, parentViewController, nil, "URL request ERROR")
             }
         }
         
@@ -121,16 +117,16 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     }
     
     /// Checks result of connection check request, displays ad if confirmd and handles any other failures
-    func handleWebsiteCheck(success: Bool, parentVC: UIViewController?, responseCode: Int? ) {
+    func handleWebsiteCheck(success: Bool, parentVC: UIViewController?, responseCode: Int?, failReason: String? ) {
         if(success) {
             switch(responseCode) {
             case 200:
                 DispatchQueue.main.async { self.showOnceConnectionConfirmed(parentVC: parentVC) }
             default:
-                listener.onTempoAdShowFailed(isInterstitial: isInterstitial, reason: "\(responseCode ?? -1)")
+                sendAdShowFailed(reason: "Could not validate URL content: \(responseCode ?? -1)")
             }
         } else {
-            listener.onTempoAdShowFailed(isInterstitial: isInterstitial, reason: "\(responseCode ?? -1)")
+            sendAdShowFailed(reason: failReason ?? "Could not validate URL content: \(responseCode ?? -1)")
         }
     }
     

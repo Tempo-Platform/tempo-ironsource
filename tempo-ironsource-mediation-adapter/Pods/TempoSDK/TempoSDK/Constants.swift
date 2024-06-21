@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.5.2-rc.1"
+    public static let SDK_VERSIONS = "1.5.3"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -86,7 +86,7 @@ public struct Constants {
     }
     
     // Testable variables
-    public static var isProd = false
-    public static var isTesting = true
+    public static var isProd = true
+    public static var isTesting = false
     
 }
