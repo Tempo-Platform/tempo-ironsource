@@ -6,7 +6,7 @@ import TempoSDK
 public class ISTempoCustomAdapter: ISBaseNetworkAdapter {
  
     public static let ADAPTER_TYPE = "IRONSOURCE"
-    public static let TEMPO_ADAPTER_VERSION = "1.7.2"
+    public static let TEMPO_ADAPTER_VERSION = "1.7.1"
     
     /// SDK initialisation handler
     public override func `init` (_ adData: ISAdData, delegate: ISNetworkInitializationDelegate) {
