@@ -195,7 +195,7 @@ https://platform.ironsrc.com/partners/terms-and-conditions-new-user
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+   Copyright [2024] [Tempo Pty Ltd 2024]
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

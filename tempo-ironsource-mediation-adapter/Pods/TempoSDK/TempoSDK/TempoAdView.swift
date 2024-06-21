@@ -29,6 +29,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     internal var countryCode: String? = CountryCode.getIsoCountryCode2Digit()
     var locationData: LocationData?
     var metricList: [Metric] = []
+    var lastestURL: String? = nil
     
     public init(listener: TempoAdListener, appId: String) {
         super.init(nibName: nil, bundle: nil)
@@ -43,7 +44,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         adId = getAdId()
     }
     
-    // Ingore requirement to implement required initializer ‘init(coder:) in it.
+    /// Ingore requirement to implement required initializer ‘init(coder:) in it.
     @available(*, unavailable, message: "Nibs are unsupported")
     public required init?(coder aDecoder: NSCoder) {
         fatalError("Nibs are unsupported")
@@ -83,6 +84,55 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     /// Plays currently loaded ad for current session (interstitial/reward)
     public func showAd(parentVC: UIViewController?) {
         
+        // Checks connection first, then runs showOnceConnectionConfirmed() upon successful completion
+        checkWebsiteConnectivity(urlString: lastestURL ?? "", parentViewController: parentVC, completion: handleWebsiteCheck)
+    }
+    
+    /// Checks target content URL prior to displaying, aborting if fails
+    func checkWebsiteConnectivity(urlString: String, parentViewController: UIViewController?, completion: @escaping (Bool, UIViewController?, Int?, String?) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(false, parentViewController, nil, "URL string guard error")
+            return
+        }
+        
+        // Ceated HEAD method request
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        
+        // Check response and pass on parent ViewController
+        let task = URLSession.shared.dataTask(with: request) { _, response, error in
+            guard error == nil else {
+                completion(false, parentViewController, nil, "URL Reponse guard error")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                completion(true, parentViewController, httpResponse.statusCode, "URL request SUCCSSS")
+            } else {
+                completion(false, parentViewController, nil, "URL request ERROR")
+            }
+        }
+        
+        task.resume()
+    }
+    
+    /// Checks result of connection check request, displays ad if confirmd and handles any other failures
+    func handleWebsiteCheck(success: Bool, parentVC: UIViewController?, responseCode: Int?, failReason: String? ) {
+        if(success) {
+            switch(responseCode) {
+            case 200:
+                DispatchQueue.main.async { self.showOnceConnectionConfirmed(parentVC: parentVC) }
+            default:
+                sendAdShowFailed(reason: "Could not validate URL content: \(responseCode ?? -1)")
+            }
+        } else {
+            sendAdShowFailed(reason: failReason ?? "Could not validate URL content: \(responseCode ?? -1)")
+        }
+    }
+    
+    /// Adds conetnt webview to parent ViewController and displays ad
+    private func showOnceConnectionConfirmed(parentVC: UIViewController?) {
+        
         // Update parent VC with received value
         self.parentVC = parentVC
         
@@ -112,6 +162,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                 TempoUtils.Warn(msg: "Error playing video: \(error)")
             }
         }
+        
     }
     
     /// Closes current WkWebView
@@ -134,7 +185,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         listener?.onTempoAdClosed(isInterstitial: self.isInterstitial)
     }
     
-    // Cnecks is consented Ad ID exists and returns (nullable) value
+    /// Checks is consented Ad ID exists and returns (nullable) value
     func getAdId() -> String! {
         
         // Get Advertising ID (IDFA) // TODO: add proper IDFA alternative here if we don't have Ad ID
@@ -213,6 +264,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                                 }
                                 
                                 let url = URL(string: TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial, campaignId: campaignId, urlSuffix: responseSuccess.location_url_suffix))!
+                                self.lastestURL = url.absoluteString
                                 self.campaignId = TempoUtils.checkForTestCampaign(campaignId: campaignId)
                                 self.webView.load(URLRequest(url: url))
                                 self.adState = AdState.dormant
@@ -644,7 +696,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         //TempoUtils.Say(msg: "✅ didFinish SUCCESS")
     }
-    
     
     /// Test function used to test specific campaign ID using dummy values fo other metrics
     public func loadSpecificCampaignAd(isInterstitial: Bool, campaignId:String) {

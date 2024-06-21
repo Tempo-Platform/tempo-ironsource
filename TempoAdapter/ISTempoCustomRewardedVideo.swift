@@ -42,19 +42,6 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
             
             // Load ad, provided the ad controller is not null
             self.rewarded?.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
-            //self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
-//            if(self.rewarded == nil) {
-//                self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
-//                
-//                if(self.rewarded == nil) {
-//                    self.onTempoAdFetchFailed(isInterstitial: true, reason: "Ad controll is null")
-//                } else {
-//                    self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
-//                    //self.rewarded!.checkLocationConsentAndLoad(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
-//                }
-//            } else {
-//                self.rewarded!.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
-//            }
         }
     }
     
@@ -67,6 +54,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     /// Callback from ironSource API when IronSource.showRewardedAds() called
     public override func showAd(with viewController: UIViewController, adData: ISAdData, delegate: ISRewardedVideoAdDelegate) {
         //TempoUtils.Say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
+        
         // Implement callback delegate
         self.delegate = delegate
                 

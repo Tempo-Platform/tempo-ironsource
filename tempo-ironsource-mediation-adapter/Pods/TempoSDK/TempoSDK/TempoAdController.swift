@@ -10,6 +10,7 @@ public class TempoAdController: NSObject {
     public var adView: TempoAdView?
     public var locationData: LocationData? = nil
     var tempoProfile: TempoProfile? = nil
+   
     
     public init(tempoAdListener: TempoAdListener, appId: String!) {
         super.init()
@@ -52,22 +53,24 @@ public class TempoAdController: NSObject {
     
     /// Public SHOW function for mediation adapters to call
     public func showAd(parentViewController: UIViewController?) {
-        //adView!.showAd(parentVC: parentViewController)
         
-        // Load ad callback for when checks are satisfied
-        let showAdCallback: () -> Void = {
-            DispatchQueue.main.async {
-                self.adView!.showAd(parentVC: parentViewController)
+            //adView!.showAd(parentVC: parentViewController)
+            
+            // Load ad callback for when checks are satisfied
+            let showAdCallback: () -> Void = {
+                DispatchQueue.main.async {
+                    self.adView!.showAd(parentVC: parentViewController)
+                }
             }
-        }
-        
-        // Create tempoProfile instance if does not already exist
-        tempoProfile =  tempoProfile ?? TempoProfile(adView: adView!)
-        
-        // Check for lates location consent autorisation - after which run loadAds()
-        // This does not take long, it's just run async on background thread
-        tempoProfile?.doTaskAfterLocAuthUpdate(completion: showAdCallback)
+            
+            // Create tempoProfile instance if does not already exist
+            tempoProfile =  tempoProfile ?? TempoProfile(adView: adView!)
+            
+            // Check for lates location consent autorisation - after which, run showAds()
+            // This does not take long, it's just run async on background thread
+            tempoProfile?.doTaskAfterLocAuthUpdate(completion: showAdCallback)
     }
+    
     
     /// Public LOAD function for internal testing with specific campaign ID
     public func loadSpecificAd(isInterstitial: Bool, campaignId:String){
