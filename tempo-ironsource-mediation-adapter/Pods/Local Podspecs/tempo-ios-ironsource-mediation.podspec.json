@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "TempoSDK": [
-      "1.5.3"
+      "1.6.0"
     ],
     "IronSourceSDK": [
       "~> 8"

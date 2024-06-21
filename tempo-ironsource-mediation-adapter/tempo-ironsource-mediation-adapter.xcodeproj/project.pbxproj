@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00E4C1CC9811A85774CBDDF3 /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 876140E512CC4177637592D6 /* libPods-tempo-ironsource-mediation-adapter.a */; };
 		0D0793152A25A4E000586808 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0793142A25A4E000586808 /* AppDelegate.swift */; };
 		0D0793172A25A4E000586808 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0793162A25A4E000586808 /* SceneDelegate.swift */; };
 		0D0793192A25A4E000586808 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0793182A25A4E000586808 /* ViewController.swift */; };
 		0D07931C2A25A4E000586808 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D07931A2A25A4E000586808 /* Main.storyboard */; };
 		0D07931E2A25A4E100586808 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D07931D2A25A4E100586808 /* Assets.xcassets */; };
 		0D0793212A25A4E100586808 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D07931F2A25A4E100586808 /* LaunchScreen.storyboard */; };
-		2E011351EEC4F7404FBE4DC6 /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 130C26069CB43C6A43C0C889 /* libPods-tempo-ironsource-mediation-adapter.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +25,9 @@
 		0D07931D2A25A4E100586808 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D0793202A25A4E100586808 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D0793222A25A4E100586808 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		130C26069CB43C6A43C0C889 /* libPods-tempo-ironsource-mediation-adapter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tempo-ironsource-mediation-adapter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1DC62A4978434AD2F61D2AE0 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; sourceTree = "<group>"; };
-		B37DAC89513EF3FE3062492B /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; sourceTree = "<group>"; };
+		37DA72A0C2AC784E3EFE7307 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.debug.xcconfig"; sourceTree = "<group>"; };
+		71DD017A52D5EC655A228B6C /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; path = "Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter.release.xcconfig"; sourceTree = "<group>"; };
+		876140E512CC4177637592D6 /* libPods-tempo-ironsource-mediation-adapter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tempo-ironsource-mediation-adapter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E011351EEC4F7404FBE4DC6 /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */,
+				00E4C1CC9811A85774CBDDF3 /* libPods-tempo-ironsource-mediation-adapter.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,7 +48,7 @@
 				0D0793132A25A4E000586808 /* tempo-ironsource-mediation-adapter */,
 				0D0793122A25A4E000586808 /* Products */,
 				C5277068D64121BDF8550F36 /* Pods */,
-				B5BC318497FBD6DE97BD0E27 /* Frameworks */,
+				78613EF12B42523805D92EC2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,10 +74,10 @@
 			path = "tempo-ironsource-mediation-adapter";
 			sourceTree = "<group>";
 		};
-		B5BC318497FBD6DE97BD0E27 /* Frameworks */ = {
+		78613EF12B42523805D92EC2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				130C26069CB43C6A43C0C889 /* libPods-tempo-ironsource-mediation-adapter.a */,
+				876140E512CC4177637592D6 /* libPods-tempo-ironsource-mediation-adapter.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -85,8 +85,8 @@
 		C5277068D64121BDF8550F36 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1DC62A4978434AD2F61D2AE0 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */,
-				B37DAC89513EF3FE3062492B /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */,
+				37DA72A0C2AC784E3EFE7307 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */,
+				71DD017A52D5EC655A228B6C /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -98,11 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0D0793252A25A4E100586808 /* Build configuration list for PBXNativeTarget "tempo-ironsource-mediation-adapter" */;
 			buildPhases = (
-				ADA34D996AC05D8660A93828 /* [CP] Check Pods Manifest.lock */,
+				5253D42FB1F4EA303ABDCEC0 /* [CP] Check Pods Manifest.lock */,
 				0D07930D2A25A4E000586808 /* Sources */,
 				0D07930E2A25A4E000586808 /* Frameworks */,
 				0D07930F2A25A4E000586808 /* Resources */,
-				863C9E2D343F1839F1DB07B0 /* [CP] Copy Pods Resources */,
+				25CDDE17E28CD2208F86608A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -160,7 +160,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		863C9E2D343F1839F1DB07B0 /* [CP] Copy Pods Resources */ = {
+		25CDDE17E28CD2208F86608A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -177,7 +177,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tempo-ironsource-mediation-adapter/Pods-tempo-ironsource-mediation-adapter-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ADA34D996AC05D8660A93828 /* [CP] Check Pods Manifest.lock */ = {
+		5253D42FB1F4EA303ABDCEC0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -350,7 +350,7 @@
 		};
 		0D0793262A25A4E100586808 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1DC62A4978434AD2F61D2AE0 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */;
+			baseConfigurationReference = 37DA72A0C2AC784E3EFE7307 /* Pods-tempo-ironsource-mediation-adapter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -382,7 +382,7 @@
 		};
 		0D0793272A25A4E100586808 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B37DAC89513EF3FE3062492B /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */;
+			baseConfigurationReference = 71DD017A52D5EC655A228B6C /* Pods-tempo-ironsource-mediation-adapter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
