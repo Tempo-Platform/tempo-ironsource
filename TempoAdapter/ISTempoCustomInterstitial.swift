@@ -25,9 +25,9 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
             let cpmFloor = ISTempoUtils.getCpmFloor(adData: adData)
             let cpmFloorFloat: Float = Float(cpmFloor) ?? 0.0
             if cpmFloorFloat != 0.0 {
-                print("The CPM is a valid Float: \(cpmFloorFloat)")
+                TempoUtils.Say(msg: "The CPM is a valid Float: \(cpmFloorFloat)")
             } else {
-                print("The CPM is not a valid Float or is zero")
+                TempoUtils.Warn(msg: "The CPM is not a valid Float or is zero")
             }
             
             // Create ad instance and load new ad
@@ -48,7 +48,7 @@ public class ISTempoCustomInterstitial: ISBaseInterstitial, TempoAdListener {
                 self.interstitial?.loadAd(isInterstitial: true, cpmFloor: cpmFloorFloat, placementId: nil)
             }
         } catch {
-            print("Invalid ad data: unable to get App ID")
+            TempoUtils.Warn(msg: "Invalid ad data: unable to get App ID")
             self.onTempoAdFetchFailed(isInterstitial: true, reason: "Invalid ad data")
         }
         
