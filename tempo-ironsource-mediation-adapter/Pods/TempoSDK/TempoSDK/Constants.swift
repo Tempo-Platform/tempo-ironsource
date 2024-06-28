@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.6.1-rc.1"
+    public static let SDK_VERSIONS = "1.6.2-rc.0"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -100,8 +100,7 @@ public struct Constants {
         public static let allValues = [DEV, STG, PRD]
     }
     
-    // Testable variables
-    //public static var isProd = true
+    // Test tool variables
     public static var environment: Environment = Environment.DEV
     public static var isVerboseDebugging = true
     

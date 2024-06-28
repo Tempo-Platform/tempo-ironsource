@@ -119,136 +119,147 @@ public class TempoUtils {
     //    }
     //
     /// Returns web URL of ad content with customised parameters
-    public static func getFullWebUrl(isInterstitial: Bool, campaignId: String, urlSuffix: String?) -> String {
+    public static func getFullWebUrl(isInterstitial: Bool, campaignId: String, urlSuffix: String?) throws -> String {
         var webAdUrl: String
         
-        let checkedCampaignId = checkForTestCampaign(campaignId: campaignId)
-        
-        if(isInterstitial) {
-            webAdUrl = "\(getInterstitialUrl())/\(checkedCampaignId!)"
+        do{
+            guard let checkedCampaignId = try checkForTestCampaign(campaignId: campaignId) else {
+                TempoUtils.Warn(msg: "No valid campaign ID, cannot continue")
+                throw WebURLError.invalidCampaignId // TODO: When is this caught, here or calling method?
+            }
+         
+            if(isInterstitial) {
+                webAdUrl = "\(getInterstitialUrl())/\(checkedCampaignId)"
+            }
+            else {
+                webAdUrl = "\(getRewardedUrl())/\(checkedCampaignId)"
+            }
+            
+            // If additional URL suffix valid, place at the end of the string
+            if let suffix = urlSuffix, !suffix.isEmpty {
+                webAdUrl.append("\(suffix)")
+            }
+            
+            TempoUtils.Say(msg: "🌏 Web URL: \(webAdUrl)")
+            
+            return webAdUrl
+            
+        } catch WebURLError.invalidCustomCampaignID {
+            throw WebURLError.invalidCustomCampaignID
+        } catch {
+            throw WebURLError.invalidCampaignId
         }
-        else {
-            webAdUrl = "\(getRewardedUrl())/\(checkedCampaignId!)"
-        }
-        
-        // If additional URL suffix valid, place at the end of the string
-        if let suffix = urlSuffix, !suffix.isEmpty {
-            webAdUrl.append("\(suffix)")
-        }
-        
-        TempoUtils.Say(msg: "🌏 Web URL: \(webAdUrl)")
-        
-        return webAdUrl
     }
     
     /// Checks local UI testing variables to see if there is a custom Campaign ID to overwrite the one returned from ads API
-    internal static func checkForTestCampaign(campaignId: String!) -> String! {
+    internal static func checkForTestCampaign(campaignId: String!) throws -> String! {
         
-        let customCampaignTrimmed: String? = TempoTesting.instance?.customCampaignId?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let invalidString = customCampaignTrimmed?.isEmpty ?? true
-        //print("💥 customCampaignTrimmed: \(customCampaignTrimmed ?? "NOTHING") | invalidString: \(invalidString)")
-        
-        if (!invalidString && (TempoTesting.instance?.isTestingCustomCampaigns ?? false)) {
-            return TempoTesting.instance?.customCampaignId
+        if(campaignId != nil && !campaignId.isEmpty) {
+            
+            if (TempoTesting.instance?.isTestingCustomCampaigns ?? false) {
+                guard let customCampaignId = TempoTesting.instance?.customCampaignId?.trimmingCharacters(in: .whitespacesAndNewlines), !customCampaignId.isEmpty else {
+                    throw WebURLError.invalidCustomCampaignID
+                }
+                
+                return customCampaignId
+            }
+        }
+        else{
+            throw WebURLError.invalidCampaignId
         }
         
-        return campaignId
+        
+        return campaignId;
     }
     
     /// Returns URL for Rewarded Ads
     public static func getRewardedUrl() -> String {
-        if((TempoTesting.instance?.isTestingDeployVersion ?? false) && TempoTesting.instance?.currentDeployVersion != nil) {
-            let deployPreviewUrl = Constants.Web.ADS_DOM_PREFIX_URL_PREVIEW +
-            (TempoTesting.instance?.currentDeployVersion)! +
-            Constants.Web.ADS_DOM_APPENDIX_URL_PREVIEW +
-            Constants.Web.URL_REW
-            
+        
+        // For ease of reading
+        let cw = Constants.Web.self
+        
+        // Check is TempoTesting inititalised, and is in DeployPreview mode. Then checks if DP version is valid.
+        if let tester = TempoTesting.instance, tester.isTestingDeployVersion, let deployVersion = tester.currentDeployVersion {
+            let deployPreviewUrl = "\(cw.ADS_DOM_PREFIX_URL_PREVIEW)\(deployVersion)\(cw.ADS_DOM_APPENDIX_URL_PREVIEW)\(cw.URL_REW)"
             TempoUtils.Say(msg: "DeployPreview (R) URL = \(deployPreviewUrl)")
-            
             return deployPreviewUrl
         }
         
-        switch(Constants.environment){
-        case Constants.Environment.STG:
-            return "\(Constants.Web.ADS_DOM_URL_STG)/\(Constants.Web.URL_REW)"
-        case Constants.Environment.PRD:
-            return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_REW)"
-        case Constants.Environment.DEV:
+        // If non-DP, return env-based address
+        switch(Constants.environment) {
+        case .STG:
+            return "\(cw.ADS_DOM_URL_STG)/\(cw.URL_REW)"
+        case .PRD:
+            return "\(cw.ADS_DOM_URL_PROD)/\(cw.URL_REW)"
+        case .DEV:
             fallthrough
         default:
-            return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_REW)"
+            return "\(cw.ADS_DOM_URL_DEV)/\(cw.URL_REW)"
         }
-        
-//        if Constants.isProd {
-//            return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_REW)"
-//        }
-//        else {
-//            return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_REW)"
-//        }
     }
     
     /// Returns URL for Interstitial Ads
     public static func getInterstitialUrl() -> String {
-        if((TempoTesting.instance?.isTestingDeployVersion ?? false) && TempoTesting.instance?.currentDeployVersion != nil) {
-            let deployPreviewUrl = Constants.Web.ADS_DOM_PREFIX_URL_PREVIEW +
-            (TempoTesting.instance?.currentDeployVersion)! +
-            Constants.Web.ADS_DOM_APPENDIX_URL_PREVIEW +
-            Constants.Web.URL_INT
-            
-            TempoUtils.Say(msg: "DeployPreview (R) URL = \(deployPreviewUrl)")
-            
+        
+        // For ease of reading
+        let cw = Constants.Web.self
+        
+        // Check is TempoTesting inititalised, and is in DeployPreview mode. Then checks if DP version is valid.
+        if let tester = TempoTesting.instance, tester.isTestingDeployVersion, let deployVersion = tester.currentDeployVersion {
+            let deployPreviewUrl = "\(cw.ADS_DOM_PREFIX_URL_PREVIEW)\(deployVersion)\(cw.ADS_DOM_APPENDIX_URL_PREVIEW)\(cw.URL_INT)"
+            TempoUtils.Say(msg: "DeployPreview (I) URL = \(deployPreviewUrl)")
             return deployPreviewUrl
         }
         
-        switch(Constants.environment){
-        case Constants.Environment.STG:
-            return "\(Constants.Web.ADS_DOM_URL_STG)/\(Constants.Web.URL_INT)"
-        case Constants.Environment.PRD:
-            return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_INT)"
-        case Constants.Environment.DEV:
+        // If non-DP, return env-based address
+        switch(Constants.environment) {
+        case .STG:
+            return "\(cw.ADS_DOM_URL_STG)/\(cw.URL_INT)"
+        case .PRD:
+            return "\(cw.ADS_DOM_URL_PROD)/\(cw.URL_INT)"
+        case .DEV:
             fallthrough
         default:
-            return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_INT)"
+            return "\(cw.ADS_DOM_URL_DEV)/\(cw.URL_INT)"
         }
-        
-//        if Constants.isProd {
-//            return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_INT)"
-//        }
-//        else {
-//            return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_INT)"
-//        }
     }
     
     /// Returns REST-ADS-API url based on current environment
     public static func getAdsApiUrl() -> String {
+        
+        // For ease of reading
+        let cw = Constants.Web.self
+        
+        // Return env-based ads-api URL
         switch(Constants.environment){
-        case Constants.Environment.STG:
-            return Constants.Web.ADS_API_URL_STG
-        case Constants.Environment.PRD:
-            return Constants.Web.ADS_API_URL_PROD
-        case Constants.Environment.DEV:
+        case .STG:
+            return cw.ADS_API_URL_STG
+        case .PRD:
+            return cw.ADS_API_URL_PROD
+        case .DEV:
             fallthrough
         default:
-            return Constants.Web.ADS_API_URL_DEV
+            return cw.ADS_API_URL_DEV
         }
-        
-        //return Constants.isProd ? Constants.Web.ADS_API_URL_PROD : Constants.Web.ADS_API_URL_DEV;
     }
     
     /// Returns METRICS url based on current environment
     public static func getMetricsUrl() -> String {
+        
+        // For ease of reading
+        let cw = Constants.Web.self
+        
+        // Return env-based Metric URL
         switch(Constants.environment){
-        case Constants.Environment.STG:
-            return Constants.Web.METRICS_URL_STG
-        case Constants.Environment.PRD:
-            return Constants.Web.METRICS_URL_PROD
-        case Constants.Environment.DEV:
+        case .STG:
+            return cw.METRICS_URL_STG
+        case .PRD:
+            return cw.METRICS_URL_PROD
+        case .DEV:
             fallthrough
         default:
-            return Constants.Web.METRICS_URL_DEV
+            return cw.METRICS_URL_DEV
         }
-        
-        //return Constants.isProd ? Constants.Web.METRICS_URL_PROD : Constants.Web.METRICS_URL_DEV;
     }
     
     /// Retuns string of 'INTERSTITIAL' or 'REWARDED' for debugging purposes

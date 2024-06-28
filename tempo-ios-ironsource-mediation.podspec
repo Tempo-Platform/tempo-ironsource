@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
       'TempoAdapter' => ['TempoAdapter/Resources/**/*']
     }
 
-  spec.dependency 'TempoSDK', '1.6.1-rc.1'
+  spec.dependency 'TempoSDK', '1.6.2-rc.0'
   spec.dependency 'IronSourceSDK', '~> 8'
   spec.requires_arc     = true
   spec.frameworks       = 'Foundation', 'UIKit'
