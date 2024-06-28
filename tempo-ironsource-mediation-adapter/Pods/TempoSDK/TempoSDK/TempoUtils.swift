@@ -64,7 +64,7 @@ public class TempoUtils {
     
     /// Log for URGENT output with 🔴 marker - not to be used in production
     public static func Shout(msg: String) {
-        if(Constants.isTesting) {
+        if(Constants.isVerboseDebugging) {
             print("🔴 TempoSDK: \(msg)");
         }
     }
@@ -73,14 +73,14 @@ public class TempoUtils {
     public static func Shout(msg: String, absoluteDisplay: Bool) {
         if (absoluteDisplay) {
             print("🔴 TempoSDK: \(msg)");
-        } else if (Constants.isTesting) {
+        } else if (Constants.isVerboseDebugging) {
             // Nothing - muted
         }
     }
     
     /// Log for general test  output -, never shows in production
     public static func Say(msg: String) {
-        if(Constants.isTesting) {
+        if(Constants.isVerboseDebugging) {
             print("🟣 TempoSDK: \(msg)");
         }
     }
@@ -89,14 +89,14 @@ public class TempoUtils {
     public static func Say(msg: String, absoluteDisplay: Bool) {
         if (absoluteDisplay) {
             print("TempoSDK: \(msg)");
-        } else if (Constants.isTesting) {
+        } else if (Constants.isVerboseDebugging) {
             // Nothing - muted
         }
     }
     
     /// Log for WARNING output with ⚠️ marker - not to be used in production
     public static func Warn(msg: String) {
-        if(Constants.isTesting) {
+        if(Constants.isVerboseDebugging) {
             print("⚠️ TempoSDK: \(msg)");
         }
     }
@@ -105,7 +105,7 @@ public class TempoUtils {
     public static func Warn(msg: String, absoluteDisplay: Bool) {
         if (absoluteDisplay) {
             print("⚠️ TempoSDK: \(msg)");
-        } else if (Constants.isTesting) {
+        } else if (Constants.isVerboseDebugging) {
             // Nothing - muted
         }
     }
@@ -168,12 +168,23 @@ public class TempoUtils {
             return deployPreviewUrl
         }
         
-        if Constants.isProd {
+        switch(Constants.environment){
+        case Constants.Environment.STG:
+            return "\(Constants.Web.ADS_DOM_URL_STG)/\(Constants.Web.URL_REW)"
+        case Constants.Environment.PRD:
             return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_REW)"
-        }
-        else {
+        case Constants.Environment.DEV:
+            fallthrough
+        default:
             return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_REW)"
         }
+        
+//        if Constants.isProd {
+//            return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_REW)"
+//        }
+//        else {
+//            return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_REW)"
+//        }
     }
     
     /// Returns URL for Interstitial Ads
@@ -189,22 +200,55 @@ public class TempoUtils {
             return deployPreviewUrl
         }
         
-        if Constants.isProd {
+        switch(Constants.environment){
+        case Constants.Environment.STG:
+            return "\(Constants.Web.ADS_DOM_URL_STG)/\(Constants.Web.URL_INT)"
+        case Constants.Environment.PRD:
             return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_INT)"
-        }
-        else {
+        case Constants.Environment.DEV:
+            fallthrough
+        default:
             return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_INT)"
         }
+        
+//        if Constants.isProd {
+//            return "\(Constants.Web.ADS_DOM_URL_PROD)/\(Constants.Web.URL_INT)"
+//        }
+//        else {
+//            return "\(Constants.Web.ADS_DOM_URL_DEV)/\(Constants.Web.URL_INT)"
+//        }
     }
     
     /// Returns REST-ADS-API url based on current environment
     public static func getAdsApiUrl() -> String {
-        return Constants.isProd ? Constants.Web.ADS_API_URL_PROD : Constants.Web.ADS_API_URL_DEV;
+        switch(Constants.environment){
+        case Constants.Environment.STG:
+            return Constants.Web.ADS_API_URL_STG
+        case Constants.Environment.PRD:
+            return Constants.Web.ADS_API_URL_PROD
+        case Constants.Environment.DEV:
+            fallthrough
+        default:
+            return Constants.Web.ADS_API_URL_DEV
+        }
+        
+        //return Constants.isProd ? Constants.Web.ADS_API_URL_PROD : Constants.Web.ADS_API_URL_DEV;
     }
     
     /// Returns METRICS url based on current environment
     public static func getMetricsUrl() -> String {
-        return Constants.isProd ? Constants.Web.METRICS_URL_PROD : Constants.Web.METRICS_URL_DEV;
+        switch(Constants.environment){
+        case Constants.Environment.STG:
+            return Constants.Web.METRICS_URL_STG
+        case Constants.Environment.PRD:
+            return Constants.Web.METRICS_URL_PROD
+        case Constants.Environment.DEV:
+            fallthrough
+        default:
+            return Constants.Web.METRICS_URL_DEV
+        }
+        
+        //return Constants.isProd ? Constants.Web.METRICS_URL_PROD : Constants.Web.METRICS_URL_DEV;
     }
     
     /// Retuns string of 'INTERSTITIAL' or 'REWARDED' for debugging purposes

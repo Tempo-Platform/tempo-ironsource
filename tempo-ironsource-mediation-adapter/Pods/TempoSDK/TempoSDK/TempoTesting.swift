@@ -20,12 +20,16 @@ public class TempoTesting {
         TempoTesting.instance = self
     }
     
-    public func toggleTesting() -> Void {
-        Constants.isTesting = !Constants.isTesting
+    public func toggleVerboseDebugging() -> Void {
+        Constants.isVerboseDebugging = !Constants.isVerboseDebugging
     }
     
     public func updateEnvironment(isProd: Bool) -> Void {
-        Constants.isProd = isProd
+        //Constants.isProd = isProd
+    }
+    
+    public func updateEnvironmentWithIndex(enumValue: Int) -> Void {
+        Constants.environment = Constants.Environment.allValues[enumValue]
     }
     
     public func activateUseOfDeployVersion(activate: Bool) -> Void {
