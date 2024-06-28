@@ -3,9 +3,11 @@ import Foundation
 public class Metrics {
    
     /// Converst metrics JSON payload into readinle format with new lines for each array member and spaces after commas
-    static func formatMetricsOutput(jsonString: String?) -> String {
+    static func formatMetricsOutput(jsonString: String?) throws -> String {
         
-        guard var jsonString = jsonString else { return "" }
+        guard var jsonString = jsonString else {
+            throw MetricsError.missingJsonString
+        }
         
         jsonString = jsonString.replacingOccurrences(of: "[", with: "[\n")
         jsonString = jsonString.replacingOccurrences(of: "]", with: "\n]")
@@ -16,10 +18,12 @@ public class Metrics {
     }
     
     /// Sends latest version of Metrics array to Tempo backend and then clears
-    public static func pushMetrics(currentMetrics: inout [Metric], backupUrl: URL?) {
+    public static func pushMetrics(currentMetrics: inout [Metric], backupUrl: URL?) throws {
         
-        // Create the url with NSURL
-        let url = URL(string: TempoUtils.getMetricsUrl())!
+        // Confirm url is not nil
+        guard let url = URL(string: TempoUtils.getMetricsUrl()) else {
+            throw MetricsError.invalidURL
+        }
         
         // Create the session object
         let session = URLSession.shared
@@ -35,21 +39,29 @@ public class Metrics {
         // Assigned values depend on whether it's backup-resend or standard push
         if let backupUrl = backupUrl {
             metricListCopy = TempoDataBackup.fileMetric[backupUrl] ?? []
-            metricData = try? JSONEncoder().encode(metricListCopy)
+            // Confirm valid JSON from backup Metric list
+            guard let jsonEncodedBackupData = try? JSONEncoder().encode(metricListCopy) else {
+                throw MetricsError.jsonEncodingFailed // TODO: COnsequencs of this failing?
+            }
+            metricData = jsonEncodedBackupData
         } else {
             metricListCopy = currentMetrics
-            metricData = try? JSONEncoder().encode(currentMetrics)
+            // Confirm valid JSON from Metric list
+            guard let jsonEncodedMetricData = try? JSONEncoder().encode(currentMetrics) else {
+                throw MetricsError.jsonEncodingFailed // TODO: Consequencs of this failing?
+            }
+            metricData = jsonEncodedMetricData
             currentMetrics.removeAll()
         }
         
         // Pass dictionary to data object and set it as request body
         request.httpBody = metricData
         
-        // Prints out metrics types being sent in this push
+        // Prints out metrics types being sent in this push, ends if list empty
         let outMetricList = backupUrl != nil ? TempoDataBackup.fileMetric[backupUrl!]: metricListCopy
-        if(outMetricList == nil || outMetricList!.count <= 0)  {
+        guard let unwrappedMetricList = outMetricList, !unwrappedMetricList.isEmpty else {
             TempoUtils.Say(msg: "📊 Metrics (0 - nothing sent)")
-            return
+            throw MetricsError.emptyMetrics
         }
         
         // For printout only (Metric type list)
@@ -60,53 +72,81 @@ public class Metrics {
         TempoUtils.Say(msg: "📊 \(metricOutput)")
         
         // For printout only (Metrics JSON payload)
-        var jsonString = String(data: metricData ?? Data(), encoding: .utf8)!
-        jsonString = formatMetricsOutput(jsonString: jsonString)
-        TempoUtils.Say(msg: "📊 Payload: " + jsonString)
+        guard let jsonString = String(data: metricData ?? Data(), encoding: .utf8) else {
+            throw MetricsError.missingJsonString // TODO: Do I really want to throw here..?
+        }
         
-        // HTTP Headers
-        request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_CONTENT_TYPE)
-        request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_ACCEPT)
-        request.addValue(String(Int(Date().timeIntervalSince1970)), forHTTPHeaderField: Constants.Web.HEADER_METRIC_TIME)
-        
-        // Create dataTask using the session object to send data to the server
-        let task = session.dataTask(with: request, completionHandler: { data, response, error in
-            guard error == nil else {
-                if(backupUrl == nil) {
-                    TempoUtils.Warn(msg: "Data did not send, creating backup")
-                    TempoDataBackup.storeData(metricsArray: metricListCopy)
-                }
-                else{
-                    TempoUtils.Warn(msg:"Data did not send, keeping backup: \(backupUrl!)")
-                }
-                return
-            }
+        // On JSON metrics validation, create metrics POST request
+        do {
+            let formattedOutput = try formatMetricsOutput(jsonString: jsonString)
+            TempoUtils.Say(msg: "📊 Payload: " + formattedOutput)
             
-            // If metrics were back-ups - and were successfully resent - delete the file from device storage before sending again in case rules have changed
-            if(backupUrl != nil)
-            {
-                TempoUtils.Say(msg: "Removing backup: \(backupUrl!) (x\(TempoDataBackup.fileMetric[backupUrl!]!.count))")
+            // HTTP Headers
+            // Super-pedantic header validation
+            request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_CONTENT_TYPE)
+            request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_ACCEPT)
+            let metricTimeValue = String(Int(Date().timeIntervalSince1970))
+            // Confirm valid date/time first
+            guard !metricTimeValue.isEmpty else { throw MetricsError.invalidHeaderValue }
+            request.addValue(metricTimeValue, forHTTPHeaderField: Constants.Web.HEADER_METRIC_TIME)
+            
+            // Create dataTask using the session object to send data to the server
+            let task = session.dataTask(with: request, completionHandler: { data, response, error in
+                guard error == nil else {
+                    if(backupUrl == nil) {
+                        TempoUtils.Warn(msg: "Data did not send, creating backup")
+                        do {
+                            try TempoDataBackup.storeData(metricsArray: metricListCopy)
+                        } catch {
+                            TempoUtils.Warn(msg:"Error while backing up data: \(error)")
+                            return
+                        }
+                    }
+                    else{
+                        TempoUtils.Warn(msg:"Data did not send, keeping backup: \(backupUrl!)")
+                    }
+                    return
+                }
                 
-                // Remove metricList from device storage
-                TempoDataBackup.removeSpecificMetricList(backupUrl: backupUrl!)
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                switch(httpResponse.statusCode)
+                // If metrics were back-ups - and were successfully resent - delete the file from device storage before sending again in case rules have changed
+                if(backupUrl != nil)
                 {
-                case 200:
-                    TempoUtils.Say(msg: "📊 Sent metrics - safe pass: \(httpResponse.statusCode)")
-                case 400, 422, 500:
-                    TempoUtils.Say(msg: "📊 Passed/Bad metrics - do not backup: \(httpResponse.statusCode)")
-                    break
-                default:
-                    TempoUtils.Say(msg: "📊 Non-Tempo related error - backup: \(httpResponse.statusCode)")
-                    TempoDataBackup.storeData(metricsArray: metricListCopy)
+                    TempoUtils.Say(msg: "Removing backup: \(backupUrl!) (x\(TempoDataBackup.fileMetric[backupUrl!]!.count))")
+                    
+                    // Remove metricList from device storage
+                    do {
+                        try TempoDataBackup.removeSpecificMetricList(backupUrl: backupUrl!)
+                    } catch {
+                        TempoUtils.Warn(msg: "Error removing file: \(error)")
+                    }
                 }
-            }
-        })
-        
-        task.resume()
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    switch(httpResponse.statusCode)
+                    {
+                    case 200:
+                        TempoUtils.Say(msg: "📊 Sent metrics - safe pass: \(httpResponse.statusCode)")
+                    case 400, 422, 500:
+                        TempoUtils.Say(msg: "📊 Passed/Bad metrics - do not backup: \(httpResponse.statusCode)")
+                        break
+                    default:
+                        TempoUtils.Say(msg: "📊 Non-Tempo related error - backup: \(httpResponse.statusCode)")
+                        do {
+                            try TempoDataBackup.storeData(metricsArray: metricListCopy)
+                        } catch {
+                            TempoUtils.Warn(msg:"Error while backing up data: \(error)")
+                            return
+                        }
+                    }
+                }
+            })
+            
+            task.resume()
+        } catch MetricsError.missingJsonString {
+            TempoUtils.Warn(msg: "Error: Missing JSON string")
+        } catch {
+            TempoUtils.Warn(msg: "An unknown error occurred: \(error)")
+        }
     }
 }
 

@@ -15,7 +15,7 @@ import CoreLocation
 let prodKey = "1ade2c39d"
 let devKey = "1a470a75d"
 
-let kAPPKEY = Constants.isProd ? prodKey : devKey
+let kAPPKEY = Constants.environment == Constants.Environment.DEV ? devKey: prodKey 
 
 class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlayRewardedVideoManualDelegate, ISInitializationDelegate, ISImpressionDataDelegate {
     

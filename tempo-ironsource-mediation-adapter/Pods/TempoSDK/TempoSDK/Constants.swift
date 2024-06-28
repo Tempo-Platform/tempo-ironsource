@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.6.0"
+    public static let SDK_VERSIONS = "1.6.2-rc.0"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -30,9 +30,15 @@ public struct Constants {
         static let METRICS_URL_PROD = "https://metric-api.tempoplatform.com/metrics" // PROD
         static let ADS_API_URL_PROD = "https://ads-api.tempoplatform.com/ad" // PROD
         static let ADS_DOM_URL_PROD = "https://ads.tempoplatform.com" // PROD
+        
+        static let METRICS_URL_STG = "https://metric-api.stg.tempoplatform.com/metrics" // STG
+        static let ADS_API_URL_STG = "https://ads-api.stg.tempoplatform.com/ad" // STG
+        static let ADS_DOM_URL_STG = "https://staging--tempo-html-ads.netlify.app" // STG
+        
         static let METRICS_URL_DEV = "https://metric-api.dev.tempoplatform.com/metrics" // DEV
         static let ADS_API_URL_DEV = "https://ads-api.dev.tempoplatform.com/ad" // DEV
         static let ADS_DOM_URL_DEV = "https://development--tempo-html-ads.netlify.app" // DEV
+        
         static let ADS_DOM_PREFIX_URL_PREVIEW = "https://deploy-preview-" // DEPLOY PREVIEW
         static let ADS_DOM_APPENDIX_URL_PREVIEW = "--tempo-html-ads.netlify.app/" // DEPLOY PREVIEW
         static let URL_INT = "interstitial"
@@ -85,8 +91,17 @@ public struct Constants {
         case PRECISE
     }
     
-    // Testable variables
-    public static var isProd = true
-    public static var isTesting = false
+    public enum Environment: String {
+        case DEV
+        case STG
+        case PRD
+        
+        // Swift does not assign index valus to enum, so we make an indexable array
+        public static let allValues = [DEV, STG, PRD]
+    }
+    
+    // Test tool variables
+    public static var environment: Environment = Environment.DEV
+    public static var isVerboseDebugging = true
     
 }

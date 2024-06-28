@@ -19,10 +19,17 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         
         // Update locData with backup if nil
         if(TempoProfile.locData == nil) {
-            TempoProfile.locData = TempoDataBackup.getMostRecentLocationData()
+            do{
+                TempoProfile.locData = try TempoDataBackup.getMostRecentLocationData()
+            } catch {
+                TempoUtils.Warn(msg: "Error while attempting to fetch cached location data during init")
+                TempoProfile.locData = LocationData()
+            }
         } else {
             TempoUtils.Say(msg: "🌏 LocData is null, no backup needed")
         }
+
+        // Update location state
         TempoProfile.updateLocState(newState: TempoProfile.locationState ?? LocationState.UNCHECKED)
         
         // Assign manager delegate
@@ -37,6 +44,7 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         }
     }
     
+    /// Makes a location request, updates locationState to CHECKING
     private func requestLocationWithChecks() {
         if(TempoProfile.locationState != .CHECKING) {
             TempoProfile.updateLocState(newState: .CHECKING)
@@ -53,65 +61,70 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         // CLLocationManager.authorizationStatus can cause UI unresponsiveness if invoked on the main thread.
         DispatchQueue.global().async {
             
-            // Make sure location servics are available
-            if CLLocationManager.locationServicesEnabled() {
-                
-                // get authorisation status
-                let authStatus = self.getLocAuthStatus()
-                
-                switch (authStatus) {
-                case .authorizedAlways, .authorizedWhenInUse: // TODO: auth always might not work
-                    let addendum = completion == nil ? "No completion task given" : ""
-                    TempoUtils.Say(msg: "✅ Access - always or authorizedWhenInUse [UPDATE] \(addendum)")
-                    if #available(iOS 14.0, *) {
-                        // iOS 14 intro precise/general options
-                        if self.locManager.accuracyAuthorization == .reducedAccuracy {
-                            // Update LocationData singleton as GENERAL
-                            self.updateLocConsentValues(consentType: Constants.LocationConsent.GENERAL)
-                            completion?()
-                            return
-                        } else {
-                            // Update LocationData singleton as PRECISE
-                            self.updateLocConsentValues(consentType: Constants.LocationConsent.PRECISE)
-                            completion?()
-                            return
-                        }
-                    } else {
-                        // Update LocationData singleton as PRECISE (pre-iOS 14 considered precise)
-                        self.updateLocConsentValues(consentType: Constants.LocationConsent.PRECISE)
-                        completion?()
-                        return
-                    }
-                case .restricted, .denied:
-                    TempoUtils.Warn(msg: "⛔️ No access - restricted or denied [UPDATE]")
-                    // Need to update latest valid consent as confirmed NONE
-                    TempoProfile.locData = self.adView.getClonedAndCleanedLocation()
+            // Make sure location services are available
+            guard CLLocationManager.locationServicesEnabled() else {
+                DispatchQueue.main.async {
+                    TempoUtils.Warn(msg: "⛔️ Location services not enabled [UPDATE]")
                     TempoProfile.updateLocState(newState: LocationState.UNAVAILABLE)
                     self.updateLocConsentValues(consentType: Constants.LocationConsent.NONE)
-                    self.saveLatestValidLocData()
                     completion?()
-                    return
-                case .notDetermined:
-                    TempoUtils.Warn(msg: "⛔️ No access - notDetermined [UPDATE]")
-                    // Need to update latest valid consent as confirmed NONE
-                    TempoProfile.locData = self.adView.getClonedAndCleanedLocation()
-                    TempoProfile.updateLocState(newState: LocationState.UNAVAILABLE)
-                    self.updateLocConsentValues(consentType: Constants.LocationConsent.NONE)
-                    self.saveLatestValidLocData()
-                    completion?()
-                    return
-                @unknown default:
-                    TempoUtils.Warn(msg: "⛔️ Unknown authorization status [UPDATE]")
                 }
-            } else {
-                TempoUtils.Warn(msg: "⛔️ Location services not enabled [UPDATE]")
+                return
             }
             
-            TempoProfile.updateLocState(newState: LocationState.UNAVAILABLE)
-            self.updateLocConsentValues(consentType: Constants.LocationConsent.NONE)
-            completion?()
+            // Get authorization status
+            let authStatus = self.getLocAuthStatus()
             
+            switch authStatus {
+            case .authorizedAlways, .authorizedWhenInUse:
+                DispatchQueue.main.async {
+                    TempoUtils.Say(msg: "✅ Access - always or authorizedWhenInUse [UPDATE]")
+                    if #available(iOS 14.0, *) {
+                        // iOS 14 introduced precise/general options
+                        if self.locManager.accuracyAuthorization == .reducedAccuracy {
+                            self.handleAuthorizedLocAccess(.GENERAL, completion: completion)
+                        } else {
+                            self.handleAuthorizedLocAccess(.PRECISE, completion: completion)
+                        }
+                    } else {
+                        // Pre-iOS 14: always treat as precise
+                        self.handleAuthorizedLocAccess(.PRECISE, completion: completion)
+                    }
+                }
+            case .restricted, .denied, .notDetermined:
+                DispatchQueue.main.async {
+                    switch authStatus {
+                    case .restricted, .denied:
+                        TempoUtils.Warn(msg: "⛔️ No access - restricted or denied [UPDATE]")
+                    case .notDetermined:
+                        TempoUtils.Warn(msg: "⛔️ No access - notDetermined [UPDATE]")
+                    default:
+                        break
+                    }
+                    self.handleNoAccessUpdate(completion: completion)
+                }
+            @unknown default:
+                DispatchQueue.main.async {
+                    TempoUtils.Warn(msg: "⛔️ Unknown authorization status [UPDATE]")
+                }
+            }
         }
+    }
+    
+    /// Behaviour when location access returns as authorizedAlways/authorizedWhenInUse
+    private func handleAuthorizedLocAccess(_ consentType: Constants.LocationConsent, completion: (() -> Void)?) {
+        TempoUtils.Say(msg: "Updating LocationData consent as \(consentType.rawValue)")
+        self.updateLocConsentValues(consentType: consentType)
+        completion?()
+    }
+    
+    /// Behaviour when location access returned is NOT authorizedAlways/authorizedWhenInUse
+    private func handleNoAccessUpdate(completion: (() -> Void)?) {
+        TempoProfile.locData = self.adView.getClonedAndCleanedLocation()
+        TempoProfile.updateLocState(newState: LocationState.UNAVAILABLE)
+        self.updateLocConsentValues(consentType: Constants.LocationConsent.NONE)
+        self.saveLatestValidLocData()
+        completion?()
     }
     
     // Updates consent value to both the static object and the adView instance string reference
@@ -125,12 +138,14 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
     /// Get CLAuthorizationStatus location consent value
     private func getLocAuthStatus() -> CLAuthorizationStatus {
         var locationAuthorizationStatus : CLAuthorizationStatus
+        
         if #available(iOS 14.0, *) {
             locationAuthorizationStatus =  locManager.authorizationStatus
         } else {
             // Fallback for earlier versions
             locationAuthorizationStatus = CLLocationManager.authorizationStatus()
         }
+        
         return locationAuthorizationStatus
     }
     
@@ -177,14 +192,13 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         if(TempoProfile.outputtingLocationInfo) {
             TempoUtils.Say(msg: "🗣️ Updated location state to: \(newState.rawValue)")
         }
-        
     }
     
     /* ---------- Location Manager Callback ---------- */
     /// Location Manager callback: didChangeAuthorization
     public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
         var updating = "NOT UPDATING"
+        
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             if(TempoProfile.locationState != .CHECKING) {
                 updating = "UPDATING"
@@ -206,91 +220,66 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
     
     /// Location Manager callback: didUpdateLocations
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        var errorMsg: String?
-        //TempoUtils.Say(msg: "☎️ didUpdateLocations: \(locations.count)")
-        
-        // Last location is most recent (i.e. most accurate)
-        if let location = locations.last {
-            
-            // Reverse geocoding to get the location properties
-            let geocoder = CLGeocoder()
-            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            
-                if let error = error {
-                    errorMsg = "Reverse geocoding failed with error: \(error.localizedDescription) | Values remain unchanged"
-                    TempoProfile.updateLocState(newState: LocationState.FAILED)
-                    self.adView.pushHeldMetricsWithUpdatedLocationData()
-                }
-                else {
-                    if let placemark = placemarks?.first {
-                        
-                        TempoProfile.locData?.state = self.getLocationPropertyValue(labelName: "State", property: placemark.administrativeArea)
-                        TempoProfile.locData?.postcode = self.getLocationPropertyValue(labelName: "Postcode", property: placemark.postalCode)
-                        TempoProfile.locData?.postal_code = self.getLocationPropertyValue(labelName: "Postal Code", property: placemark.postalCode)
-                        TempoProfile.locData?.country_code = self.getLocationPropertyValue(labelName: "Country Code", property: placemark.isoCountryCode)
-                        TempoProfile.locData?.admin_area = self.getLocationPropertyValue(labelName: "Admin Area", property: placemark.administrativeArea)
-                        TempoProfile.locData?.sub_admin_area = self.getLocationPropertyValue(labelName: "Sub Admin Area", property: placemark.subAdministrativeArea)
-                        TempoProfile.locData?.locality = self.getLocationPropertyValue(labelName: "Locality", property: placemark.locality)
-                        TempoProfile.locData?.sub_locality = self.getLocationPropertyValue(labelName: "Sub Locality", property: placemark.subLocality)
-                        
-                        let testingOutput = false
-                        if(testingOutput) {
-//                        print("🌐 => \(location.coordinate.latitude)/\(location.coordinate.longitude)" )
-//                        self.getLocationPropertyValue(labelName: "name", property: placemark.name) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "thoroughfare", property: placemark.thoroughfare) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "subThoroughfare", property: placemark.subThoroughfare) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "locality", property: placemark.locality) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "subLocality", property: placemark.subLocality) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "administrativeArea", property: placemark.administrativeArea) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "subAdministrativeArea", property: placemark.subAdministrativeArea) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "postalCode", property: placemark.postalCode) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "isoCountryCode", property: placemark.isoCountryCode) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "country", property: placemark.country) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "inlandWater", property: placemark.inlandWater) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "ocean", property: placemark.ocean) ?? "n/a"
-//                        self.getLocationPropertyValue(labelName: "areasOfInterest", property: placemark.areasOfInterest) ?? []
-                        }
-                        
-                        // Update current sessions top-level country code paramter is there is a value
-                        if let cc = TempoProfile.locData?.country_code, !cc.isEmpty {
-                            self.adView.countryCode = cc
-                        }
-                        
-                        TempoUtils.Say(msg: "☎️ didUpdateLocations: [admin=\(TempoProfile.locData?.admin_area ?? "nil") | locality=\(TempoProfile.locData?.locality ?? "nil")] | Values have been updated")
-                        
-                        // Save data instance as most recently validated data
-                        self.saveLatestValidLocData()
-                        
-                        TempoProfile.updateLocState(newState: LocationState.CHECKED)
-                        self.adView.pushHeldMetricsWithUpdatedLocationData()
-                        return
-                    }
-                }
-                
-                TempoUtils.Warn(msg: "☎️ didUpdateLocations: [errorMsg: \(errorMsg ?? "UNKNOWN")]] | Values remain unchanged have been updated")
-                
-            }
-        } else {
-            TempoUtils.Warn(msg: "☎️ didUpdateLocations: [errorMsg: \(errorMsg ?? "UNKNOWN")]] | Values remain unchanged have been updated")
+        guard let location = locations.last else {
+            TempoUtils.Warn(msg: "☎️ didUpdateLocations: No valid locations found")
             TempoProfile.updateLocState(newState: LocationState.FAILED)
-            self.adView.pushHeldMetricsWithUpdatedLocationData()
+            adView.pushHeldMetricsWithUpdatedLocationData()
             return
+        }
+        
+        // Reverse geocoding to get the location properties
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            if let error = error {
+                TempoUtils.Warn(msg: "Reverse geocoding failed with error: \(error.localizedDescription) | Values remain unchanged")
+                TempoProfile.updateLocState(newState: LocationState.FAILED)
+                self.adView.pushHeldMetricsWithUpdatedLocationData()
+            } else if let placemark = placemarks?.first {
+                TempoProfile.locData?.state = self.getLocationPropertyValue(labelName: "State", property: placemark.administrativeArea)
+                TempoProfile.locData?.postcode = self.getLocationPropertyValue(labelName: "Postcode", property: placemark.postalCode)
+                TempoProfile.locData?.postal_code = self.getLocationPropertyValue(labelName: "Postal Code", property: placemark.postalCode)
+                TempoProfile.locData?.country_code = self.getLocationPropertyValue(labelName: "Country Code", property: placemark.isoCountryCode)
+                TempoProfile.locData?.admin_area = self.getLocationPropertyValue(labelName: "Admin Area", property: placemark.administrativeArea)
+                TempoProfile.locData?.sub_admin_area = self.getLocationPropertyValue(labelName: "Sub Admin Area", property: placemark.subAdministrativeArea)
+                TempoProfile.locData?.locality = self.getLocationPropertyValue(labelName: "Locality", property: placemark.locality)
+                TempoProfile.locData?.sub_locality = self.getLocationPropertyValue(labelName: "Sub Locality", property: placemark.subLocality)
+                
+                // Update current session's top-level country code parameter if there is a value
+                if let countryCode = TempoProfile.locData?.country_code, !countryCode.isEmpty {
+                    self.adView.countryCode = countryCode
+                }
+                
+                TempoUtils.Say(msg: "☎️ didUpdateLocations: [admin=\(TempoProfile.locData?.admin_area ?? "nil") | locality=\(TempoProfile.locData?.locality ?? "nil")] | Values have been updated")
+                
+                // Save data instance as the most recently validated data
+                self.saveLatestValidLocData()
+                
+                TempoProfile.updateLocState(newState: LocationState.CHECKED)
+                self.adView.pushHeldMetricsWithUpdatedLocationData()
+            } else {
+                TempoUtils.Warn(msg: "No placemarks found")
+                TempoProfile.updateLocState(newState: LocationState.FAILED)
+                self.adView.pushHeldMetricsWithUpdatedLocationData()
+            }
         }
     }
     
-    
+    // Save the instance to UserDefaults
     private func saveLatestValidLocData() {
         
-        // Save the instance to UserDefaults
         let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(TempoProfile.locData) {
+        do {
+            // Encode locData to JSON
+            let encoded = try encoder.encode(TempoProfile.locData)
+            
+            // Save encoded data to UserDefaults
             let defaults = UserDefaults.standard
             defaults.set(encoded, forKey: Constants.Backup.LOC_BACKUP_REF)
+            
             TempoUtils.Say(msg: "Backup location data saved")
-        }
-        else {
-            TempoUtils.Warn(msg: "Backup location data saved")
+        } catch {
+            // Handle encoding errors
+            TempoUtils.Warn(msg: "Failed to encode and save location data: \(error.localizedDescription)")
         }
     }
     
@@ -303,18 +292,18 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         if let clErr = error as? CLError {
             switch clErr.code {
             case .locationUnknown, .denied, .network:
-                print("Location request failed with error: \(clErr.localizedDescription)")
+                TempoUtils.Warn(msg: "Location request failed with error: \(clErr.localizedDescription)")
             case .headingFailure:
-                print("Heading request failed with error: \(clErr.localizedDescription)")
+                TempoUtils.Warn(msg: "Heading request failed with error: \(clErr.localizedDescription)")
             case .rangingUnavailable, .rangingFailure:
-                print("Ranging request failed with error: \(clErr.localizedDescription)")
+                TempoUtils.Warn(msg: "Ranging request failed with error: \(clErr.localizedDescription)")
             case .regionMonitoringDenied, .regionMonitoringFailure, .regionMonitoringSetupDelayed, .regionMonitoringResponseDelayed:
-                print("Region monitoring request failed with error: \(clErr.localizedDescription)")
+                TempoUtils.Warn(msg: "Region monitoring request failed with error: \(clErr.localizedDescription)")
             default:
-                print("Unknown location manager error: \(clErr.localizedDescription)")
+                TempoUtils.Warn(msg: "Unknown location manager error: \(clErr.localizedDescription)")
             }
         } else {
-            print("Unknown error occurred while handling location manager error: \(error.localizedDescription)")
+            TempoUtils.Warn(msg: "Unknown error occurred while handling location manager error: \(error.localizedDescription)")
         }
         
         // Need to start pushing these for this round
