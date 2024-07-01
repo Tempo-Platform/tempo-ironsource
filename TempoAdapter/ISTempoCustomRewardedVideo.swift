@@ -12,42 +12,54 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     
     /// Callback from ironSource API when IronSource.loadRewardedAds() called
     public override func loadAd(with adData: ISAdData, delegate: ISRewardedVideoAdDelegate) {
-        TempoUtils.Say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
-        
+
         // Implement callback delegate
         self.delegate = delegate
         
-        // Get AppID/CPMFloor from Ad Data
-        let appId = ISTempoUtils.getAppId(adData: adData)
-        let cpmFloor = ISTempoUtils.getCpmFloor(adData: adData)
-        var cpmFloorFloat: Float = 0
-        if let floatValue = Float(cpmFloor) {
-            print("The CPM is a valid Double: \(floatValue)")
-            cpmFloorFloat = floatValue
-        } else {
-            print("The CPM is not a valid Double")
-        }
-
-        // Create ad instance and load new ad
-        DispatchQueue.main.async {
+        do {
+            // Confirm valid App ID
+            let appId = try ISTempoUtils.getAppId(adData: adData)
+            TempoUtils.Say(msg: "\(try ISTempoUtils.adUnitDataStringer(adData: adData))");
             
-            if self.rewarded == nil {
-                self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
-                
-                if self.rewarded == nil {
-                    self.onTempoAdFetchFailed(isInterstitial: false, reason: "Ad controller is null")
-                    return
-                }
+            // Check for valid CPM Floor
+            let cpmFloor = ISTempoUtils.getCpmFloor(adData: adData)
+            let cpmFloorFloat: Float = Float(cpmFloor) ?? 0.0
+            if cpmFloorFloat != 0.0 {
+                TempoUtils.Say(msg: "The CPM is a valid Float: \(cpmFloorFloat)")
+            } else {
+                TempoUtils.Warn(msg: "The CPM is not a valid Float or is zero")
             }
             
-            // Load ad, provided the ad controller is not null
-            self.rewarded?.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+            // Create ad instance and load new ad
+            DispatchQueue.main.async {
+                
+                if self.rewarded == nil {
+                    self.rewarded = TempoAdController(tempoAdListener: self, appId: appId)
+                    
+                    // Abort if nil
+                    guard self.rewarded != nil else {
+                        self.onTempoAdFetchFailed(isInterstitial: false, reason: "Ad controller is null")
+                        return
+                    }
+                }
+                
+                // Load ad, provided the ad controller is not null
+                self.rewarded?.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
+            }
+        } catch {
+            TempoUtils.Warn(msg: "Invalid ad data: unable to get App ID")
+            self.onTempoAdFetchFailed(isInterstitial: false, reason: "Invalid ad data")
         }
     }
     
     /// Callback from ironSource API which checks the availbility as determined by the 'isAdReady' property
     public override func isAdAvailable(with adData: ISAdData) -> Bool {
-        TempoUtils.Say(msg: "[\(isAdReady ? "Ad Ready": "Ad NOT Ready"), \(ISTempoUtils.adUnitDataStringer(adData: adData))]");
+        do {
+            TempoUtils.Say(msg: "[\(isAdReady ? "Ad Ready": "Ad NOT Ready"), \(try ISTempoUtils.adUnitDataStringer(adData: adData))]");
+        } catch {
+            TempoUtils.Warn(msg: "Error checking ad availability - invalid ad details, cannot continue")
+            isAdReady = false
+        }
         return isAdReady
     }
     
@@ -59,12 +71,13 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
         self.delegate = delegate
                 
         // Nil error handling
-        if (!isAdReady) {
-           delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad is not ready to show for the current instanceData")
-           return
-        } else if (self.rewarded == nil) {
-            onTempoAdShowFailed(isInterstitial: false, reason: "Ad controller is null")
-            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "ad controller has not be created yet. Cannot display ad")
+        guard isAdReady else {
+            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "Ad is not ready to show for the current instance data")
+            return
+        }
+        
+        guard let interstitial = self.rewarded else {
+            delegate.adDidFailToShowWithErrorCode(ISAdapterErrors.internal.rawValue, errorMessage: "Ad controller has not been created yet. Cannot display ad")
             return
         }
         

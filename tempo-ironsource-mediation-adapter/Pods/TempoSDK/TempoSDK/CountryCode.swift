@@ -10,22 +10,41 @@ public class CountryCode {
     /// Test  blueprint/ouput for any future requests
     public static func printOtherDetails() {
         
-        let currencyCode = currentLocale.currencyCode
-        let regionLocale = currentLocale.identifier
-        let countryCode: String?
+        // Confirm currency code has value
+        guard let currencyCode = currentLocale.currencyCode else {
+            TempoUtils.Warn(msg: "currentLocale.currencyCode is nil")
+            return
+            //throw CountryCodeError.missingCurrencyCode
+        }
         
+        // Confirm regionalLocale has value
+        let regionLocale = currentLocale.identifier
+        guard !regionLocale.isEmpty else {
+            TempoUtils.Warn(msg: "currentLocale.identifier is empty")
+            //throw CountryCodeError.missingRegionLocale
+            return
+        }
+        
+        // Confirm country code has value
+        let countryCode: String?
         if #available(iOS 16, *) {
             countryCode = currentLocale.language.region?.identifier
         } else {
             countryCode = currentLocale.regionCode
         }
-        print("🌏 Location details:\n - Currency Code: \(currencyCode!)\n - Region Locale: \(regionLocale)\n - Country Code: \(countryCode ?? "NIL")")
+        guard let unwrappedCountryCode = countryCode else {
+            TempoUtils.Warn(msg: "region/country code could not be defined")
+            //throw CountryCodeError.missingCountryCode
+            return
+        }
+        
+        // Upon successful retrieval of basic locale data
+        TempoUtils.Say(msg: "🌏 Location details:\n\t- currencyCode: \(currencyCode)\n\t- regionLocale: \(regionLocale)\n\t- countryCode: \(unwrappedCountryCode)")
     }
     
     /// Returns the ISO/countryCode as per the user's device region settings ISO 3166-1 (alpha-2)
-    public static func getIsoCountryCode2Digit() -> String?
+    public static func getIsoCountryCode2Digit() throws -> String!
     {
-        //printOtherDetails()
         var countryCode: String?
         
         // currentLocale.regionCode deprecated in iOS 16
@@ -35,24 +54,31 @@ public class CountryCode {
             countryCode = currentLocale.regionCode
         }
         
-        return countryCode;
+        // Confirm ISO 2-digit country code has value
+        guard let unwrappedCountryCode = countryCode else {
+            TempoUtils.Warn(msg: "Error: Could not get country code from device")
+            throw CountryCodeError.missingCountryCode
+        }
+        
+        // Output details
+        //printOtherDetails()
+        
+        return unwrappedCountryCode;
     }
     
     /// Returns the ISO/countryCode as per the user's device region settings ISO 3166-1 (alpha-3)
-    public static func getIsoCountryCode3Digit() -> String
+    public static func getIsoCountryCode3Digit() throws -> String!
     {
-        let currencyCode = currentLocale.currencyCode
-        if(currencyCode == nil || currencyCode == "") {
-            print("3 digit country code not recognised, return \(unknown)")
-            return unknown // Technically, Locale.current.currencyCode defaults to "XXX" so this should never happen
+        guard let currencyCode = currentLocale.currencyCode, !currencyCode.isEmpty else {
+            TempoUtils.Warn(msg: "3 digit country code not recognized, return \(unknown)")
+            throw CountryCodeError.missingCurrencyCode
         }
-        else {
-            print("3 digit country recognised, return \(currencyCode!)")
-            return currencyCode!
-        }
+        
+        TempoUtils.Say(msg: "3 digit country code recognized, return \(currencyCode)")
+        return currencyCode
     }
     
-    // Dictionary of 3 -> 2 digit ISO-1366-1 counrty codes
+    /// Dictionary of 3 -> 2 digit ISO-1366-1 counrty codes
     // Source: https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
     static let iso1366Dict: [String: String] = [
         "ABW": "AW",

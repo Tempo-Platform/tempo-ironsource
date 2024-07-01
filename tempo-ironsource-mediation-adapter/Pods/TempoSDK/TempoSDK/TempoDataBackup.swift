@@ -11,76 +11,91 @@ public class TempoDataBackup
     static var fileMetric: [URL: [Metric]] = [:]
     
     /// Public funciton to start retrieval of backup data
-    public static func initCheck() {
-        //clearAllData()
-        buildMetricArrays()
+    public static func initCheck() throws {
+        try buildMetricArrays()
     }
     
     /// Adds Metric JSON array as data file to device's backup folder
-    internal static func storeData(metricsArray: [Metric]?) {
+    internal static func storeData(metricsArray: [Metric]?) throws {
         
-        if(backupsAtMax)
-        {
+        // Full capacity - end job
+        guard !backupsAtMax else {
             TempoUtils.Warn(msg: "❌ Cannot add anymore backups. At full capacity!")
-        }
-        else {
-            if(metricsArray != nil)
-            {
-                // Declare file subdirectory to fetch data
-                let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
-                do {
-                    try FileManager.default.createDirectory(at: jsonDirectory, withIntermediateDirectories: true, attributes: nil)
-                } catch {
-                    TempoUtils.Shout(msg: "Error creating document directory: \(error.localizedDescription)")
-                    return
-                }
-                
-                let encoder = JSONEncoder()
-                do {
-                    // Encode metric array to JSON data object
-                    let jsonData = try encoder.encode(metricsArray)
-                    
-                    // Create unique name using datetime
-                    var filename = String(Int(Date().timeIntervalSince1970 * 1000))
-                    filename = filename.replacingOccurrences(of: ".", with: "_") +  Constants.Backup.METRIC_BACKUP_APPEND
-                    
-                    // Create file URL to device storage
-                    let fileURL = jsonDirectory.appendingPathComponent(filename)
-                    
-                    // Add metric arrays to device file storage
-                    try jsonData.write(to: fileURL)
-                    
-                    // Output array details durign debugging
-                    let fileSize = try FileManager.default.attributesOfItem(atPath: fileURL.path)[.size] as? NSNumber
-                    var nameList = "Saved files: \(filename) (\(fileSize?.intValue ?? 0 ) bytes)"
-                    for metric in metricsArray! {
-                        nameList += "\n - \(metric.metric_type ?? "[type_undefined]")"
-                    }
-                    TempoUtils.Say(msg: "📂 \(nameList)")
-                    
-                }
-                catch{
-                    TempoUtils.Shout(msg: "Error either creating or saving JSON: \(error.localizedDescription)")
-                    return
-                }
-            }
-        }
-        
-    }
-
-    /// Checks device's folder allocated to metrics data and builds an array of metric arrays from it
-    static func buildMetricArrays() {
-        
-        // Declare file subdirectory to store data
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
-        
-        guard let contents = try? FileManager.default.contentsOfDirectory(at: jsonDirectory, includingPropertiesForKeys: nil) else {
             return
         }
         
-        if(contents.count == 0) {
+        // If metrics array is nil, no action needed
+        guard let metricsArray = metricsArray else {
+            return
+        }
+        
+        // Declare file subdirectory to fetch data
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
+        do {
+            try FileManager.default.createDirectory(at: jsonDirectory, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            TempoUtils.Shout(msg: "Error creating document directory: \(error.localizedDescription)")
+            throw StoreDataError.directoryCreationFailed
+        }
+        
+        do {
+            // Encode metric array to JSON data object
+            let jsonData = try JSONEncoder().encode(metricsArray)
+            
+            // Create unique name using datetime
+            var filename = String(Int(Date().timeIntervalSince1970 * 1000))
+            filename = filename.replacingOccurrences(of: ".", with: "_") +  Constants.Backup.METRIC_BACKUP_APPEND
+            
+            // Create file URL to device storage
+            let fileURL = jsonDirectory.appendingPathComponent(filename)
+            
+            // Add metric arrays to device file storage
+            do {
+                try jsonData.write(to: fileURL)
+            } catch {
+                TempoUtils.Shout(msg: "Error saving JSON data to file: \(error.localizedDescription)")
+                throw StoreDataError.fileWriteFailed
+            }
+            
+            // Output array details durign debugging
+            if let fileSize = try FileManager.default.attributesOfItem(atPath: fileURL.path)[.size] as? NSNumber {
+                var nameList = "Saved files: \(filename) (\(fileSize.intValue) bytes)"
+                for metric in metricsArray {
+                    nameList += "\n - \(metric.metric_type ?? "[type_undefined]")"
+                }
+                TempoUtils.Say(msg: "📂 \(nameList)")
+            } else {
+                TempoUtils.Shout(msg: "Error fetching file attributes after saving")
+                throw StoreDataError.attributesFetchFailed
+            }
+        } catch {
+            TempoUtils.Shout(msg: "Error saving JSON data to file: \(error.localizedDescription)")
+            throw StoreDataError.jsonDataEncodingFailed
+        }
+    }
+
+    /// Checks device's folder allocated to metrics data and builds an array of metric arrays from it
+    static func buildMetricArrays() throws {
+        
+        // Declare file subdirectory to store data, escape if failed validation
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            TempoUtils.Shout(msg: "Directory targeted for backups is invalid")
+            throw MetricsError.invalidDirectory
+        }
+        let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
+        
+        // Get contents of directory,, escape if failed validation
+        let contents: [URL]
+        do {
+            contents = try FileManager.default.contentsOfDirectory(at: jsonDirectory, includingPropertiesForKeys: nil)
+        } catch {
+            TempoUtils.Shout(msg: "Contents of directory failed: \(error.localizedDescription)")
+            throw MetricsError.contentsOfDirectoryFailed(error)
+        }
+        
+        // If no backups, ignore and leave
+        if(contents.isEmpty) {
             TempoUtils.Say(msg: "✅ No Backups! [\(contents.count)]")
             return
         }
@@ -96,79 +111,103 @@ public class TempoDataBackup
         
         // Loop through backend metrics and add to static dictionary
         for fileURL in contents {
+            // Check is backup has passed expiry date
+            var filepathString: String
+            if #available(iOS 16.0, *) {
+                filepathString = fileURL.path()
+            } else {
+                filepathString = fileURL.path
+            }
+            
             do {
-                // Check is backup has passed expiry date
-                var filepathString: String
-                if #available(iOS 16.0, *) {
-                    filepathString = fileURL.path()
-                } else {
-                    filepathString = fileURL.path
-                }
-                
-                do{
-                    let fileAttributes = try FileManager.default.attributesOfItem(atPath: filepathString)
-                    if let creationDate = fileAttributes[.creationDate] as? Date {
-                        let currentDate = Date()
-                        let calendar = Calendar.current
-                        let daysOld = calendar.dateComponents([.day], from: creationDate, to: currentDate).day ?? 0
-                        
-                        if daysOld >= Constants.Backup.EXPIRY_DAYS {
-                            removeSpecificMetricList(backupUrl: fileURL)
-                            TempoUtils.Warn(msg: "File is older than \(Constants.Backup.EXPIRY_DAYS) days")
-                            continue
-                        }
-                    }
+                let fileAttributes = try FileManager.default.attributesOfItem(atPath: filepathString)
+                if let creationDate = fileAttributes[.creationDate] as? Date {
+                    let currentDate = Date()
+                    let calendar = Calendar.current
+                    let daysOld = calendar.dateComponents([.day], from: creationDate, to: currentDate).day ?? 0
                     
-                } catch {
-                    TempoUtils.Shout(msg: "Error checking backup file date: \(error)")
+                    if daysOld >= Constants.Backup.EXPIRY_DAYS {
+                        try removeSpecificMetricList(backupUrl: fileURL)
+                        TempoUtils.Warn(msg: "File is older than \(Constants.Backup.EXPIRY_DAYS) days")
+                        continue
+                    }
                 }
-                
-                let data = try Data(contentsOf: fileURL)
-                let decoder = JSONDecoder()
-                
-                // Individual metric objects
-                let metricPayload = try decoder.decode([Metric].self, from: data)
-                for metric in metricPayload
-                {
-                    fileMetric[fileURL] = metricPayload
-                    TempoUtils.Say(msg: "📊 \(fileURL) => \(metric.metric_type ?? "UNKNOWN")")
-                }
-                
-            } catch let error {
-                TempoUtils.Shout(msg: "Error reading file at \(fileURL): \(error)")
+            } catch {
+                TempoUtils.Shout(msg: "Error checking backup file date: \(error)")
+                //throw MetricsError.attributesOfItemFailed(error) // Don't throw as others may be valid
                 continue
+            }
+            
+            // Confirm file data is valid
+            let data: Data
+            do {
+                data = try Data(contentsOf: fileURL)
+            } catch {
+                TempoUtils.Shout(msg: "Error checking backup file date: \(error)")
+                //throw MetricsError.dataReadingFailed(error) // Don't throw as others may be valid
+                continue
+            }
+            let decoder = JSONDecoder()
+            
+            // Individual metric objects
+            let metricPayload:[Metric]
+            do {
+                metricPayload = try decoder.decode([Metric].self, from: data)
+                TempoUtils.Say(msg: "metricPayload validated")
+            } catch {
+                TempoUtils.Shout(msg: "Decoding failed: \(error.localizedDescription)")
+                //throw MetricsError.decodingFailed(error) // Don't throw as others may be valid
+                continue
+            }
+            
+            for metric in metricPayload
+            {
+                fileMetric[fileURL] = metricPayload
+                TempoUtils.Say(msg: "📊 \(fileURL) => \(metric.metric_type ?? "UNKNOWN")")
             }
         }
     }
 
     /// Uses parameter file URL to locate and remove the file from local backup folder
-    public static func removeSpecificMetricList(backupUrl: URL) {
+    public static func removeSpecificMetricList(backupUrl: URL) throws {
         do {
             // Remove each file
             try FileManager.default.removeItem(at: backupUrl)
             TempoUtils.Say(msg: "Removing file: \(backupUrl)")
-        } catch {
-            TempoUtils.Shout(msg: "Error while attempting to remove '\(backupUrl)' from backup folder: \(error)")        }
+        } catch let error as NSError {
+            switch error.code {
+            case NSFileNoSuchFileError: TempoUtils.Warn(msg: "Error: File not found '\(backupUrl)'")
+            case NSFileWriteNoPermissionError:  TempoUtils.Warn(msg: "Error: No permission to remove file '\(backupUrl)'")
+            case NSFileWriteFileExistsError:  TempoUtils.Warn(msg: "Error: Directory not empty '\(backupUrl)'")
+            case NSFileWriteVolumeReadOnlyError:  TempoUtils.Warn(msg: "Error: File system is read-only '\(backupUrl)'")
+            default: TempoUtils.Warn(msg: "Error while attempting to remove '\(backupUrl)' from backup folder: \(error.localizedDescription)")
+            }
+            throw error
+        }
     }
     
-    
-    public static func getMostRecentLocationData() -> LocationData {
+    /// Checks backups for any cached location data
+    public static func getMostRecentLocationData() throws -> LocationData {
         
-        // To retrieve the instance from UserDefaults:
-        if let savedLocationData = UserDefaults.standard.data(forKey: Constants.Backup.LOC_BACKUP_REF),
-            let decodedLocation = try? JSONDecoder().decode(LocationData.self, from: savedLocationData) {
-            // Use the retrieved location data
-            TempoUtils.Say(msg: "🌎 Most recent location backed up: admin=\(decodedLocation.admin_area ?? "nil"), locality=\(decodedLocation.locality ?? "nil")")
-            return decodedLocation
-        } else {
-            TempoUtils.Warn(msg: "🌎 Failed to backup most recent location")
+        // Validate backup location exists with UserDefaults using 'locationData' key
+        guard let savedLocationData = UserDefaults.standard.data(forKey: Constants.Backup.LOC_BACKUP_REF) else {
+            TempoUtils.Warn(msg: "Could not find cache location for LocData")
+            throw LocationDataError.missingBackupData
         }
         
-        return LocationData()
+        // Confirm backup file is valid
+        do {
+            let decodedLocation = try JSONDecoder().decode(LocationData.self, from: savedLocationData)
+            TempoUtils.Say(msg: "🌎 Most recent location backed up: admin=\(decodedLocation.admin_area ?? "nil"), locality=\(decodedLocation.locality ?? "nil")")
+            return decodedLocation
+        } catch {
+            TempoUtils.Warn(msg: "Error decoding existing LocData JSON: \(error)")
+            throw LocationDataError.decodingFailed(error)
+        }
     }
     
     /// Clears ALL references in the dedicated local backup folder
-    static func clearAllData()  {
+    static func clearAllData() throws {
         let jsonDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
         
         do {
@@ -181,23 +220,37 @@ public class TempoDataBackup
             }
         } catch {
             TempoUtils.Shout(msg: "Error while attempting to clear backup folder: \(error)")
+            throw MetricsError.failedToRemoveFiles(error)
         }
     }
     
-    public static func checkHeldMetrics(completion: @escaping (inout [Metric], URL) -> Void) {
+    /// Checks if any metric data held in case, actions completion task (usually PushMetrics) if existing data valid
+    public static func checkHeldMetrics(completion: @escaping (inout [Metric], URL) throws -> Void) throws {
         // See if check has already been called
         if(readyForCheck) {
             // Request creation of backup metrics dictionary
-            initCheck()
-            //TempoUtils.Say(msg: "Resending: \(TempoDataBackup.fileMetric.count)")
-            
-            var emptyArray: [Metric] = []
-            
-            // Cycles through each stored arrays and resends
-            for url in fileMetric.keys
-            {
-                // Attempt to push metric(s) again
-                completion(&emptyArray, url)
+            do{
+                try initCheck()
+                //TempoUtils.Say(msg: "Resending: \(TempoDataBackup.fileMetric.count)")
+                
+                var emptyArray: [Metric] = []
+                
+                // Cycles through each stored arrays and resends
+                for url in fileMetric.keys
+                {
+                    // Attempt to push metric(s) again
+                    do{
+                        try completion(&emptyArray, url)
+                    }
+                    catch {
+                        TempoUtils.Warn(msg: "\(error)")
+                        //throw MetricsError.metricResendFailed(url, error) // Don't throw as others may be valid
+                        continue
+                    }
+                }
+            } catch {
+                TempoUtils.Warn(msg: "Error while checking backup metrics: \(error)")
+                throw MetricsError.checkingFailed(error)
             }
             
             // Prevents from being checked again this session. If network is failing, no point retrying during this session
