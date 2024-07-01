@@ -27,15 +27,13 @@ public class TempoAdController: NSObject {
                 // Handle specific errors or log them
                 if let metricsError = error as? MetricsError {
                     switch metricsError {
-                    case .missingJsonString:
-                        TempoUtils.Warn(msg: "Missing JSON string error: \(metricsError)")
-                    case .decodingFailed(let decodingError):
-                        TempoUtils.Warn(msg: "Decoding failed: \(decodingError)")
-                    default: TempoUtils.Warn(msg: "Failed to push backup metrics")
+                        case .missingJsonString: TempoUtils.Warn(msg: "Missing JSON string error: \(metricsError)")
+                        case .decodingFailed(let decodingError): TempoUtils.Warn(msg: "Decoding failed: \(decodingError)")
+                        default: TempoUtils.Warn(msg: "Failed to push backup metrics")
                     }
                 } else {
                     // Handle other generic errors
-                    TempoUtils.Warn(msg: "Error while handling backuo metrics: \(error)")
+                    TempoUtils.Warn(msg: "Error while handling backup metrics: \(error)")
                 }
             }
             

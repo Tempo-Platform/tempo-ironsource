@@ -249,7 +249,7 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
                     self.adView.countryCode = countryCode
                 }
                 
-                TempoUtils.Say(msg: "☎️ didUpdateLocations: [admin=\(TempoProfile.locData?.admin_area ?? "nil") | locality=\(TempoProfile.locData?.locality ?? "nil")] | Values have been updated")
+                TempoUtils.Say(msg: "☎️ didUpdateLocations: [state/admin=\(TempoProfile.locData?.admin_area ?? "nil")] | Values have been updated")
                 
                 // Save data instance as the most recently validated data
                 self.saveLatestValidLocData()

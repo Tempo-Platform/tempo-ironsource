@@ -22,6 +22,7 @@ public class Metrics {
         
         // Confirm url is not nil
         guard let url = URL(string: TempoUtils.getMetricsUrl()) else {
+            TempoUtils.Warn(msg: "Invalid URL for metrics")
             throw MetricsError.invalidURL
         }
         
@@ -41,14 +42,16 @@ public class Metrics {
             metricListCopy = TempoDataBackup.fileMetric[backupUrl] ?? []
             // Confirm valid JSON from backup Metric list
             guard let jsonEncodedBackupData = try? JSONEncoder().encode(metricListCopy) else {
-                throw MetricsError.jsonEncodingFailed // TODO: COnsequencs of this failing?
+                TempoUtils.Warn(msg: "Error: Failed to encode backup metrics data")
+                throw MetricsError.jsonEncodingFailed
             }
             metricData = jsonEncodedBackupData
         } else {
             metricListCopy = currentMetrics
             // Confirm valid JSON from Metric list
             guard let jsonEncodedMetricData = try? JSONEncoder().encode(currentMetrics) else {
-                throw MetricsError.jsonEncodingFailed // TODO: Consequencs of this failing?
+                TempoUtils.Warn(msg: "Error: Failed to encode metrics data")
+                throw MetricsError.jsonEncodingFailed
             }
             metricData = jsonEncodedMetricData
             currentMetrics.removeAll()
@@ -67,27 +70,31 @@ public class Metrics {
         // For printout only (Metric type list)
         var metricOutput = "Metrics (x\(outMetricList?.count ?? 0))"
         for metric in outMetricList!{
-            metricOutput += "\n  - \(metric.metric_type ?? "<TYPE_UNKNOWN>")"
+            metricOutput += "\n  > \(metric.metric_type ?? "<TYPE_UNKNOWN>")"
         }
         TempoUtils.Say(msg: "📊 \(metricOutput)")
         
         // For printout only (Metrics JSON payload)
-        guard let jsonString = String(data: metricData ?? Data(), encoding: .utf8) else {
-            throw MetricsError.missingJsonString // TODO: Do I really want to throw here..?
+        do {
+            let metricJsonString = String(data: metricData ?? Data(), encoding: .utf8)
+            let formattedOutput = try formatMetricsOutput(jsonString: metricJsonString)
+            TempoUtils.Say(msg: "📊 Payload: " + formattedOutput)
+        }
+        catch {
+            TempoUtils.Warn(msg: "📊 Payload: ERROR - could not convert metricData to JSON string")
         }
         
         // On JSON metrics validation, create metrics POST request
         do {
-            let formattedOutput = try formatMetricsOutput(jsonString: jsonString)
-            TempoUtils.Say(msg: "📊 Payload: " + formattedOutput)
-            
-            // HTTP Headers
             // Super-pedantic header validation
             request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_CONTENT_TYPE)
             request.addValue(Constants.Web.APPLICATION_JSON, forHTTPHeaderField: Constants.Web.HEADER_ACCEPT)
             let metricTimeValue = String(Int(Date().timeIntervalSince1970))
             // Confirm valid date/time first
-            guard !metricTimeValue.isEmpty else { throw MetricsError.invalidHeaderValue }
+            guard !metricTimeValue.isEmpty else {
+                TempoUtils.Warn(msg: "Invalid header value for X-Timestamp header")
+                throw MetricsError.invalidHeaderValue
+            }
             request.addValue(metricTimeValue, forHTTPHeaderField: Constants.Web.HEADER_METRIC_TIME)
             
             // Create dataTask using the session object to send data to the server
@@ -143,7 +150,7 @@ public class Metrics {
             
             task.resume()
         } catch MetricsError.missingJsonString {
-            TempoUtils.Warn(msg: "Error: Missing JSON string")
+            TempoUtils.Warn(msg: "Missing JSON string")
         } catch {
             TempoUtils.Warn(msg: "An unknown error occurred: \(error)")
         }

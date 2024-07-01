@@ -12,27 +12,7 @@ public class TempoDataBackup
     
     /// Public funciton to start retrieval of backup data
     public static func initCheck() throws {
-        // try clearAllData() // Used to clear when TESTING only
-        do {
-            try buildMetricArrays()
-        } catch MetricsError.invalidDirectory {
-            TempoUtils.Shout(msg: "Directory targeted for backups is invalid")
-            throw MetricsError.invalidDirectory
-        } catch MetricsError.contentsOfDirectoryFailed(let error) {
-            TempoUtils.Shout(msg: "Contents of directory failed: \(error.localizedDescription)")
-            throw MetricsError.contentsOfDirectoryFailed(error)
-        } catch MetricsError.attributesOfItemFailed(let error) {
-            TempoUtils.Shout(msg: "Attributes of item failed: \(error.localizedDescription)")
-            throw MetricsError.attributesOfItemFailed(error)
-        } catch MetricsError.dataReadingFailed(let error) {
-            TempoUtils.Shout(msg: "Data reading failed: \(error.localizedDescription)")
-            throw MetricsError.dataReadingFailed(error)
-        } catch MetricsError.decodingFailed(let error) {
-            TempoUtils.Shout(msg: "Decoding failed: \(error.localizedDescription)")
-            throw MetricsError.decodingFailed(error)
-        } catch {
-            TempoUtils.Shout(msg: "An unknown error occurred: \(error.localizedDescription)")
-        }
+        try buildMetricArrays()
     }
     
     /// Adds Metric JSON array as data file to device's backup folder
@@ -100,6 +80,7 @@ public class TempoDataBackup
         
         // Declare file subdirectory to store data, escape if failed validation
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            TempoUtils.Shout(msg: "Directory targeted for backups is invalid")
             throw MetricsError.invalidDirectory
         }
         let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
@@ -109,6 +90,7 @@ public class TempoDataBackup
         do {
             contents = try FileManager.default.contentsOfDirectory(at: jsonDirectory, includingPropertiesForKeys: nil)
         } catch {
+            TempoUtils.Shout(msg: "Contents of directory failed: \(error.localizedDescription)")
             throw MetricsError.contentsOfDirectoryFailed(error)
         }
         
@@ -173,7 +155,8 @@ public class TempoDataBackup
                 metricPayload = try decoder.decode([Metric].self, from: data)
                 TempoUtils.Say(msg: "metricPayload validated")
             } catch {
-                // throw MetricsError.decodingFailed(error) // Don't throw as others may be valid
+                TempoUtils.Shout(msg: "Decoding failed: \(error.localizedDescription)")
+                //throw MetricsError.decodingFailed(error) // Don't throw as others may be valid
                 continue
             }
             
@@ -193,16 +176,11 @@ public class TempoDataBackup
             TempoUtils.Say(msg: "Removing file: \(backupUrl)")
         } catch let error as NSError {
             switch error.code {
-            case NSFileNoSuchFileError:
-                TempoUtils.Warn(msg: "Error: File not found '\(backupUrl)'")
-            case NSFileWriteNoPermissionError:
-                TempoUtils.Warn(msg: "Error: No permission to remove file '\(backupUrl)'")
-            case NSFileWriteFileExistsError:
-                TempoUtils.Warn(msg: "Error: Directory not empty '\(backupUrl)'")
-            case NSFileWriteVolumeReadOnlyError:
-                TempoUtils.Warn(msg: "Error: File system is read-only '\(backupUrl)'")
-            default:
-                TempoUtils.Warn(msg: "Error while attempting to remove '\(backupUrl)' from backup folder: \(error.localizedDescription)")
+            case NSFileNoSuchFileError: TempoUtils.Warn(msg: "Error: File not found '\(backupUrl)'")
+            case NSFileWriteNoPermissionError:  TempoUtils.Warn(msg: "Error: No permission to remove file '\(backupUrl)'")
+            case NSFileWriteFileExistsError:  TempoUtils.Warn(msg: "Error: Directory not empty '\(backupUrl)'")
+            case NSFileWriteVolumeReadOnlyError:  TempoUtils.Warn(msg: "Error: File system is read-only '\(backupUrl)'")
+            default: TempoUtils.Warn(msg: "Error while attempting to remove '\(backupUrl)' from backup folder: \(error.localizedDescription)")
             }
             throw error
         }

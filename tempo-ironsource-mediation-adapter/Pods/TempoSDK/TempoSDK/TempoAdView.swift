@@ -6,8 +6,8 @@ import AdSupport
 public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessageHandler  {
     var listener: TempoAdListener!
     var parentVC: UIViewController?
-    var webViewBackground: FullScreenUIView!
-    var webViewAd: FullScreenWKWebView!
+    var webViewBackground: FullScreenBackgroundWebView!
+    var webViewAd: FullScreenAdWebView!
     
     // Ad state - followed for catching WebView crashes
     enum AdState { case dormant, loading, showing }
@@ -37,32 +37,31 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         self.listener = listener
         self.appId = appId
         
-        // Confirm a valid country code
+        // Confirm a valid country code - catch result is a nil countryCode, which should be ok // TODO: Check this
         do {
             countryCode = try CountryCode.getIsoCountryCode2Digit()
             TempoUtils.Say(msg: "ISO Country Code: \(countryCode!)")
-        } catch CountryCodeError.missingCountryCode {
-            TempoUtils.Warn(msg: "Error: Missing ISO country code") // TODO: Consequences of this being nil?
         } catch {
-            TempoUtils.Shout(msg: "An unknown error occurred: \(error)") // TODO: Consequences of this happening?
+            TempoUtils.Warn(msg: "Setting countryCode as hard nil")
+            countryCode = nil
         }
+        
         sdkVersion = Constants.SDK_VERSIONS
         adapterVersion = self.listener.getTempoAdapterVersion()
         adapterType = self.listener.getTempoAdapterType()
         consent = self.listener.hasUserConsent()
+        
+        // Check if Ad ID is activated and available
         do {
             try updateAdId()
-            TempoUtils.Say(msg: "Ad ID: \(adId!)")
-        } catch ProfileError.idfaNotAvailable {
-            TempoUtils.Warn(msg: "Error: IDFA not available. Ensure that advertising tracking is enabled.")
-        } catch ProfileError.invalidAdId {
-            TempoUtils.Warn(msg: "Error: Invalid Ad ID received.")
         } catch {
-            TempoUtils.Warn(msg: "An unexpected error occurred: \(error.localizedDescription)")
+            adId = Constants.ZERO_AD_ID
+            TempoUtils.Warn(msg: "Ad ID could not be retireved: \(error.localizedDescription)")
         }
+        TempoUtils.Say(msg: "Ad ID: \(adId!)")
     }
     
-    /// Ingore requirement to implement required initializer ‘init(coder:) in it.
+    /// Ignore requirement to implement required initializer ‘init(coder:) in it.
     @available(*, unavailable, message: "Nibs are unsupported")
     public required init?(coder aDecoder: NSCoder) {
         fatalError("Nibs are unsupported")
@@ -79,6 +78,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         do {
             try setupWKWebview()
         } catch let error {
+            // Fails if cannot get WkWebView
             self.adState = AdState.dormant
             DispatchQueue.main.async {
                 self.processAdFetchFailed(reason: "Could not create WKWebView: \(error.localizedDescription)")
@@ -93,7 +93,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         
         // Update session values from global checks
         uuid = UUID().uuidString
-        //geo = CountryCode.getIsoCountryCode2Digit()  // TODO: This will eventually need to be taken from mediation parameters
         
         // Create ad load metrics with updated ad data
         self.addMetric(metricType: Constants.MetricType.LOAD_REQUEST)
@@ -169,7 +168,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         task.resume()
     }
     
-    /// Checks result of connection check request, displays ad if confirmd and handles any other failures
+    /// Checks result of connection check request, displays ad if confirmed and handles any other failures
     func handleWebsiteCheck(success: Bool, parentVC: UIViewController?, failReason: String? ) {
         if(success) {
             // Validate parent ViewController
@@ -241,18 +240,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             do {
                 try Metrics.pushMetrics(currentMetrics: &metricList, backupUrl: nil)
                 TempoUtils.Say(msg: "Metrics pushed successfully.")
-            } catch MetricsError.invalidURL {
-                TempoUtils.Warn(msg: "Error: Invalid URL")
-            } catch MetricsError.jsonEncodingFailed {
-                TempoUtils.Warn(msg: "Error: Failed to encode metrics data")
-            } catch MetricsError.emptyMetrics {
-                TempoUtils.Warn(msg: "Error: No metrics to push")
-            } catch MetricsError.missingJsonString {
-                TempoUtils.Warn(msg: "Error: Missing JSON string")
-            } catch MetricsError.invalidHeaderValue {
-                TempoUtils.Warn(msg: "Error: Invalid header value")
             } catch {
-                TempoUtils.Warn(msg: "An unknown error occurred: \(error)")
+                TempoUtils.Warn(msg: "Error pushing metrics on close: \(error)")
             }
         }
         
@@ -281,11 +270,9 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     /// Checks is consented Ad ID exists and returns (nullable) value
     func updateAdId() throws {
         
-        // Init default value
-        adId = Constants.ZERO_AD_ID
-        
         // Check if advertising tracking is enabled
         guard ASIdentifierManager.shared().isAdvertisingTrackingEnabled else {
+            TempoUtils.Warn(msg: "Error: IDFA not available. Ensure that advertising tracking is enabled.")
             throw ProfileError.idfaNotAvailable
         }
         
@@ -294,7 +281,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         adId = advertisingIdentifier.uuidString
         
         // Validate the IDFA
-        if adId == Constants.ZERO_AD_ID {
+        if adId == nil || adId!.isEmpty {
+            TempoUtils.Warn(msg: "Invalid Ad ID received.")
             throw ProfileError.invalidAdId
         }
     }
@@ -307,14 +295,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             TempoUtils.Say(msg: "🌏 Updating with backup")
             do{
                 TempoProfile.locData = try TempoDataBackup.getMostRecentLocationData()
-            } catch LocationDataError.missingBackupData {
-                TempoUtils.Say(msg: "Could not locate existing cache location data during ad request")
-                TempoProfile.locData = LocationData()
-            } catch LocationDataError.decodingFailed(let error) {
-                TempoUtils.Warn(msg: "Decoding failed getting location JSON during ad request: \(error.localizedDescription)")
-                TempoProfile.locData = LocationData()
             } catch {
-                TempoUtils.Warn(msg: "Error while attempting to fetch cached location data during ad request")
+                TempoUtils.Warn(msg: "LocData error during ad request")
                 TempoProfile.locData = LocationData()
             }
         } else {
@@ -326,7 +308,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         do{
             components = try createUrlComponents()
         } catch {
-            TempoUtils.Warn(msg: "Failed to create URL component")
             throw AdRequestError.urlCreationFailed
         }
         
@@ -364,9 +345,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                 // Fail on invalid HTTP response
                 guard let httpResponse = response as? HTTPURLResponse else {
                     self.adState = AdState.dormant
-                    DispatchQueue.main.async {
-                        self.processAdFetchFailed(reason: "Invalid HTTP response")
-                    }
+                    DispatchQueue.main.async { self.processAdFetchFailed(reason: "Invalid HTTP response") }
                     return
                 }
                 TempoUtils.Say(msg: "🤖🤖🤖 Response: \((response as! HTTPURLResponse).statusCode)")
@@ -391,8 +370,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                                 self.processAdFetchFailed(reason: errorMsg)
                                 return
                             }
-
-                                
                             do {
                                 let url = URL(string: try TempoUtils.getFullWebUrl(isInterstitial: self.isInterstitial, campaignId: campaignId, urlSuffix: responseSuccess.location_url_suffix))!
                                 
@@ -404,7 +381,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                                     self.webViewAd.load(URLRequest(url: url))
                                 }
                                 
-                                TempoUtils.Shout(msg: "---- A ----")
                                 return
                             }
                             catch WebURLError.invalidCampaignId {
@@ -416,9 +392,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
                             catch {
                                 errorMsg = "200 - Unknown error while loading ad"
                             }
-                            
-                            TempoUtils.Shout(msg: "---- B ----")
-                            
                         default:
                             errorMsg = "200 - Unexpected data returned"
                         }
@@ -464,6 +437,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         
         // Get URL domain/path
         guard let url = URL(string: TempoUtils.getAdsApiUrl()) else {
+            TempoUtils.Warn(msg: "Failed to create URL component")
             throw AdProcessError.invalidUrl
         }
         
@@ -519,16 +493,14 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     // Combines fetch fail callback and metric send
     func processAdFetchFailed(reason: String?) {
-        let endTag = reason?.isEmpty == true ? "" : ": \(reason!)"
-        TempoUtils.Warn(msg: "AdFetchFailed:\(endTag)")
+        TempoUtils.Warn(msg: "AdFetchFailed: \(reason ?? "UNKNOWN")")
         self.addMetric(metricType: Constants.MetricType.LOAD_FAILED)
         self.listener.onTempoAdFetchFailed(isInterstitial: self.isInterstitial, reason: reason)
     }
     
     // Combines show fail callback and metric send
     func processAdShowFailed(reason: String?) {
-        let endTag = reason?.isEmpty == true ? "" : ": \(reason!)"
-        TempoUtils.Warn(msg: "AdShowFailed:\(endTag)")
+        TempoUtils.Warn(msg: "AdFetchFailed: \(reason ?? "UNKNOWN")")
         self.addMetric(metricType: Constants.MetricType.SHOW_FAIL)
         self.listener.onTempoAdShowFailed(isInterstitial: self.isInterstitial, reason: reason)
     }
@@ -554,13 +526,13 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         let configuration = getWKWebViewConfiguration()
         
         // Create WKWebView object
-        webViewAd = FullScreenWKWebView(frame: webViewFrame, configuration: configuration)
-        if(webViewAd == nil) { throw WebViewError.webViewCreationFailed }
+        webViewAd = FullScreenAdWebView(frame: webViewFrame, configuration: configuration)
+        if(webViewAd == nil){ throw WebViewError.webViewCreationFailed }
         webViewAd.navigationDelegate = self
         
         // Add black base background, and add main view to background
-        webViewBackground = FullScreenUIView(frame: UIScreen.main.bounds)
-        if(webViewAd == nil) { throw WebViewError.backgroundViewCreationFailed }
+        webViewBackground = FullScreenBackgroundWebView(frame: UIScreen.main.bounds)
+        if(webViewBackground == nil) { throw WebViewError.backgroundViewCreationFailed }
         webViewBackground.backgroundColor = UIColor(red: 0.01, green: 0.01, blue: 0.01, alpha: 1)
         webViewBackground.addSubview(webViewAd)
     }
@@ -607,12 +579,8 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             TempoUtils.Say(msg: "WEB: \(webMsg)", absoluteDisplay: true)
         }
         
-        // Can close ad
-        if(webMsg == Constants.MetricType.CLOSE_AD){
-            self.closeAd()
-        }
-        
         // Handle any actionable commands
+        var jsMsg = "JS: \(webMsg)"
         switch(webMsg) {
         case Constants.MetricType.CLOSE_AD:
             self.closeAd()
@@ -620,8 +588,10 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             listener.onTempoAdFetchSucceeded(isInterstitial: self.isInterstitial)
             self.addMetric(metricType: Constants.MetricType.LOAD_SUCCESS)
         default: //
-            TempoUtils.Say(msg: "JS metric unhandled: \(webMsg)")
+            jsMsg.append(" (unused)")
         }
+        
+        TempoUtils.Say(msg: jsMsg)
     }
     
     /// Creates and returns new LocationData from current static singleton that doesn't retain its memory references (clears all if NONE consent)
@@ -649,7 +619,6 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     private func addMetric(metricType: String) {
         
         do {
-            
             let metric = try createMetric(metricType: metricType)
             metricList.append(metric)
             
@@ -659,12 +628,12 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
             // Hold if still waiting for profile LocationData (or if consent != NONE)
             guard validState || metric.location_data?.consent == Constants.LocationConsent.NONE.rawValue else {
                 TempoUtils.Warn(msg: "[\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
-                                "Not sending metrics just yet: [admin=\(metric.location_data?.admin_area ?? "nil") | locality=\(metric.location_data?.locality ?? "nil")]")
+                                "Not sending metrics just yet: [state/admin=\(metric.location_data?.admin_area ?? "nil")]")
                 return
             }
             
             TempoUtils.Say(msg: "[\(metricType)::\(TempoProfile.locationState ?? LocationState.UNCHECKED)] " +
-                           "Sending metrics! [admin=\(metric.location_data?.admin_area ?? "nil") | locality=\(metric.location_data?.locality ?? "nil")]")
+                           "Sending metrics! [state/admin=\(metric.location_data?.admin_area ?? "nil")]")
             
             if Constants.MetricType.METRIC_SEND_NOW.contains(metricType) {
                 try pushMetrics()
@@ -867,12 +836,16 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
     
     /// Test function used to test specific campaign ID using dummy values fo other metrics
     public func loadSpecificCampaignAd(isInterstitial: Bool, campaignId:String) {
-        adState = AdState.loading
         TempoUtils.Say(msg: "load specific url \(isInterstitial ? "INTERSTITIAL": "REWARDED")")
         
+        // Update state to LOADING
+        adState = AdState.loading
+        
+        // Create WKWebView instance
         do {
             try setupWKWebview()
         } catch let error {
+            // Fails if cannot get WkWebView
             self.adState = AdState.dormant
             DispatchQueue.main.async {
                 self.processAdFetchFailed(reason: "Could not create WKWebView for specific campaign: \(error.localizedDescription)")
@@ -926,7 +899,7 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
 }
 
 
-class FullScreenWKWebView: WKWebView {
+class FullScreenAdWebView: WKWebView {
     
     override var safeAreaInsets: UIEdgeInsets {
         return UIEdgeInsets(top: 50, left: 0, bottom: 0, right: 0)
@@ -947,7 +920,7 @@ class FullScreenWKWebView: WKWebView {
     }
 }
 
-class FullScreenUIView: UIView {
+class FullScreenBackgroundWebView: UIView {
     override var safeAreaInsets: UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
