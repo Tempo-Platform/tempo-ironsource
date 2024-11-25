@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.7.0"
+    public static let SDK_VERSIONS = "1.8.0"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -81,6 +81,7 @@ public struct Constants {
         static let VIDEO_LOADED = "TEMPO_VIDEO_LOADED"
         static let IMAGES_LOADED = "TEMPO_IMAGES_LOADED"
         static let TIMER_COMPLETED = "TIMER_COMPLETED"
+        static let OPEN_URL_IN_EXTERNAL_BROWSER = "OPEN_URL_IN_EXTERNAL_BROWSER"
         static let METRIC_OUTPUT_TYPES = [ASSETS_LOADED, VIDEO_LOADED, TIMER_COMPLETED, IMAGES_LOADED]
         static let METRIC_SEND_NOW = [SHOW, LOAD_REQUEST, TIMER_COMPLETED]
     }
@@ -98,6 +99,12 @@ public struct Constants {
         
         // Swift does not assign index valus to enum, so we make an indexable array
         public static let allValues = [DEV, STG, PRD]
+    }
+    
+    // JSON received structure
+    struct Function_RedirectToUrl: Codable {
+        var msgType: String
+        var url: String
     }
     
     // Test tool variables
