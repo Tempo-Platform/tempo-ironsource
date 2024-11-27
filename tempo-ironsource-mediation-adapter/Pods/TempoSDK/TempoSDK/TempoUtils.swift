@@ -21,7 +21,6 @@ public class ResponseUnprocessable: Decodable {
                 TempoUtils.Warn(msg: "[422]: msg=\(detail.msg ?? "nil"), type=\(detail.type ?? "nil"), loc=\(detail.loc ?? ["n/a"])")
             }
         }
-        
     }
 }
 
@@ -110,14 +109,6 @@ public class TempoUtils {
         }
     }
     
-    //    /// Returns HTML-ADS url based on current environment and adType/campaignID parameters
-    //    public static func getAdsWebUrl(isInterstitial: Bool, campaignId: String) -> String! {
-    //        let urlDomain = Constants.isProd ? Constants.Web.ADS_DOM_URL_PROD : Constants.Web.ADS_DOM_URL_DEV
-    //        let adsWebUrl = "\(urlDomain)/\(isInterstitial ? Constants.Web.URL_INT : Constants.Web.URL_REW)/\(campaignId)/ios";
-    //        Say(msg: "🌏 WEB URL: \(adsWebUrl)")
-    //        return adsWebUrl
-    //    }
-    //
     /// Returns web URL of ad content with customised parameters
     public static func getFullWebUrl(isInterstitial: Bool, campaignId: String, urlSuffix: String?) throws -> String {
         var webAdUrl: String
@@ -265,5 +256,20 @@ public class TempoUtils {
     /// Retuns string of 'INTERSTITIAL' or 'REWARDED' for debugging purposes
     public static func getAdTypeString(isInterstitial: Bool) -> String {
         return isInterstitial ? "INTERSTITIAL": "REWARDED"
+    }
+    
+    /// Opens external browser on device at given URL
+    public static func openUrlInBrowser(url: String) {
+        if let validatedUrl = URL(string: url) {
+            TempoUtils.Say(msg: "Opening URL: \(url)")
+            UIApplication.shared.open(validatedUrl, options: [:], completionHandler: nil)
+        }
+    }
+    
+    /// Checks if string begins/ends with "{" / "}"
+    public static func isPossiblyJSONObject(msg: String) -> Bool {
+        // Trim whitespace and newlines to avoid false negatives
+        let trimmed = msg.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.hasPrefix("{") && trimmed.hasSuffix("}")
     }
 }
