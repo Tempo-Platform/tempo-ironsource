@@ -2,12 +2,13 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.8.0"
+    public static let SDK_VERSIONS = "1.8.1"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
     static let ZERO_AD_ID = "00000000-0000-0000-0000-000000000000"
     static let TEMP_GEO_US = "US"
+    static let IOS_SDK_PLATFORM = "ios"
     
     struct Backup {
         static let METRIC_BACKUP_FOLDER = "metricJsons"
@@ -60,7 +61,7 @@ public struct Constants {
         static let SDK_VERSION = "sdk_version"
         static let ADAPTER_VERSION = "adapter_version"
         static let ADAPTER_TYPE = "adapter_type"
-        
+        static let SDK_PLATFORM = "sdk_platform"
         static let LOC_COUNTRY_CODE = "country_code"
         static let LOC_POSTAL_CODE = "postal_code"
         static let LOC_ADMIN_AREA = "admin_area"

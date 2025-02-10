@@ -42,7 +42,14 @@ public class TempoAdController: NSObject {
         }
         
         // Create AdView object
+        TempoUtils.Say(msg: "🌟🌟🌟 adView created... ")
         adView = TempoAdView(listener: tempoAdListener, appId: appId)
+//        adView!.modalPresentationStyle = .fullScreen
+//        if let unityVC = UIApplication.shared.windows.first?.rootViewController {
+//            
+//            TempoUtils.Say(msg: "🌟🌟🌟 Presenting adView... ")
+//            unityVC.present(adView!, animated: true, completion: nil)
+//        }
     }
     
     /// Public LOAD function for mediation adapters to call
@@ -65,8 +72,7 @@ public class TempoAdController: NSObject {
         // This does not take long, it's just run async on background thread
         tempoProfile?.doTaskAfterLocAuthUpdate(completion: loadAdCallback)
     }
-    
-    
+        
     /// Public SHOW function for mediation adapters to call
     public func showAd(parentViewController: UIViewController?) {
         
@@ -75,6 +81,7 @@ public class TempoAdController: NSObject {
             // Load ad callback for when checks are satisfied
             let showAdCallback: () -> Void = {
                 DispatchQueue.main.async {
+                    self.adView!.modalPresentationStyle = .fullScreen
                     self.adView!.showAd(parentVC: parentViewController)
                 }
             }
@@ -86,8 +93,7 @@ public class TempoAdController: NSObject {
             // This does not take long, it's just run async on background thread
             tempoProfile?.doTaskAfterLocAuthUpdate(completion: showAdCallback)
     }
-    
-    
+        
     /// Public LOAD function for internal testing with specific campaign ID {ONLY USED IN TESTING)
     public func loadSpecificAd(isInterstitial: Bool, campaignId:String) {
         adView!.loadSpecificCampaignAd(
