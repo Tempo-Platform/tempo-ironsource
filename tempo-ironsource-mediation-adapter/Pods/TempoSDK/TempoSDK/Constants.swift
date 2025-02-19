@@ -2,7 +2,7 @@
 
 public struct Constants {
     
-    public static let SDK_VERSIONS = "1.8.1"
+    public static let SDK_VERSIONS = "1.8.2"
     static let NO_FILL = "NO_FILL"
     static let OK = "OK"
     static let UNDEF = "UNDEFINED"
@@ -19,7 +19,8 @@ public struct Constants {
     }
     
     struct JS {
-        static let JS_FORCE_PLAY = "var video = document.getElementById('video'); if (video) { video.play(); void(0)}"
+        static let JS_FORCE_PLAY_VIDEO = "var video = document.getElementById('video'); if (video) { video.play(); void(0) }"
+        static let JS_MUTE_VIDEO = "var video = document.getElementById('video'); if (video) { video.muted = true; void(0) }"
         static let LOCK_SCALE_SOURCE = "var meta = document.createElement('meta');" +
         "meta.name = 'viewport';" +
         "meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';" +

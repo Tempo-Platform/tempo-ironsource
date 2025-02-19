@@ -144,7 +144,6 @@ public class TempoUtils {
     
     /// Checks local UI testing variables to see if there is a custom Campaign ID to overwrite the one returned from ads API
     internal static func checkForTestCampaign(campaignId: String!) throws -> String! {
-        
         if(campaignId != nil && !campaignId.isEmpty) {
             
             if (TempoTesting.instance?.isTestingCustomCampaigns ?? false) {
