@@ -22,7 +22,7 @@ public class Metrics {
         
         // Confirm url is not nil
         guard let url = URL(string: TempoUtils.getMetricsUrl()) else {
-            TempoUtils.Warn(msg: "Invalid URL for metrics")
+            TempoUtils.warn(msg: "Invalid URL for metrics")
             throw MetricsError.invalidURL
         }
         
@@ -42,7 +42,7 @@ public class Metrics {
             metricListCopy = TempoDataBackup.fileMetric[backupUrl] ?? []
             // Confirm valid JSON from backup Metric list
             guard let jsonEncodedBackupData = try? JSONEncoder().encode(metricListCopy) else {
-                TempoUtils.Warn(msg: "Error: Failed to encode backup metrics data")
+                TempoUtils.warn(msg: "Error: Failed to encode backup metrics data")
                 throw MetricsError.jsonEncodingFailed
             }
             metricData = jsonEncodedBackupData
@@ -50,7 +50,7 @@ public class Metrics {
             metricListCopy = currentMetrics
             // Confirm valid JSON from Metric list
             guard let jsonEncodedMetricData = try? JSONEncoder().encode(currentMetrics) else {
-                TempoUtils.Warn(msg: "Error: Failed to encode metrics data")
+                TempoUtils.warn(msg: "Error: Failed to encode metrics data")
                 throw MetricsError.jsonEncodingFailed
             }
             metricData = jsonEncodedMetricData
@@ -63,7 +63,7 @@ public class Metrics {
         // Prints out metrics types being sent in this push, ends if list empty
         let outMetricList = backupUrl != nil ? TempoDataBackup.fileMetric[backupUrl!]: metricListCopy
         guard let unwrappedMetricList = outMetricList, !unwrappedMetricList.isEmpty else {
-            TempoUtils.Say(msg: "📊 Metrics (0 - nothing sent)")
+            TempoUtils.say(msg: "📊 Metrics (0 - nothing sent)")
             throw MetricsError.emptyMetrics
         }
         
@@ -72,16 +72,16 @@ public class Metrics {
         for metric in outMetricList!{
             metricOutput += "\n  > \(metric.metric_type ?? "<TYPE_UNKNOWN>")"
         }
-        TempoUtils.Say(msg: "📊 \(metricOutput)")
+        TempoUtils.say(msg: "📊 \(metricOutput)")
         
         // For printout only (Metrics JSON payload)
         do {
             let metricJsonString = String(data: metricData ?? Data(), encoding: .utf8)
             let formattedOutput = try formatMetricsOutput(jsonString: metricJsonString)
-            TempoUtils.Say(msg: "📊 Payload: " + formattedOutput)
+            TempoUtils.say(msg: "📊 Payload: " + formattedOutput)
         }
         catch {
-            TempoUtils.Warn(msg: "📊 Payload: ERROR - could not convert metricData to JSON string")
+            TempoUtils.warn(msg: "📊 Payload: ERROR - could not convert metricData to JSON string")
         }
         
         // On JSON metrics validation, create metrics POST request
@@ -92,7 +92,7 @@ public class Metrics {
             let metricTimeValue = String(Int(Date().timeIntervalSince1970))
             // Confirm valid date/time first
             guard !metricTimeValue.isEmpty else {
-                TempoUtils.Warn(msg: "Invalid header value for X-Timestamp header")
+                TempoUtils.warn(msg: "Invalid header value for X-Timestamp header")
                 throw MetricsError.invalidHeaderValue
             }
             request.addValue(metricTimeValue, forHTTPHeaderField: Constants.Web.HEADER_METRIC_TIME)
@@ -101,16 +101,16 @@ public class Metrics {
             let task = session.dataTask(with: request, completionHandler: { data, response, error in
                 guard error == nil else {
                     if(backupUrl == nil) {
-                        TempoUtils.Warn(msg: "Data did not send, creating backup")
+                        TempoUtils.warn(msg: "Data did not send, creating backup")
                         do {
                             try TempoDataBackup.storeData(metricsArray: metricListCopy)
                         } catch {
-                            TempoUtils.Warn(msg:"Error while backing up data: \(error)")
+                            TempoUtils.warn(msg:"Error while backing up data: \(error)")
                             return
                         }
                     }
                     else{
-                        TempoUtils.Warn(msg:"Data did not send, keeping backup: \(backupUrl!)")
+                        TempoUtils.warn(msg:"Data did not send, keeping backup: \(backupUrl!)")
                     }
                     return
                 }
@@ -118,13 +118,13 @@ public class Metrics {
                 // If metrics were back-ups - and were successfully resent - delete the file from device storage before sending again in case rules have changed
                 if(backupUrl != nil)
                 {
-                    TempoUtils.Say(msg: "Removing backup: \(backupUrl!) (x\(TempoDataBackup.fileMetric[backupUrl!]!.count))")
+                    TempoUtils.say(msg: "Removing backup: \(backupUrl!) (x\(TempoDataBackup.fileMetric[backupUrl!]!.count))")
                     
                     // Remove metricList from device storage
                     do {
                         try TempoDataBackup.removeSpecificMetricList(backupUrl: backupUrl!)
                     } catch {
-                        TempoUtils.Warn(msg: "Error removing file: \(error)")
+                        TempoUtils.warn(msg: "Error removing file: \(error)")
                     }
                 }
                 
@@ -132,16 +132,16 @@ public class Metrics {
                     switch(httpResponse.statusCode)
                     {
                     case 200:
-                        TempoUtils.Say(msg: "📊 Sent metrics - safe pass: \(httpResponse.statusCode)")
+                        TempoUtils.say(msg: "📊 Sent metrics - safe pass: \(httpResponse.statusCode)")
                     case 400, 422, 500:
-                        TempoUtils.Say(msg: "📊 Passed/Bad metrics - do not backup: \(httpResponse.statusCode)")
+                        TempoUtils.say(msg: "📊 Passed/Bad metrics - do not backup: \(httpResponse.statusCode)")
                         break
                     default:
-                        TempoUtils.Say(msg: "📊 Non-Tempo related error - backup: \(httpResponse.statusCode)")
+                        TempoUtils.say(msg: "📊 Non-Tempo related error - backup: \(httpResponse.statusCode)")
                         do {
                             try TempoDataBackup.storeData(metricsArray: metricListCopy)
                         } catch {
-                            TempoUtils.Warn(msg:"Error while backing up data: \(error)")
+                            TempoUtils.warn(msg:"Error while backing up data: \(error)")
                             return
                         }
                     }
@@ -150,9 +150,9 @@ public class Metrics {
             
             task.resume()
         } catch MetricsError.missingJsonString {
-            TempoUtils.Warn(msg: "Missing JSON string")
+            TempoUtils.warn(msg: "Missing JSON string")
         } catch {
-            TempoUtils.Warn(msg: "An unknown error occurred: \(error)")
+            TempoUtils.warn(msg: "An unknown error occurred: \(error)")
         }
     }
 }

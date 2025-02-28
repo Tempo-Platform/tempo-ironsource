@@ -19,15 +19,15 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
         do {
             // Confirm valid App ID
             let appId = try ISTempoUtils.getAppId(adData: adData)
-            TempoUtils.Say(msg: "\(try ISTempoUtils.adUnitDataStringer(adData: adData))");
+            TempoUtils.say(msg: "\(try ISTempoUtils.adUnitDataStringer(adData: adData))");
             
             // Check for valid CPM Floor
             let cpmFloor = ISTempoUtils.getCpmFloor(adData: adData)
             let cpmFloorFloat: Float = Float(cpmFloor) ?? 0.0
             if cpmFloorFloat != 0.0 {
-                TempoUtils.Say(msg: "The CPM is a valid Float: \(cpmFloorFloat)")
+                TempoUtils.say(msg: "The CPM is a valid Float: \(cpmFloorFloat)")
             } else {
-                TempoUtils.Warn(msg: "The CPM is not a valid Float or is zero")
+                TempoUtils.warn(msg: "The CPM is not a valid Float or is zero")
             }
             
             // Create ad instance and load new ad
@@ -47,7 +47,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
                 self.rewarded?.loadAd(isInterstitial: false, cpmFloor: cpmFloorFloat, placementId: nil)
             }
         } catch {
-            TempoUtils.Warn(msg: "Invalid ad data: unable to get App ID")
+            TempoUtils.warn(msg: "Invalid ad data: unable to get App ID")
             self.onTempoAdFetchFailed(isInterstitial: false, reason: "Invalid ad data")
         }
     }
@@ -55,9 +55,9 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     /// Callback from ironSource API which checks the availbility as determined by the 'isAdReady' property
     public override func isAdAvailable(with adData: ISAdData) -> Bool {
         do {
-            TempoUtils.Say(msg: "[\(isAdReady ? "Ad Ready": "Ad NOT Ready"), \(try ISTempoUtils.adUnitDataStringer(adData: adData))]");
+            TempoUtils.say(msg: "[\(isAdReady ? "Ad Ready": "Ad NOT Ready"), \(try ISTempoUtils.adUnitDataStringer(adData: adData))]");
         } catch {
-            TempoUtils.Warn(msg: "Error checking ad availability - invalid ad details, cannot continue")
+            TempoUtils.warn(msg: "Error checking ad availability - invalid ad details, cannot continue")
             isAdReady = false
         }
         return isAdReady
@@ -65,7 +65,7 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     
     /// Callback from ironSource API when IronSource.showRewardedAds() called
     public override func showAd(with viewController: UIViewController, adData: ISAdData, delegate: ISRewardedVideoAdDelegate) {
-        //TempoUtils.Say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
+        //TempoUtils.say(msg: "\(ISTempoUtils.adUnitDataStringer(adData: adData))");
         
         // Implement callback delegate
         self.delegate = delegate
@@ -86,57 +86,57 @@ public class ISTempoCustomRewardedVideo: ISBaseRewardedVideo, TempoAdListener {
     
     /// Tempo listener - to be called when ad has successfully loaded
     public func onTempoAdFetchSucceeded(isInterstitial: Bool) {
-        TempoUtils.Say(msg: "onAdFetchSucceeded \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
+        TempoUtils.say(msg: "onAdFetchSucceeded \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidLoad()
         isAdReady = true
     }
     
     /// Tempo listener - to be called when ad failed to load
     public func onTempoAdFetchFailed(isInterstitial: Bool, reason: String?) {
-        TempoUtils.Say(msg: "onAdFetchFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
+        TempoUtils.say(msg: "onAdFetchFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidFailToLoadWith(ISAdapterErrorType.internal, errorCode: 0, errorMessage: "Ad fetch failed for some reason")
     }
     
     /// Tempo listener - to be called when ad is closed
     public func onTempoAdClosed(isInterstitial: Bool) {
-        TempoUtils.Say(msg: "onAdClosed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
+        TempoUtils.say(msg: "onAdClosed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidClose()
         isAdReady = false
     }
     
     /// Tempo listener - to be called when ad is displayed
     public func onTempoAdDisplayed(isInterstitial: Bool) {
-        TempoUtils.Say(msg: "onAdDisplayed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
+        TempoUtils.say(msg: "onAdDisplayed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidOpen()
         self.delegate?.adRewarded()
     }
     
     public func onTempoAdShowFailed(isInterstitial: Bool, reason: String?) {
-        TempoUtils.Say(msg: "onAdShowFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial)): \(reason ?? "Unknown")");
+        TempoUtils.say(msg: "onAdShowFailed \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial)): \(reason ?? "Unknown")");
         
         self.delegate?.adDidFailToShowWithErrorCode(0, errorMessage: reason ?? "Unknown")
     }
     
     /// Tempo listener - to be called when ad is clicked
     public func onTempoAdClicked(isInterstitial: Bool) {
-        TempoUtils.Say(msg: "onAdClicked \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
+        TempoUtils.say(msg: "onAdClicked \(ISTempoUtils.sayAdType(isInterstitial: isInterstitial))");
         self.delegate?.adDidClick()
     }
     
     /// Tempo listener - to be called when version references are updated
     public func getTempoAdapterVersion() -> String? {
-        TempoUtils.Say(msg: "getTempoAdapterVersion \(ISTempoUtils.sayAdType(isInterstitial: false))");
+        TempoUtils.say(msg: "getTempoAdapterVersion \(ISTempoUtils.sayAdType(isInterstitial: false))");
         return ISTempoCustomAdapter.TEMPO_ADAPTER_VERSION
     }
     
     /// Tempo listener - to be called when adapter type is requested
     public func getTempoAdapterType() -> String? {
-        TempoUtils.Say(msg: "getTempoAdapterType \(ISTempoUtils.sayAdType(isInterstitial: false))");
+        TempoUtils.say(msg: "getTempoAdapterType \(ISTempoUtils.sayAdType(isInterstitial: false))");
         return ISTempoCustomAdapter.ADAPTER_TYPE
     }
     
     public func hasUserConsent() -> Bool? {
-        TempoUtils.Say(msg: "hasUserConsent \(ISTempoUtils.sayAdType(isInterstitial: false))");
+        TempoUtils.say(msg: "hasUserConsent \(ISTempoUtils.sayAdType(isInterstitial: false))");
         return nil;
     }
 }

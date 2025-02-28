@@ -20,7 +20,7 @@ public class TempoDataBackup
         
         // Full capacity - end job
         guard !backupsAtMax else {
-            TempoUtils.Warn(msg: "❌ Cannot add anymore backups. At full capacity!")
+            TempoUtils.warn(msg: "❌ Cannot add anymore backups. At full capacity!")
             return
         }
         
@@ -35,7 +35,7 @@ public class TempoDataBackup
         do {
             try FileManager.default.createDirectory(at: jsonDirectory, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            TempoUtils.Shout(msg: "Error creating document directory: \(error.localizedDescription)")
+            TempoUtils.shout(msg: "Error creating document directory: \(error.localizedDescription)")
             throw StoreDataError.directoryCreationFailed
         }
         
@@ -54,7 +54,7 @@ public class TempoDataBackup
             do {
                 try jsonData.write(to: fileURL)
             } catch {
-                TempoUtils.Shout(msg: "Error saving JSON data to file: \(error.localizedDescription)")
+                TempoUtils.shout(msg: "Error saving JSON data to file: \(error.localizedDescription)")
                 throw StoreDataError.fileWriteFailed
             }
             
@@ -64,13 +64,13 @@ public class TempoDataBackup
                 for metric in metricsArray {
                     nameList += "\n - \(metric.metric_type ?? "[type_undefined]")"
                 }
-                TempoUtils.Say(msg: "📂 \(nameList)")
+                TempoUtils.say(msg: "📂 \(nameList)")
             } else {
-                TempoUtils.Shout(msg: "Error fetching file attributes after saving")
+                TempoUtils.shout(msg: "Error fetching file attributes after saving")
                 throw StoreDataError.attributesFetchFailed
             }
         } catch {
-            TempoUtils.Shout(msg: "Error saving JSON data to file: \(error.localizedDescription)")
+            TempoUtils.shout(msg: "Error saving JSON data to file: \(error.localizedDescription)")
             throw StoreDataError.jsonDataEncodingFailed
         }
     }
@@ -80,7 +80,7 @@ public class TempoDataBackup
         
         // Declare file subdirectory to store data, escape if failed validation
         guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            TempoUtils.Shout(msg: "Directory targeted for backups is invalid")
+            TempoUtils.shout(msg: "Directory targeted for backups is invalid")
             throw MetricsError.invalidDirectory
         }
         let jsonDirectory = documentsDirectory.appendingPathComponent(Constants.Backup.METRIC_BACKUP_FOLDER)
@@ -90,22 +90,22 @@ public class TempoDataBackup
         do {
             contents = try FileManager.default.contentsOfDirectory(at: jsonDirectory, includingPropertiesForKeys: nil)
         } catch {
-            TempoUtils.Shout(msg: "Contents of directory failed: \(error.localizedDescription)")
+            TempoUtils.shout(msg: "Contents of directory failed: \(error.localizedDescription)")
             throw MetricsError.contentsOfDirectoryFailed(error)
         }
         
         // If no backups, ignore and leave
         if(contents.isEmpty) {
-            TempoUtils.Say(msg: "✅ No Backups! [\(contents.count)]")
+            TempoUtils.say(msg: "✅ No Backups! [\(contents.count)]")
             return
         }
         else {
-            TempoUtils.Say(msg: "📂 Backups Found! [\(contents.count)]")
+            TempoUtils.say(msg: "📂 Backups Found! [\(contents.count)]")
         }
         
         // Check backups are not at full capacity
         if(contents.count > Constants.Backup.MAX_BACKUPS) {
-            TempoUtils.Warn(msg: "❌ Max Backups! [\(contents.count)]")
+            TempoUtils.warn(msg: "❌ Max Backups! [\(contents.count)]")
             backupsAtMax = true
         }
         
@@ -128,12 +128,12 @@ public class TempoDataBackup
                     
                     if daysOld >= Constants.Backup.EXPIRY_DAYS {
                         try removeSpecificMetricList(backupUrl: fileURL)
-                        TempoUtils.Warn(msg: "File is older than \(Constants.Backup.EXPIRY_DAYS) days")
+                        TempoUtils.warn(msg: "File is older than \(Constants.Backup.EXPIRY_DAYS) days")
                         continue
                     }
                 }
             } catch {
-                TempoUtils.Shout(msg: "Error checking backup file date: \(error)")
+                TempoUtils.shout(msg: "Error checking backup file date: \(error)")
                 //throw MetricsError.attributesOfItemFailed(error) // Don't throw as others may be valid
                 continue
             }
@@ -143,7 +143,7 @@ public class TempoDataBackup
             do {
                 data = try Data(contentsOf: fileURL)
             } catch {
-                TempoUtils.Shout(msg: "Error checking backup file date: \(error)")
+                TempoUtils.shout(msg: "Error checking backup file date: \(error)")
                 //throw MetricsError.dataReadingFailed(error) // Don't throw as others may be valid
                 continue
             }
@@ -153,9 +153,9 @@ public class TempoDataBackup
             let metricPayload:[Metric]
             do {
                 metricPayload = try decoder.decode([Metric].self, from: data)
-                TempoUtils.Say(msg: "metricPayload validated")
+                TempoUtils.say(msg: "metricPayload validated")
             } catch {
-                TempoUtils.Shout(msg: "Decoding failed: \(error.localizedDescription)")
+                TempoUtils.shout(msg: "Decoding failed: \(error.localizedDescription)")
                 //throw MetricsError.decodingFailed(error) // Don't throw as others may be valid
                 continue
             }
@@ -163,7 +163,7 @@ public class TempoDataBackup
             for metric in metricPayload
             {
                 fileMetric[fileURL] = metricPayload
-                TempoUtils.Say(msg: "📊 \(fileURL) => \(metric.metric_type ?? "UNKNOWN")")
+                TempoUtils.say(msg: "📊 \(fileURL) => \(metric.metric_type ?? "UNKNOWN")")
             }
         }
     }
@@ -173,35 +173,35 @@ public class TempoDataBackup
         do {
             // Remove each file
             try FileManager.default.removeItem(at: backupUrl)
-            TempoUtils.Say(msg: "Removing file: \(backupUrl)")
+            TempoUtils.say(msg: "Removing file: \(backupUrl)")
         } catch let error as NSError {
             switch error.code {
-            case NSFileNoSuchFileError: TempoUtils.Warn(msg: "Error: File not found '\(backupUrl)'")
-            case NSFileWriteNoPermissionError:  TempoUtils.Warn(msg: "Error: No permission to remove file '\(backupUrl)'")
-            case NSFileWriteFileExistsError:  TempoUtils.Warn(msg: "Error: Directory not empty '\(backupUrl)'")
-            case NSFileWriteVolumeReadOnlyError:  TempoUtils.Warn(msg: "Error: File system is read-only '\(backupUrl)'")
-            default: TempoUtils.Warn(msg: "Error while attempting to remove '\(backupUrl)' from backup folder: \(error.localizedDescription)")
+            case NSFileNoSuchFileError: TempoUtils.warn(msg: "Error: File not found '\(backupUrl)'")
+            case NSFileWriteNoPermissionError:  TempoUtils.warn(msg: "Error: No permission to remove file '\(backupUrl)'")
+            case NSFileWriteFileExistsError:  TempoUtils.warn(msg: "Error: Directory not empty '\(backupUrl)'")
+            case NSFileWriteVolumeReadOnlyError:  TempoUtils.warn(msg: "Error: File system is read-only '\(backupUrl)'")
+            default: TempoUtils.warn(msg: "Error while attempting to remove '\(backupUrl)' from backup folder: \(error.localizedDescription)")
             }
             throw error
         }
     }
     
     /// Checks backups for any cached location data
-    public static func getMostRecentLocationData() throws -> LocationData {
+    public static func getLocationDataFromCache() throws -> LocationData {
         
         // Validate backup location exists with UserDefaults using 'locationData' key
         guard let savedLocationData = UserDefaults.standard.data(forKey: Constants.Backup.LOC_BACKUP_REF) else {
-            TempoUtils.Warn(msg: "Could not find cache location for LocData")
+            TempoUtils.warn(msg: "Could not find cache location for LocData")
             throw LocationDataError.missingBackupData
         }
         
         // Confirm backup file is valid
         do {
             let decodedLocation = try JSONDecoder().decode(LocationData.self, from: savedLocationData)
-            TempoUtils.Say(msg: "🌎 Most recent location backed up: admin=\(decodedLocation.admin_area ?? "nil"), locality=\(decodedLocation.locality ?? "nil")")
+            TempoUtils.say(msg: "🌎 Most recent location backed up: admin=\(decodedLocation.admin_area ?? "nil"), locality=\(decodedLocation.locality ?? "nil")")
             return decodedLocation
         } catch {
-            TempoUtils.Warn(msg: "Error decoding existing LocData JSON: \(error)")
+            TempoUtils.warn(msg: "Error decoding existing LocData JSON: \(error)")
             throw LocationDataError.decodingFailed(error)
         }
     }
@@ -219,7 +219,7 @@ public class TempoDataBackup
                 try FileManager.default.removeItem(at: fileURL)
             }
         } catch {
-            TempoUtils.Shout(msg: "Error while attempting to clear backup folder: \(error)")
+            TempoUtils.shout(msg: "Error while attempting to clear backup folder: \(error)")
             throw MetricsError.failedToRemoveFiles(error)
         }
     }
@@ -243,13 +243,13 @@ public class TempoDataBackup
                         try completion(&emptyArray, url)
                     }
                     catch {
-                        TempoUtils.Warn(msg: "\(error)")
+                        TempoUtils.warn(msg: "\(error)")
                         //throw MetricsError.metricResendFailed(url, error) // Don't throw as others may be valid
                         continue
                     }
                 }
             } catch {
-                TempoUtils.Warn(msg: "Error while checking backup metrics: \(error)")
+                TempoUtils.warn(msg: "Error while checking backup metrics: \(error.localizedDescription)")
                 throw MetricsError.checkingFailed(error)
             }
             

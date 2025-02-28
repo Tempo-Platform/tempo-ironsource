@@ -77,7 +77,7 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     
     /// Initialisation functions
     func initializationDidComplete() {
-        TempoUtils.Say(msg: "initializationDidComplete")
+        TempoUtils.say(msg: "initializationDidComplete")
     }
     
     /// Initialize the UI elements of the activity
@@ -88,45 +88,45 @@ class ViewController: UIViewController, LevelPlayInterstitialDelegate, LevelPlay
     
     /// LevelPlayInterstitialDelegate functions
     func didShow(with adInfo: ISAdInfo!) {
-        TempoUtils.Say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        TempoUtils.say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     func didClick(with adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
-        TempoUtils.Say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        TempoUtils.say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     
     /// LevelPlayRewardedVideoDelegate functions
     func hasAvailableAd(with adInfo: ISAdInfo!) {
-        TempoUtils.Say(msg: "****** Has Video: \(IronSource.hasRewardedVideo()) | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
+        TempoUtils.say(msg: "****** Has Video: \(IronSource.hasRewardedVideo()) | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
     }
     func hasNoAvailableAd() {
     }
     func didReceiveReward(forPlacement placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
-        TempoUtils.Say(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
+        TempoUtils.say(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))")
     }
     func didClick(_ placementInfo: ISPlacementInfo!, with adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
-        TempoUtils.Say(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
+        TempoUtils.say(msg: "\(placementInfo.placementName ?? "NO_PLACEMENT") | \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
     }
     
     /// BOTH Reward/Interstitalfunctions
     func didLoad(with adInfo: ISAdInfo!) {
-        TempoUtils.Say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        TempoUtils.say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     func didFailToLoadWithError(_ error: Error!) {
-        TempoUtils.Say(msg: String(describing: error.self));
+        TempoUtils.say(msg: String(describing: error.self));
     }
     func didOpen(with adInfo: ISAdInfo!) {
-        TempoUtils.Say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        TempoUtils.say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     func didFailToShowWithError(_ error: Error!, andAdInfo adInfo: ISAdInfo!) { // NEVER GETS CALLED BY OUR ADAPTER
-        TempoUtils.Say(msg: "\(String(describing: error.self)) |  \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
+        TempoUtils.say(msg: "\(String(describing: error.self)) |  \(ISTempoUtils.adUnitStringer(adInfo: adInfo))");
     }
     func didClose(with adInfo: ISAdInfo!) {
-        TempoUtils.Say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
+        TempoUtils.say(msg: ISTempoUtils.adUnitStringer(adInfo: adInfo));
     }
     
     // Impressions functions
     func impressionDataDidSucceed(_ impressionData: ISImpressionData!) {
-        TempoUtils.Say(msg: impressionData.all_data?.debugDescription ?? "NO_ALL_DATA");
+        TempoUtils.say(msg: impressionData.all_data?.debugDescription ?? "NO_ALL_DATA");
     }
 
 
