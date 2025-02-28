@@ -9,7 +9,7 @@ public class TempoAdController: NSObject {
     static var isInitialised: Bool = false
     public var adView: TempoAdView?
     public var locationData: LocationData? = nil
-    var tempoProfile: TempoProfile? = nil
+    //var tempoProfile: TempoProfile? = nil
    
     
     public init(tempoAdListener: TempoAdListener, appId: String!) {
@@ -27,13 +27,13 @@ public class TempoAdController: NSObject {
                 // Handle specific errors or log them
                 if let metricsError = error as? MetricsError {
                     switch metricsError {
-                        case .missingJsonString: TempoUtils.Warn(msg: "Missing JSON string error: \(metricsError)")
-                        case .decodingFailed(let decodingError): TempoUtils.Warn(msg: "Decoding failed: \(decodingError)")
-                        default: TempoUtils.Warn(msg: "Failed to push backup metrics")
+                        case .missingJsonString: TempoUtils.warn(msg: "Missing JSON string error: \(metricsError)")
+                        case .decodingFailed(let decodingError): TempoUtils.warn(msg: "Decoding failed: \(decodingError)")
+                        default: TempoUtils.warn(msg: "Failed to push backup metrics")
                     }
                 } else {
                     // Handle other generic errors
-                    TempoUtils.Warn(msg: "Error while handling backup metrics: \(error)")
+                    TempoUtils.warn(msg: "Error while handling backup metrics: \(error)")
                 }
             }
             
@@ -42,56 +42,25 @@ public class TempoAdController: NSObject {
         }
         
         // Create AdView object
-        TempoUtils.Say(msg: "🌟🌟🌟 adView created... ")
         adView = TempoAdView(listener: tempoAdListener, appId: appId)
-//        adView!.modalPresentationStyle = .fullScreen
-//        if let unityVC = UIApplication.shared.windows.first?.rootViewController {
-//            
-//            TempoUtils.Say(msg: "🌟🌟🌟 Presenting adView... ")
-//            unityVC.present(adView!, animated: true, completion: nil)
-//        }
     }
     
     /// Public LOAD function for mediation adapters to call
     public func loadAd(isInterstitial: Bool, cpmFloor: Float?, placementId: String?) {
-        
-        // Load ad callback for when checks are satisfied
-        let loadAdCallback: () -> Void = {
-            DispatchQueue.main.async {
-                self.adView!.loadAd (
-                    isInterstitial: isInterstitial,
-                    cpmFloor: cpmFloor,
-                    placementId: placementId)
-            }
+        DispatchQueue.main.async {
+            self.adView!.loadAd (
+                isInterstitial: isInterstitial,
+                cpmFloor: cpmFloor,
+                placementId: placementId)
         }
-        
-        // Create tempoProfile instance if does not already exist
-        tempoProfile = tempoProfile ?? TempoProfile(adView: adView!)
-        
-        // Check for lates location consent autorisation - after which run loadAds()
-        // This does not take long, it's just run async on background thread
-        tempoProfile?.doTaskAfterLocAuthUpdate(completion: loadAdCallback)
     }
         
     /// Public SHOW function for mediation adapters to call
     public func showAd(parentViewController: UIViewController?) {
-        
-            //adView!.showAd(parentVC: parentViewController)
-            
-            // Load ad callback for when checks are satisfied
-            let showAdCallback: () -> Void = {
-                DispatchQueue.main.async {
-                    self.adView!.modalPresentationStyle = .fullScreen
-                    self.adView!.showAd(parentVC: parentViewController)
-                }
-            }
-            
-            // Create tempoProfile instance if does not already exist
-            tempoProfile =  tempoProfile ?? TempoProfile(adView: adView!)
-            
-            // Check for lates location consent autorisation - after which, run showAds()
-            // This does not take long, it's just run async on background thread
-            tempoProfile?.doTaskAfterLocAuthUpdate(completion: showAdCallback)
+        DispatchQueue.main.async {
+            self.adView!.modalPresentationStyle = .fullScreen
+            self.adView!.showAd(parentVC: parentViewController)
+        }
     }
         
     /// Public LOAD function for internal testing with specific campaign ID {ONLY USED IN TESTING)

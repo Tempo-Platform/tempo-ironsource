@@ -12,7 +12,7 @@ public class CountryCode {
         
         // Confirm currency code has value
         guard let currencyCode = currentLocale.currencyCode else {
-            TempoUtils.Warn(msg: "currentLocale.currencyCode is nil")
+            TempoUtils.warn(msg: "currentLocale.currencyCode is nil")
             return
             //throw CountryCodeError.missingCurrencyCode
         }
@@ -20,7 +20,7 @@ public class CountryCode {
         // Confirm regionalLocale has value
         let regionLocale = currentLocale.identifier
         guard !regionLocale.isEmpty else {
-            TempoUtils.Warn(msg: "currentLocale.identifier is empty")
+            TempoUtils.warn(msg: "currentLocale.identifier is empty")
             //throw CountryCodeError.missingRegionLocale
             return
         }
@@ -33,13 +33,13 @@ public class CountryCode {
             countryCode = currentLocale.regionCode
         }
         guard let unwrappedCountryCode = countryCode else {
-            TempoUtils.Warn(msg: "region/country code could not be defined")
+            TempoUtils.warn(msg: "region/country code could not be defined")
             //throw CountryCodeError.missingCountryCode
             return
         }
         
         // Upon successful retrieval of basic locale data
-        TempoUtils.Say(msg: "🌏 Location details:\n\t- currencyCode: \(currencyCode)\n\t- regionLocale: \(regionLocale)\n\t- countryCode: \(unwrappedCountryCode)")
+        TempoUtils.say(msg: "🌏 Location details:\n\t- currencyCode: \(currencyCode)\n\t- regionLocale: \(regionLocale)\n\t- countryCode: \(unwrappedCountryCode)")
     }
     
     /// Returns the ISO/countryCode as per the user's device region settings ISO 3166-1 (alpha-2)
@@ -56,7 +56,7 @@ public class CountryCode {
         
         // Confirm ISO 2-digit country code has value
         guard let unwrappedCountryCode = countryCode else {
-            TempoUtils.Warn(msg: "Error: Could not get country code from device")
+            TempoUtils.warn(msg: "Error: Could not get country code from device")
             throw CountryCodeError.missingCountryCode
         }
         
@@ -70,11 +70,11 @@ public class CountryCode {
     public static func getIsoCountryCode3Digit() throws -> String!
     {
         guard let currencyCode = currentLocale.currencyCode, !currencyCode.isEmpty else {
-            TempoUtils.Warn(msg: "3 digit country code not recognized, return \(unknown)")
+            TempoUtils.warn(msg: "3 digit country code not recognized, return \(unknown)")
             throw CountryCodeError.missingCurrencyCode
         }
         
-        TempoUtils.Say(msg: "3 digit country code recognized, return \(currencyCode)")
+        TempoUtils.say(msg: "3 digit country code recognized, return \(currencyCode)")
         return currencyCode
     }
     
