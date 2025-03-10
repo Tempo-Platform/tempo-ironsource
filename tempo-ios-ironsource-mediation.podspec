@@ -6,7 +6,7 @@
 
 Pod::Spec.new do |spec|
   spec.name          = 'tempo-ios-ironsource-mediation'
-  spec.version       = '1.9.3'
+  spec.version       = '1.9.4-rc.0'
   spec.swift_version = '5.6.1'
   spec.author        = { 'Tempo Engineering' => 'development@tempoplatform.com' }
   spec.license       = { :type => 'Apache License, Version 2.0', :file => 'LICENSE' }
@@ -25,7 +25,7 @@ Pod::Spec.new do |spec|
       'TempoAdapter' => ['TempoAdapter/Resources/**/*']
     }
 
-  spec.dependency 'TempoSDK', '1.8.3'
+  spec.dependency 'TempoSDK', '1.8.4'
   #IronSource SDK requires min deployment version to go beyond 8.0.0.0
   spec.dependency 'IronSourceSDK', '~> 8'
   spec.requires_arc     = true

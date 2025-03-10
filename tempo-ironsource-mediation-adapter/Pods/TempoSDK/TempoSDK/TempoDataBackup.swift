@@ -199,6 +199,10 @@ public class TempoDataBackup
         do {
             let decodedLocation = try JSONDecoder().decode(LocationData.self, from: savedLocationData)
             TempoUtils.say(msg: "🌎 Most recent location backed up: admin=\(decodedLocation.admin_area ?? "nil"), locality=\(decodedLocation.locality ?? "nil")")
+            // If country code is nil, we want to consider it an invalid file and check next time
+            if(decodedLocation.country_code == nil){
+                throw LocationDataError.missingBackupData
+            }
             return decodedLocation
         } catch {
             TempoUtils.warn(msg: "Error decoding existing LocData JSON: \(error)")
