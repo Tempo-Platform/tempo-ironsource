@@ -1,10 +1,3 @@
-//
-//  TempoTesting.swift
-//  TempoSDK
-//
-//  Created by Stephen Baker on 24/7/2023.
-//
-
 import Foundation
 
 public class TempoExternal {
@@ -46,5 +39,9 @@ public class TempoExternal {
     
     public func updateCustomCampaignId(campaignId: String) -> Void {
         customCampaignId = campaignId
+    }
+    
+    public func disableProfile() {
+        TempoProfile.locationState = LocationState.DISABLED
     }
 }
