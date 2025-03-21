@@ -25,7 +25,6 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         // No point proceeding if already disabled
         if(TempoProfile.locationState == LocationState.DISABLED)
         {
-            TempoUtils.warn(msg: "🌏👨‍🦽‍➡️ LocationState.DISABLED (TempoProfile.init)")
             locData = LocationData()
             initialLocationRequestDone = true
             return
@@ -56,7 +55,6 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
         // No loc request if disabled
         if(TempoProfile.locationState == LocationState.DISABLED)
         {
-            TempoUtils.warn(msg: "🌏👨‍🦽‍➡️ LocationState.DISABLED (TempoProfile.requestLocationWithChecks)")
             return
         }
         // No loc request if already checking
@@ -79,7 +77,6 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
             // Ignore and go straight to completion task if LocState disabled
             if(TempoProfile.locationState == LocationState.DISABLED)
             {
-                TempoUtils.warn(msg: "🌏👨‍🦽‍➡️ LocationState.DISABLED (TempoProfile.doTaskAfterLocAuthUpdate)")
                 self.updateLocConsentValues(consentType: Constants.LocationConsent.NONE)
                 completion?()
                 return
@@ -232,7 +229,6 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
     /* ---------- Location Manager Callback ---------- */
     /// Location Manager callback: didChangeAuthorization
     public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        //TempoUtils.warn(msg: "⚠️⚠️⚠️ STATUS CHANGE ⚠️⚠️⚠️: \(authorizationStatusString(status))")
         var updating = "NOT UPDATING"
         
         // If disabled, can attempt ad load immediately (if not already done so)
@@ -272,7 +268,6 @@ public class TempoProfile: NSObject, CLLocationManagerDelegate { //TODO: Make cl
     
     /// Location Manager callback: didUpdateLocations
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //TempoUtils.warn(msg: "⚠️⚠️⚠️ LOCATION DATA ⚠️⚠️⚠️")
         guard let location = locations.last else {
             TempoUtils.warn(msg: "☎️ didUpdateLocations: No valid locations found")
             TempoProfile.updateLocState(newState: LocationState.FAILED)

@@ -406,13 +406,11 @@ public class TempoAdView: UIViewController, WKNavigationDelegate, WKScriptMessag
         // We don't want to update any backups with personal data is that is disabled
         if(TempoProfile.locationState == LocationState.DISABLED)
         {
-            TempoUtils.warn(msg: "🌏👨‍🦽‍➡️  LocationState.DISABLED (TempoAdView.sendAdRequest)")
             tempoProfile?.locData = LocationData()
         }
         
         // Update locData with backup if nil
         else if(tempoProfile?.locData == nil) {
-            TempoUtils.say(msg: "🌏 Updating with backup")
             do{
                 tempoProfile?.locData = try TempoDataBackup.getLocationDataFromCache()
             } catch {
